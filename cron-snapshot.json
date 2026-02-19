@@ -1,0 +1,18 @@
+[
+  {"name":"Yama 15-min check-in","enabled":false,"schedule":"every 15m","lastStatus":"ok","lastRunMs":1770535767970,"model":"systemEvent"},
+  {"name":"67 Post #3 - Community Boost","enabled":false,"schedule":"0 13 * * * PT","lastStatus":"error","lastRunMs":1770930000008,"model":"opus"},
+  {"name":"67 Post #4 - Bull Thesis (old)","enabled":false,"schedule":"0 16 * * * PT","lastStatus":"ok","lastRunMs":1770940800008,"model":"opus"},
+  {"name":"67 Post #3 - Bull Thesis (v2)","enabled":false,"schedule":"0 13 * * * PT","lastStatus":"ok","lastRunMs":1771189200011,"model":"opus"},
+  {"name":"67 Post #4 - Community (v2)","enabled":false,"schedule":"0 16 * * * PT","lastStatus":"ok","lastRunMs":1771200000012,"model":"opus"},
+  {"name":"67 Post #1 - Morning Catalyst","enabled":true,"schedule":"0 9 * * * PT","lastStatus":"ok","lastRunMs":1771445988375,"model":"opus"},
+  {"name":"OpenClaw Release Monitor","enabled":true,"schedule":"Mon/Thu 9 AM PT","lastStatus":"ok","lastRunMs":1771261255369,"model":"sonnet"},
+  {"name":"session-cleanup","enabled":true,"schedule":"every 2h","lastStatus":"ok","lastRunMs":1771513311706,"model":"sonnet"},
+  {"name":"session-state-freshener","enabled":true,"schedule":"every 1h","lastStatus":"ok","lastRunMs":1771517110364,"model":"sonnet"},
+  {"name":"Task Resumption Check","enabled":true,"schedule":"every 2h","lastStatus":"ok","lastRunMs":1771517207779,"model":"opus"},
+  {"name":"67 Post #2 - Culture Drop","enabled":true,"schedule":"0 11 * * * PT","lastStatus":"ok","lastRunMs":1771445999984,"model":"opus"},
+  {"name":"67 Post #5 - Night Cap","enabled":true,"schedule":"0 19 * * * PT","lastStatus":"ok","lastRunMs":1771470000016,"model":"opus"},
+  {"name":"Nightly Build Sprint","enabled":true,"schedule":"0 23 * * * PT","lastStatus":"ok","lastRunMs":1771484400013,"model":"opus"},
+  {"name":"morning-brief","enabled":true,"schedule":"0 8 * * * PT","lastStatus":"ok","lastRunMs":1771516800016,"model":"systemEvent"},
+  {"name":"memory-maintenance","enabled":true,"schedule":"Sun/Wed 2 PM PT","lastStatus":"ok","lastRunMs":1771452000012,"model":"sonnet"},
+  {"name":"Monthly 30-Day Review","enabled":true,"schedule":"1st of month 6 AM PT","lastStatus":null,"lastRunMs":null,"model":"sonnet"}
+]

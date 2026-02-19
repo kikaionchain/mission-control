@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kikai Mission Control</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0a; --surface: #111; --surface2: #161616; --border: #1e1e1e;
+    --text: #e5e5e5; --dim: #777; --accent: #00D9FF; --green: #39FF14;
+    --yellow: #FFD700; --red: #ff4444; --orange: #ff8800;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+  
+  .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface); border-right: 1px solid var(--border);
+    padding: 24px 16px; display: flex; flex-direction: column; gap: 32px;
+  }
+  .sidebar-header { display: flex; align-items: center; gap: 10px; padding: 0 8px; }
+  .sidebar-header .emoji { font-size: 24px; }
+  .sidebar-header h1 { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+  .sidebar-header .tag { font-size: 11px; color: var(--green); font-weight: 600; margin-top: 2px; }
+  
+  .nav-section { display: flex; flex-direction: column; gap: 2px; }
+  .nav-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); padding: 0 12px; margin-bottom: 8px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px;
+    font-size: 13px; font-weight: 500; color: var(--dim); cursor: pointer; transition: all 0.15s;
+  }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active { background: rgba(0,217,255,0.08); color: var(--accent); }
+  .nav-item .icon { width: 18px; text-align: center; }
+  .nav-item .badge {
+    margin-left: auto; font-size: 11px; font-weight: 700;
+    background: rgba(0,217,255,0.15); color: var(--accent); padding: 1px 8px; border-radius: 10px;
+  }
+  
+  .sidebar-footer { margin-top: auto; padding: 12px; border-top: 1px solid var(--border); }
+  .sidebar-footer .status { font-size: 11px; color: var(--dim); }
+  .sidebar-footer .status span { color: var(--green); }
+  
+  /* Main content */
+  .main { padding: 32px; overflow-y: auto; }
+  .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+  .main-header h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+  .timestamp { font-size: 12px; color: var(--dim); }
+  
+  /* Cards grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px;
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--dim); }
+  .card-status { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .status-ok { background: rgba(57,255,20,0.1); color: var(--green); }
+  .status-warn { background: rgba(255,136,0,0.1); color: var(--orange); }
+  .status-error { background: rgba(255,68,68,0.1); color: var(--red); }
+  .status-active { background: rgba(0,217,255,0.1); color: var(--accent); }
+  
+  .metric { font-size: 36px; font-weight: 800; margin-bottom: 4px; }
+  .metric-label { font-size: 12px; color: var(--dim); }
+  
+  /* Task list */
+  .task-list { display: flex; flex-direction: column; gap: 8px; }
+  .task-item {
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    background: var(--surface2); border-radius: 8px; font-size: 13px;
+  }
+  .task-check { width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .task-check.done { border-color: var(--green); background: rgba(57,255,20,0.1); }
+  .task-check.done::after { content: '✓'; color: var(--green); font-size: 11px; font-weight: 700; }
+  .task-priority { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: auto; flex-shrink: 0; }
+  .priority-high { background: rgba(255,68,68,0.1); color: var(--red); }
+  .priority-med { background: rgba(255,136,0,0.1); color: var(--orange); }
+  .priority-low { background: rgba(0,217,255,0.1); color: var(--accent); }
+  
+  /* Cron table */
+  .cron-table { width: 100%; border-collapse: collapse; }
+  .cron-table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--dim); padding: 8px 12px; border-bottom: 1px solid var(--border);
+  }
+  .cron-table td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .cron-table tr:last-child td { border-bottom: none; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+  .dot-green { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red { background: var(--red); }
+  .dot-gray { background: #444; }
+  
+  /* Agent cards */
+  .agent-row { display: flex; gap: 16px; margin-bottom: 32px; }
+  .agent-card {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; display: flex; align-items: center; gap: 16px;
+  }
+  .agent-avatar {
+    width: 48px; height: 48px; border-radius: 12px; display: flex;
+    align-items: center; justify-content: center; font-size: 24px;
+    background: rgba(0,217,255,0.08);
+  }
+  .agent-info h3 { font-size: 15px; font-weight: 700; }
+  .agent-info .role { font-size: 12px; color: var(--dim); }
+  .agent-status-dot {
+    width: 10px; height: 10px; border-radius: 50%; margin-left: auto;
+  }
+  
+  /* Activity log */
+  .log-entry { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .log-entry:last-child { border-bottom: none; }
+  .log-time { font-size: 11px; color: var(--dim); min-width: 60px; font-family: monospace; }
+  .log-icon { font-size: 14px; min-width: 20px; text-align: center; }
+  .log-text { font-size: 13px; color: var(--text); }
+  .log-text span { color: var(--dim); }
+
+  /* Goals */
+  .goal-item { padding: 16px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; }
+  .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .goal-name { font-size: 14px; font-weight: 700; }
+  .goal-progress { font-size: 12px; color: var(--accent); font-weight: 600; }
+  .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+
+  /* Section headers */
+  .section-header { font-size: 16px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-header .count { font-size: 12px; color: var(--dim); font-weight: 500; }
+  
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .agent-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="emoji">🦊</div>
+      <div>
+        <h1>Kikai</h1>
+        <div class="tag">ONLINE</div>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <div class="nav-item active"><span class="icon">◉</span> Dashboard</div>
+      <div class="nav-item"><span class="icon">☰</span> Tasks <span class="badge" id="nav-task-count">0</span></div>
+      <div class="nav-item"><span class="icon">⏱</span> Cron Jobs <span class="badge" id="nav-cron-count">0</span></div>
+      <div class="nav-item"><span class="icon">⚡</span> Activity</div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-label">Agents</div>
+      <div class="nav-item"><span class="icon">🦊</span> Kikai</div>
+      <div class="nav-item"><span class="icon">⚔️</span> Yama</div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-label">System</div>
+      <div class="nav-item"><span class="icon">⚙</span> Config</div>
+      <div class="nav-item"><span class="icon">📝</span> Memory</div>
+      <div class="nav-item"><span class="icon">🎯</span> Goals</div>
+    </div>
+    
+    <div class="sidebar-footer">
+      <div class="status"><span>●</span> All systems operational</div>
+      <div class="status" style="margin-top: 4px;">Model: Opus 4.6</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main" id="main-content">
+    <div class="main-header">
+      <h2>Mission Control</h2>
+      <div class="timestamp" id="last-updated"></div>
+    </div>
+
+    <!-- Agent Status -->
+    <div class="agent-row">
+      <div class="agent-card">
+        <div class="agent-avatar">🦊</div>
+        <div class="agent-info">
+          <h3>Kikai</h3>
+          <div class="role">Operator - Opus 4.6</div>
+        </div>
+        <div class="agent-status-dot" id="kikai-status" style="background: var(--green);" title="Online"></div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">⚔️</div>
+        <div class="agent-info">
+          <h3>Yama</h3>
+          <div class="role">For Crypto CEO</div>
+        </div>
+        <div class="agent-status-dot" id="yama-status" style="background: #444;" title="Unknown"></div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Active Task</div>
+          <div class="card-status status-active" id="task-status">IN PROGRESS</div>
+        </div>
+        <div id="active-task-name" style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Loading...</div>
+        <div id="active-task-progress" style="font-size: 12px; color: var(--dim);">Loading...</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Cron Health</div>
+          <div class="card-status status-ok" id="cron-health-status">ALL OK</div>
+        </div>
+        <div class="metric" id="cron-ok-count">-</div>
+        <div class="metric-label" id="cron-ok-label">jobs healthy</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Current Priority</div>
+          <div class="card-status status-active">ACTIVE</div>
+        </div>
+        <div id="current-goal" style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Loading...</div>
+        <div id="current-goal-detail" style="font-size: 12px; color: var(--dim);">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Cron Jobs -->
+    <div class="section-header">Cron Jobs <span class="count" id="cron-count"></span></div>
+    <div class="card" style="margin-bottom: 32px; overflow-x: auto;">
+      <table class="cron-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Job</th>
+            <th>Schedule</th>
+            <th>Last Run</th>
+            <th>Model</th>
+          </tr>
+        </thead>
+        <tbody id="cron-tbody">
+          <tr><td colspan="5" style="color: var(--dim);">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Active Task Checklist -->
+    <div class="section-header">Task Checklist</div>
+    <div class="task-list" id="task-checklist" style="margin-bottom: 32px;">
+      <div class="task-item" style="color: var(--dim);">Loading...</div>
+    </div>
+
+    <!-- Goals -->
+    <div class="section-header">Goals</div>
+    <div id="goals-list" style="margin-bottom: 32px;">
+      <div style="color: var(--dim); font-size: 13px;">Loading...</div>
+    </div>
+
+    <!-- Activity Log -->
+    <div class="section-header">Recent Activity</div>
+    <div class="card">
+      <div id="activity-log">
+        <div class="log-entry">
+          <div class="log-time">--:--</div>
+          <div class="log-icon">⏳</div>
+          <div class="log-text">Loading activity...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// Mission Control - reads from local files via fetch to the data API
+// For now, uses static data that gets updated by cron/scripts
+
+const DATA_FILE = 'data.json';
+
+async function loadData() {
+  try {
+    const res = await fetch(DATA_FILE + '?t=' + Date.now());
+    if (!res.ok) throw new Error('No data file');
+    return await res.json();
+  } catch(e) {
+    return null;
+  }
+}
+
+function timeAgo(ms) {
+  if (!ms) return 'never';
+  const diff = Date.now() - ms;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+function cronDotClass(status, lastRunMs) {
+  if (status === 'error') return 'dot-red';
+  if (!lastRunMs) return 'dot-gray';
+  const hoursAgo = (Date.now() - lastRunMs) / 3600000;
+  if (hoursAgo > 26) return 'dot-yellow';
+  return 'dot-green';
+}
+
+function renderData(data) {
+  if (!data) return;
+  
+  document.getElementById('last-updated').textContent = 'Updated: ' + new Date(data.updatedAt).toLocaleString();
+  
+  // Active task
+  if (data.activeTask) {
+    document.getElementById('active-task-name').textContent = data.activeTask.name || 'None';
+    const done = (data.activeTask.checklist || []).filter(c => c.done).length;
+    const total = (data.activeTask.checklist || []).length;
+    document.getElementById('active-task-progress').textContent = done + '/' + total + ' items complete';
+    document.getElementById('task-status').textContent = data.activeTask.status || 'IDLE';
+  }
+  
+  // Cron jobs
+  if (data.crons) {
+    const enabled = data.crons.filter(c => c.enabled);
+    const healthy = enabled.filter(c => c.lastStatus !== 'error');
+    const stale = enabled.filter(c => c.lastRunMs && (Date.now() - c.lastRunMs) > 26 * 3600000);
+    
+    document.getElementById('cron-ok-count').textContent = healthy.length + '/' + enabled.length;
+    document.getElementById('cron-count').textContent = '(' + enabled.length + ' enabled)';
+    document.getElementById('nav-cron-count').textContent = enabled.length;
+    
+    if (stale.length > 0) {
+      document.getElementById('cron-health-status').className = 'card-status status-warn';
+      document.getElementById('cron-health-status').textContent = stale.length + ' STALE';
+    }
+    
+    const tbody = document.getElementById('cron-tbody');
+    tbody.innerHTML = data.crons.map(c => `
+      <tr style="opacity: ${c.enabled ? 1 : 0.4}">
+        <td><span class="dot ${cronDotClass(c.lastStatus, c.lastRunMs)}"></span>${c.enabled ? (c.lastStatus === 'error' ? 'Error' : 'OK') : 'Off'}</td>
+        <td style="font-weight: 600;">${c.name}</td>
+        <td style="color: var(--dim); font-family: monospace; font-size: 12px;">${c.schedule}</td>
+        <td style="color: var(--dim);">${timeAgo(c.lastRunMs)}</td>
+        <td style="color: var(--dim); font-size: 12px;">${c.model || 'default'}</td>
+      </tr>
+    `).join('');
+  }
+  
+  // Task checklist
+  if (data.activeTask && data.activeTask.checklist) {
+    const list = document.getElementById('task-checklist');
+    document.getElementById('nav-task-count').textContent = data.activeTask.checklist.filter(c => !c.done).length;
+    list.innerHTML = data.activeTask.checklist.map(item => `
+      <div class="task-item">
+        <div class="task-check ${item.done ? 'done' : ''}"></div>
+        <span style="${item.done ? 'text-decoration: line-through; color: var(--dim);' : ''}">${item.text}</span>
+      </div>
+    `).join('');
+  }
+  
+  // Goals
+  if (data.goals) {
+    const list = document.getElementById('goals-list');
+    list.innerHTML = data.goals.map(g => `
+      <div class="goal-item">
+        <div class="goal-header">
+          <div class="goal-name">${g.name}</div>
+          <div class="goal-progress">${g.progress}%</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${g.progress}%; background: ${g.progress === 100 ? 'var(--green)' : 'var(--accent)'};"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  // Current priority
+  if (data.currentPriority) {
+    document.getElementById('current-goal').textContent = data.currentPriority.name;
+    document.getElementById('current-goal-detail').textContent = data.currentPriority.detail;
+  }
+  
+  // Activity log
+  if (data.activity) {
+    const log = document.getElementById('activity-log');
+    log.innerHTML = data.activity.map(a => `
+      <div class="log-entry">
+        <div class="log-time">${a.time}</div>
+        <div class="log-icon">${a.icon}</div>
+        <div class="log-text">${a.text}</div>
+      </div>
+    `).join('');
+  }
+  
+  // Agent status
+  if (data.agents) {
+    if (data.agents.yama) {
+      const dot = document.getElementById('yama-status');
+      dot.style.background = data.agents.yama === 'online' ? 'var(--green)' : data.agents.yama === 'unknown' ? '#444' : 'var(--red)';
+    }
+  }
+}
+
+async function refresh() {
+  const data = await loadData();
+  if (data) renderData(data);
+}
+
+refresh();
+setInterval(refresh, 30000); // refresh every 30s
+</script>
+
+</body>
+</html>

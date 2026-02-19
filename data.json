@@ -1,0 +1,59 @@
+{
+  "updatedAt": "2026-02-19T16:25:00.000Z",
+  "activeTask": {
+    "name": "Build Mission Control + OS Audit (Alex Finn Standard)",
+    "status": "IN_PROGRESS",
+    "checklist": [
+      {"done": true, "text": "Clean up distracting files (business research archived)"},
+      {"done": true, "text": "Build Mission Control web dashboard"},
+      {"done": false, "text": "Triple check all OS files"},
+      {"done": false, "text": "Triple check all cron jobs"},
+      {"done": false, "text": "Triple check config (all Anthropic)"},
+      {"done": false, "text": "Verify task resumption stays on-task"},
+      {"done": false, "text": "Document final state"}
+    ]
+  },
+  "crons": [
+    {"name":"67 Post #1 - Morning Catalyst","enabled":true,"schedule":"9 AM PT daily","lastStatus":"ok","lastRunMs":1771445988375,"model":"opus"},
+    {"name":"67 Post #2 - Culture Drop","enabled":true,"schedule":"11 AM PT daily","lastStatus":"ok","lastRunMs":1771445999984,"model":"opus"},
+    {"name":"67 Post #5 - Night Cap","enabled":true,"schedule":"7 PM PT daily","lastStatus":"ok","lastRunMs":1771470000016,"model":"opus"},
+    {"name":"morning-brief","enabled":true,"schedule":"8 AM PT daily","lastStatus":"ok","lastRunMs":1771516800016,"model":"systemEvent"},
+    {"name":"Task Resumption Check","enabled":true,"schedule":"every 2h","lastStatus":"ok","lastRunMs":1771517207779,"model":"opus"},
+    {"name":"session-state-freshener","enabled":true,"schedule":"every 1h","lastStatus":"ok","lastRunMs":1771517110364,"model":"sonnet"},
+    {"name":"session-cleanup","enabled":true,"schedule":"every 2h","lastStatus":"ok","lastRunMs":1771513311706,"model":"sonnet"},
+    {"name":"Nightly Build Sprint","enabled":true,"schedule":"11 PM PT daily","lastStatus":"ok","lastRunMs":1771484400013,"model":"opus"},
+    {"name":"OpenClaw Release Monitor","enabled":true,"schedule":"Mon/Thu 9 AM","lastStatus":"ok","lastRunMs":1771261255369,"model":"sonnet"},
+    {"name":"memory-maintenance","enabled":true,"schedule":"Sun/Wed 2 PM","lastStatus":"ok","lastRunMs":1771452000012,"model":"sonnet"},
+    {"name":"Monthly 30-Day Review","enabled":true,"schedule":"1st of month","lastStatus":null,"lastRunMs":null,"model":"sonnet"},
+    {"name":"Yama 15-min check-in","enabled":false,"schedule":"every 15m","lastStatus":"ok","lastRunMs":1770535767970,"model":"systemEvent"},
+    {"name":"67 Post #3 (disabled)","enabled":false,"schedule":"1 PM PT","lastStatus":"error","lastRunMs":1770930000008,"model":"opus"},
+    {"name":"67 Post #4 (disabled)","enabled":false,"schedule":"4 PM PT","lastStatus":"ok","lastRunMs":1771200000012,"model":"opus"}
+  ],
+  "goals": [
+    {"name": "Perfect the OS (ACTIVE NOW)", "progress": 40},
+    {"name": "For Crypto", "progress": 15},
+    {"name": "67 Brand", "progress": 50},
+    {"name": "Non-Crypto Business", "progress": 5},
+    {"name": "Divvvy", "progress": 10}
+  ],
+  "currentPriority": {
+    "name": "Perfect the OS",
+    "detail": "Mission Control + Alex Finn standard + triple check everything"
+  },
+  "activity": [
+    {"time": "08:20", "icon": "🧹", "text": "Cleaned up business research files (archived, not deleted)"},
+    {"time": "08:18", "icon": "👤", "text": "WJP: Focus on OS + mission control only. Match Alex Finn."},
+    {"time": "08:15", "icon": "📝", "text": "Updated GOALS.md - current priority is OS only"},
+    {"time": "08:10", "icon": "🏗", "text": "Building Mission Control dashboard"},
+    {"time": "07:35", "icon": "👤", "text": "WJP: Are you working or dead?"},
+    {"time": "06:25", "icon": "🔧", "text": "Fixed fallback models to all-Anthropic"},
+    {"time": "06:18", "icon": "🏗", "text": "Skills audit complete - 27 skills indexed"},
+    {"time": "02:15", "icon": "🏗", "text": "Overnight: built smart contract audit business (off-task)"},
+    {"time": "02:07", "icon": "📄", "text": "Overnight: Mem0 evaluation complete"},
+    {"time": "22:22", "icon": "👤", "text": "WJP: Perfect your OS, work all night, all Anthropic"}
+  ],
+  "agents": {
+    "kikai": "online",
+    "yama": "unknown"
+  }
+}
