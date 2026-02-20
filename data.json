@@ -1,138 +1,346 @@
 {
-  "lastUpdated": "2026-02-19T14:50:00-08:00",
+  "updatedAt": "2026-02-20T12:31:59.875073",
+  "agents": {
+    "kikai": {
+      "status": "working",
+      "model": "sonnet-4-6",
+      "contextPct": 26,
+      "lastActive": "just now",
+      "working": true
+    },
+    "yama": {
+      "status": "ssh-only",
+      "model": "sonnet-4-6",
+      "contextPct": 0,
+      "lastActive": "offline since Feb 19 12pm"
+    }
+  },
   "activeTask": {
-    "name": "Full OS Overhaul - Alex Finn '100 Hours' Standard",
+    "name": "Mission Control - Bulletproof + Live Agent Monitoring",
     "status": "IN_PROGRESS",
-    "started": "2026-02-19T14:20:00-08:00",
     "checklist": [
       {
-        "pass": "Pass 1: Audit",
-        "status": "DONE",
-        "items": [
-          "Read all 11 core files, noted issues"
-        ]
+        "done": false,
+        "text": "Fix browser (port 9222 conflict - Chrome running without --remote-debugging-port; browser tool blocked; non-critical, static site verified via web_fetch)"
       },
       {
-        "pass": "Pass 2: Fix",
-        "status": "DONE",
-        "items": [
-          "AGENTS.md: Added Reverse Prompting, Self-Improvement Loop sections. Fixed quiet hours reference.",
-          "GOALS.md: Added Mission Statement, 'How I Work' reverse prompting, Standing Rules",
-          "HEARTBEAT.md: Added 'pick next from GOALS when no task', reverse prompt check",
-          "SESSION-STATE.md: Updated to current state",
-          "CORRECTIONS.md: Added 4 new rules from today"
-        ]
+        "done": true,
+        "text": "Open Mission Control - verified live at https://kikai-mission-control.netlify.app"
       },
       {
-        "pass": "Pass 3: Video concepts",
-        "status": "DONE",
-        "items": [
-          "Mission statement in GOALS.md",
-          "Reverse prompting in AGENTS.md",
-          "Self-improvement loop in AGENTS.md",
-          "Brains/muscles confirmed (Opus brain, Haiku/Sonnet muscles)",
-          "Discord workflow channels - already set up (#kikai, #yama, #today, #67-general)",
-          "Security rules updated in AGENTS.md"
-        ]
+        "done": true,
+        "text": "Document every bug/gap found (Test 1) - see Bugs Found below"
       },
       {
-        "pass": "Pass 4: Cron verification",
-        "status": "DONE",
-        "items": [
-          "12 active jobs, all Anthropic models",
-          "Reduced frequencies to prevent rate limit burnout",
-          "Fixed Release Monitor model (was erroring)",
-          "Mission Control refresh reduced to 6h",
-          "Session cleanup reduced to 4h",
-          "All 67 posts delivering to correct channel"
-        ]
+        "done": true,
+        "text": "Pull real session data - session file mtime check for \"working\" detection"
       },
       {
-        "pass": "Pass 5: Final consistency check",
-        "status": "DONE",
-        "items": [
-          "All files reference same quiet hours policy",
-          "All files reference same escalation rules",
-          "GOALS.md current priority matches actual work",
-          "No contradictions across files"
-        ]
+        "done": true,
+        "text": "Pull real cron job status + last run times - reads ~/.openclaw/cron/jobs.json"
       },
       {
-        "pass": "Remaining",
-        "status": "IN_PROGRESS",
-        "items": [
-          "Set GitHub password (blocks all web SSO - need WJP for one-time password reset CAPTCHA)",
-          "Netlify deployment (blocked by above)",
-          "Build Next.js Mission Control (upgrade from static HTML)"
-        ]
+        "done": true,
+        "text": "Add \"Currently Working\" indicator - kikai=working when sessions modified <5min, gold pulse animation"
+      },
+      {
+        "done": true,
+        "text": "Add last heartbeat timestamp - lastActive field shows \"just now\" / \"Xm ago\""
+      },
+      {
+        "done": true,
+        "text": "Add Yama SSH health check data - ssh-only status, orange dot"
+      },
+      {
+        "done": true,
+        "text": "Wire real data into data.json via update script - update-data.sh fully rewritten"
+      },
+      {
+        "done": true,
+        "text": "update-data.sh pulls live session status (mtime-based)"
+      },
+      {
+        "done": true,
+        "text": "update-data.sh pulls live cron status (jobs.json)"
+      },
+      {
+        "done": true,
+        "text": "update-data.sh pulls ACTIVE-TASK.md for real task status + checklist"
+      },
+      {
+        "done": true,
+        "text": "update-data.sh pulls Yama status via SSH (ssh -o ConnectTimeout=3)"
+      },
+      {
+        "done": true,
+        "text": "Deploy updated script - MC Data Refresh cron updated to use update-data.sh"
+      },
+      {
+        "done": true,
+        "text": "Test 2 - data.json schema validated, all fields correct"
+      },
+      {
+        "done": true,
+        "text": "index.html updated: working badge (gold), ssh-only orange dot, lastActive display"
+      },
+      {
+        "done": true,
+        "text": "Pending WJP panel added to right sidebar"
+      },
+      {
+        "done": true,
+        "text": "Yama status added to System Health panel"
+      },
+      {
+        "done": false,
+        "text": "Test 3 - visual verification via browser (blocked by port conflict - use Chrome relay)"
+      },
+      {
+        "done": false,
+        "text": "Test 4-10 - iterate if WJP finds issues"
+      },
+      {
+        "done": true,
+        "text": "Final deploy - deployed to Netlify at 11:29 AM PT"
+      },
+      {
+        "done": true,
+        "text": "Live verification - data.json returns correct schema, page serves 200"
+      },
+      {
+        "done": false,
+        "text": "WJP visual confirmation"
+      },
+      {
+        "done": false,
+        "text": "All gaps resolved"
       }
     ]
   },
-  "currentPriority": {
-    "goal": "Full OS Overhaul (WJP Directive - 2026-02-19)",
-    "description": "Go through ALL documents 5 times for 100% efficiency. Match Alex Finn's '100 hours' video standard. All Anthropic models, no exceptions. Be the most proactive, autonomous, problem-solving agent possible. Build real Mission Control (Next.js, locally hosted). When done: move to next priority automatically.",
-    "progressEstimate": "85%"
-  },
+  "crons": [
+    {
+      "id": "4f8ab010-21d2-48fc-9a8e-265b4a82aefb",
+      "name": "morning-brief",
+      "enabled": true,
+      "schedule": "0 8 * * *",
+      "model": "anthropic/claude-sonnet-4-6",
+      "nextRunMs": 1771689600000,
+      "lastRunMs": 1771603200009,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 4585
+    },
+    {
+      "id": "e8c287df-4494-4d56-ab65-922b46095fc1",
+      "name": "memory-maintenance",
+      "enabled": true,
+      "schedule": "0 14 * * 0,3",
+      "model": "anthropic/claude-sonnet-4-6",
+      "nextRunMs": 1771797600000,
+      "lastRunMs": 1771452000012,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 52276
+    },
+    {
+      "id": "18da42dd-f306-435e-9172-f5efa644a857",
+      "name": "session-cleanup",
+      "enabled": true,
+      "schedule": "every 4h",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "nextRunMs": 1771621311695,
+      "lastRunMs": 1771606911705,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 12714
+    },
+    {
+      "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
+      "name": "OpenClaw Release Monitor",
+      "enabled": true,
+      "schedule": "0 9 * * 1,4",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "nextRunMs": 1771866000000,
+      "lastRunMs": 1771570954662,
+      "lastStatus": "error",
+      "lastError": "Error: All models failed (3): anthropic/claude-sonnet-4-6: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit) | anthropic/claude-opus-4-6: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit) | anthropic/claude-haiku-4-5-20251001: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit)",
+      "consecutiveErrors": 2,
+      "lastDurationMs": 2375364
+    },
+    {
+      "id": "9761052a-e059-46b3-ae90-4b2917d3b36c",
+      "name": "Nightly Build Sprint",
+      "enabled": true,
+      "schedule": "0 23 * * *",
+      "model": "anthropic/claude-sonnet-4-6",
+      "nextRunMs": 1771657200000,
+      "lastRunMs": 1771570800011,
+      "lastStatus": "error",
+      "lastError": "Error: All models failed (3): anthropic/claude-sonnet-4-6: \u26a0\ufe0f API rate limit reached. Please try again later. (rate_limit) | anthropic/claude-opus-4-6: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit) | anthropic/claude-haiku-4-5-20251001: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit)",
+      "consecutiveErrors": 1,
+      "lastDurationMs": 2530015
+    },
+    {
+      "id": "88e323d2-9330-4b25-9942-6c6fad4ecda0",
+      "name": "session-state-freshener",
+      "enabled": true,
+      "schedule": "every 6h",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "nextRunMs": 1771622625259,
+      "lastRunMs": 1771601025264,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 40476
+    },
+    {
+      "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
+      "name": "Task Resumption Check",
+      "enabled": true,
+      "schedule": "every 4h",
+      "model": "anthropic/claude-sonnet-4-6",
+      "nextRunMs": 1771629825272,
+      "lastRunMs": 1771615425279,
+      "lastStatus": "error",
+      "lastError": "Error: cron: job execution timed out",
+      "consecutiveErrors": 1,
+      "lastDurationMs": 600016
+    },
+    {
+      "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
+      "name": "Monthly 30-Day Review",
+      "enabled": true,
+      "schedule": "0 6 1 * *",
+      "model": "anthropic/claude-sonnet-4-6",
+      "nextRunMs": 1772373600000,
+      "lastRunMs": null,
+      "lastStatus": null,
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": null
+    },
+    {
+      "id": "56690660-af43-4845-a683-6f150cc1c5ed",
+      "name": "Mission Control Data Refresh",
+      "enabled": true,
+      "schedule": "every 2h",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "nextRunMs": 1771626302456,
+      "lastRunMs": 1771619102464,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 29094
+    },
+    {
+      "id": "085d0c88-7ab4-4601-b050-a238d4593544",
+      "name": "intel-refresh",
+      "enabled": true,
+      "schedule": "0 7 * * *",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "nextRunMs": 1771686000000,
+      "lastRunMs": null,
+      "lastStatus": null,
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": null
+    }
+  ],
   "goals": [
     {
-      "goal": "Full OS Overhaul (CURRENT)",
-      "description": "Optimize all OS files based on Alex Finn '100 hours' standard",
-      "progress": "85%",
-      "priority": 1
+      "name": "Current: Agency Launch Prep",
+      "detail": "Non-Crypto Business proposal written. Agency \u2192 SaaS path recommended.",
+      "progress": 60,
+      "color": "#39FF14"
     },
     {
-      "goal": "Crypto: Cosell Marketplace",
-      "description": "Sell. Cosell. For Crypto. - Yama is CEO/executor, Kikai oversees",
-      "progress": "0%",
-      "priority": 2,
-      "status": "Waiting for WJP activation"
+      "name": "For Crypto",
+      "detail": "Codebase audited. Waiting: Yama token, PR #7 review, REST API decision",
+      "progress": 55,
+      "color": "#00D9FF"
     },
     {
-      "goal": "67 Brand (Live, Ongoing)",
-      "description": "Cultural meme coin on Solana - Daily content (3 posts/day via cron)",
-      "progress": "100%",
-      "priority": 3,
-      "status": "Active - all 67 posts delivering daily"
+      "name": "67 Brand",
+      "detail": "Posts disabled by WJP. fal.ai $0 - images offline. Crons paused.",
+      "progress": 40,
+      "color": "#FFD700"
     },
     {
-      "goal": "Non-Crypto Business: Smart Contract Audit Service",
-      "description": "Productized audit reports, $499-$4,999 per audit, target $30K/mo in 90 days",
-      "progress": "40%",
-      "priority": 4,
-      "status": "Waiting for WJP approval on business name, branding, Stripe setup"
+      "name": "Non-Crypto Business",
+      "detail": "Proposal written: Crypto AI Agency (#1), Smart Contract Auditing (#2)",
+      "progress": 30,
+      "color": "#b56eff"
+    },
+    {
+      "name": "Divvvy",
+      "detail": "GTM report done. Backburner.",
+      "progress": 15,
+      "color": "#666"
     }
   ],
-  "recentActivity": [
+  "activity": [
     {
-      "timestamp": "2026-02-19T14:50:00-08:00",
-      "event": "Cron Heartbeat: Mission Control Data Refresh",
-      "details": "Updated dashboard with current task progress and recent activity"
+      "icon": "\ud83d\udcc4",
+      "text": "Built: non crypto business proposal",
+      "time": "2026-02-20"
     },
     {
-      "timestamp": "2026-02-19T14:20:00-08:00",
-      "event": "Full OS Overhaul Started",
-      "details": "WJP directive: Become most proactive autonomous agent based on Alex Finn '100 hours' standard"
+      "icon": "\ud83d\udcc4",
+      "text": "Built: openclaw best practices 50 tips",
+      "time": "2026-02-20"
     },
     {
-      "timestamp": "2026-02-19T08:55:00-08:00",
-      "event": "Mission Control Live + Cron Audit Complete",
-      "details": "Mission Control dashboard deployed to GitHub Pages. Removed 5 dead cron jobs, fixed model tier assignments, confirmed all Anthropic models"
+      "icon": "\ud83d\udcc4",
+      "text": "Built: os state report",
+      "time": "2026-02-20"
     },
     {
-      "timestamp": "2026-02-19T04:06:00-08:00",
-      "event": "Smart Contract Audit Business Research Complete",
-      "details": "Completed market validation, audited 5 Base contracts, drafted pricing tiers ($500/$2K/$5K+), created template. Report: ops/output/2026-02-19-non-crypto-business-research.md"
+      "icon": "\ud83d\udcc4",
+      "text": "Built: overnight summary",
+      "time": "2026-02-20"
     },
     {
-      "timestamp": "2026-02-19T00:00:00-08:00",
-      "event": "Overnight Autonomous Work",
-      "details": "Verified all-Anthropic config, fixed 4 cron jobs, evaluated Mem0 (NOT recommended), built Last 30 Days review skill, completed business research"
+      "icon": "\ud83d\udcc4",
+      "text": "Built: skills audit",
+      "time": "2026-02-20"
+    },
+    {
+      "icon": "\u23f1",
+      "text": "Mission Control Rebuild (Task Resumption Cron)",
+      "time": "11:23 PT"
+    },
+    {
+      "icon": "\u26a1",
+      "text": "Agency GTM Kit COMPLETE",
+      "time": "08:25 PT"
+    },
+    {
+      "icon": "\u23f1",
+      "text": "Non-Crypto Business Proposal (Autonomous - Task Resumption Cron)",
+      "time": "07:24 PT"
+    },
+    {
+      "icon": "\u2694\ufe0f",
+      "text": "For Crypto Codebase Audit (Task: Yama Activation Pack)",
+      "time": "03:30 PT"
+    },
+    {
+      "icon": "\u23f1",
+      "text": "OS Pass 5 (Cron Resumption)",
+      "time": "03:00 PT"
+    },
+    {
+      "icon": "\u23f1",
+      "text": "Session State Refresher Cron",
+      "time": "07:23 PT"
     }
   ],
-  "cronHealth": {
-    "totalJobs": 12,
-    "allAnthropicModels": true,
-    "lastHealthCheck": "2026-02-19T14:00:00-08:00",
-    "rateLimit": "Healthy - frequencies reduced to prevent burnout"
+  "pendingWjp": [],
+  "currentPriority": {
+    "name": "Agency Launch Prep",
+    "detail": "Non-Crypto Business proposal written. Agency \u2192 SaaS path recommended."
   }
 }
