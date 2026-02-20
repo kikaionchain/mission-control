@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-20T12:34:01.315756",
+  "updatedAt": "2026-02-20T14:25:06.199541",
   "agents": {
     "kikai": {
       "status": "working",
@@ -16,104 +16,24 @@
     }
   },
   "activeTask": {
-    "name": "Mission Control - Bulletproof + Live Agent Monitoring",
-    "status": "IN_PROGRESS",
+    "name": "None",
+    "status": "COMPLETE",
     "checklist": [
       {
-        "done": false,
-        "text": "Fix browser (port 9222 conflict - Chrome running without --remote-debugging-port; browser tool blocked; non-critical, static site verified via web_fetch)"
+        "done": true,
+        "text": "Write agency greenlight brief - single page, decision-ready"
       },
       {
         "done": true,
-        "text": "Open Mission Control - verified live at https://kikai-mission-control.netlify.app"
+        "text": "Summarize PR #7 contents for WJP (what's in it, what to look for, recommended action)"
       },
       {
         "done": true,
-        "text": "Document every bug/gap found (Test 1) - see Bugs Found below"
+        "text": "Save both to ops/output/"
       },
       {
         "done": true,
-        "text": "Pull real session data - session file mtime check for \"working\" detection"
-      },
-      {
-        "done": true,
-        "text": "Pull real cron job status + last run times - reads ~/.openclaw/cron/jobs.json"
-      },
-      {
-        "done": true,
-        "text": "Add \"Currently Working\" indicator - kikai=working when sessions modified <5min, gold pulse animation"
-      },
-      {
-        "done": true,
-        "text": "Add last heartbeat timestamp - lastActive field shows \"just now\" / \"Xm ago\""
-      },
-      {
-        "done": true,
-        "text": "Add Yama SSH health check data - ssh-only status, orange dot"
-      },
-      {
-        "done": true,
-        "text": "Wire real data into data.json via update script - update-data.sh fully rewritten"
-      },
-      {
-        "done": true,
-        "text": "update-data.sh pulls live session status (mtime-based)"
-      },
-      {
-        "done": true,
-        "text": "update-data.sh pulls live cron status (jobs.json)"
-      },
-      {
-        "done": true,
-        "text": "update-data.sh pulls ACTIVE-TASK.md for real task status + checklist"
-      },
-      {
-        "done": true,
-        "text": "update-data.sh pulls Yama status via SSH (ssh -o ConnectTimeout=3)"
-      },
-      {
-        "done": true,
-        "text": "Deploy updated script - MC Data Refresh cron updated to use update-data.sh"
-      },
-      {
-        "done": true,
-        "text": "Test 2 - data.json schema validated, all fields correct"
-      },
-      {
-        "done": true,
-        "text": "index.html updated: working badge (gold), ssh-only orange dot, lastActive display"
-      },
-      {
-        "done": true,
-        "text": "Pending WJP panel added to right sidebar"
-      },
-      {
-        "done": true,
-        "text": "Yama status added to System Health panel"
-      },
-      {
-        "done": false,
-        "text": "Test 3 - visual verification via browser (blocked by port conflict - use Chrome relay)"
-      },
-      {
-        "done": false,
-        "text": "Test 4-10 - iterate if WJP finds issues"
-      },
-      {
-        "done": true,
-        "text": "Final deploy - deployed to Netlify at 11:29 AM PT"
-      },
-      {
-        "done": true,
-        "text": "Live verification - data.json returns correct schema, page serves 200"
-      },
-      {
-        "done": false,
-        "text": "WJP visual confirmation"
-      },
-      {
-        "done": false,
-        "text": "All gaps resolved"
+        "text": "Update NEEDS-WJP.md with links"
       }
     ]
   },
@@ -150,12 +70,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771621311695,
-      "lastRunMs": 1771606911705,
+      "nextRunMs": 1771635711695,
+      "lastRunMs": 1771621311705,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 12714
+      "lastDurationMs": 14233
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -189,12 +109,12 @@
       "enabled": true,
       "schedule": "every 6h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771622625259,
-      "lastRunMs": 1771601025264,
-      "lastStatus": "ok",
-      "lastError": "",
-      "consecutiveErrors": 0,
-      "lastDurationMs": 40476
+      "nextRunMs": 1771644225259,
+      "lastRunMs": 1771622625267,
+      "lastStatus": "error",
+      "lastError": "Error: cron: job execution timed out",
+      "consecutiveErrors": 1,
+      "lastDurationMs": 60011
     },
     {
       "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
@@ -284,11 +204,6 @@
   "activity": [
     {
       "icon": "\ud83d\udcc4",
-      "text": "Built: non crypto business proposal",
-      "time": "2026-02-20"
-    },
-    {
-      "icon": "\ud83d\udcc4",
       "text": "Built: openclaw best practices 50 tips",
       "time": "2026-02-20"
     },
@@ -304,8 +219,18 @@
     },
     {
       "icon": "\ud83d\udcc4",
+      "text": "Built: pr7 review brief",
+      "time": "2026-02-20"
+    },
+    {
+      "icon": "\ud83d\udcc4",
       "text": "Built: skills audit",
       "time": "2026-02-20"
+    },
+    {
+      "icon": "\u26a1",
+      "text": "Agency + PR #7 Decision Briefs",
+      "time": "13:30 PT"
     },
     {
       "icon": "\u23f1",
@@ -340,9 +265,14 @@
   ],
   "pendingWjp": [
     {
-      "title": "For Crypto - Review Backup Branch + Merge Decision",
+      "title": "Agency - GO / NO-GO Decision",
       "tag": "signal",
-      "detail": "Review the backup branch and decide what to merge to main"
+      "detail": "Do you want to launch the KANSO agency? Ready to execute same day."
+    },
+    {
+      "title": "For Crypto - PR #7 Merge Decision",
+      "tag": "signal",
+      "detail": "Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?"
     }
   ],
   "currentPriority": {
