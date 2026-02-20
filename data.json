@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-20T12:31:59.875073",
+  "updatedAt": "2026-02-20T12:34:01.315756",
   "agents": {
     "kikai": {
       "status": "working",
@@ -338,7 +338,13 @@
       "time": "07:23 PT"
     }
   ],
-  "pendingWjp": [],
+  "pendingWjp": [
+    {
+      "title": "For Crypto - Review Backup Branch + Merge Decision",
+      "tag": "signal",
+      "detail": "Review the backup branch and decide what to merge to main"
+    }
+  ],
   "currentPriority": {
     "name": "Agency Launch Prep",
     "detail": "Non-Crypto Business proposal written. Agency \u2192 SaaS path recommended."
