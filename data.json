@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-20T14:25:06.199541",
+  "updatedAt": "2026-02-20T16:25:06.420546",
   "agents": {
     "kikai": {
       "status": "working",
@@ -21,19 +21,31 @@
     "checklist": [
       {
         "done": true,
-        "text": "Write agency greenlight brief - single page, decision-ready"
+        "text": "Test forcrypto.market (correct domain - .fun doesn't resolve)"
       },
       {
         "done": true,
-        "text": "Summarize PR #7 contents for WJP (what's in it, what to look for, recommended action)"
+        "text": "Check all key routes (11 routes tested, all 200 OK, ~137ms avg)"
       },
       {
         "done": true,
-        "text": "Save both to ops/output/"
+        "text": "Test API routes (flagged - return HTML for unauthed requests, may be by design)"
       },
       {
         "done": true,
-        "text": "Update NEEDS-WJP.md with links"
+        "text": "Test auth-gated routes (301 redirect - correct behavior)"
+      },
+      {
+        "done": true,
+        "text": "Write bug report"
+      },
+      {
+        "done": true,
+        "text": "Fix domain references: forcrypto.fun \u2192 forcrypto.market (7 files fixed)"
+      },
+      {
+        "done": true,
+        "text": "Note browser port conflict (port 9222 - now cleared)"
       }
     ]
   },
@@ -122,12 +134,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-sonnet-4-6",
-      "nextRunMs": 1771629825272,
-      "lastRunMs": 1771615425279,
-      "lastStatus": "error",
-      "lastError": "Error: cron: job execution timed out",
-      "consecutiveErrors": 1,
-      "lastDurationMs": 600016
+      "nextRunMs": 1771644225272,
+      "lastRunMs": 1771629825281,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 147273
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -148,12 +160,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771626302456,
-      "lastRunMs": 1771619102464,
+      "nextRunMs": 1771633502456,
+      "lastRunMs": 1771626302467,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 29094
+      "lastDurationMs": 6528
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -226,6 +238,16 @@
       "icon": "\ud83d\udcc4",
       "text": "Built: skills audit",
       "time": "2026-02-20"
+    },
+    {
+      "icon": "\ud83d\udd27",
+      "text": "For Crypto Site Audit + Domain Bug Fix",
+      "time": "15:40 PT"
+    },
+    {
+      "icon": "\u26a1",
+      "text": "Agency Day 1 GO Script + Prospect List",
+      "time": "14:45 PT"
     },
     {
       "icon": "\u26a1",
