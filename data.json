@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T00:25:05.009478",
+  "updatedAt": "2026-02-21T02:25:08.941757",
   "agents": {
     "kikai": {
       "status": "working",
@@ -53,12 +53,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771664511695,
-      "lastRunMs": 1771650111706,
+      "nextRunMs": 1771678911695,
+      "lastRunMs": 1771664511699,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 4509
+      "lastDurationMs": 9772
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -92,12 +92,12 @@
       "enabled": true,
       "schedule": "every 6h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771665825259,
-      "lastRunMs": 1771644225268,
+      "nextRunMs": 1771687425259,
+      "lastRunMs": 1771665825269,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 43265
+      "lastDurationMs": 69049
     },
     {
       "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
@@ -131,12 +131,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771662302456,
-      "lastRunMs": 1771655102464,
+      "nextRunMs": 1771669502456,
+      "lastRunMs": 1771662302464,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 7205
+      "lastDurationMs": 5591
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -203,6 +203,11 @@
       "title": "\ud83d\udea8 CRITICAL: forcrypto.market is DOWN (GoDaddy parking page)",
       "tag": "blocking",
       "detail": "Fix DNS in GoDaddy. 2-minute task."
+    },
+    {
+      "title": "67 Brand - Re-Activate Posts + Growth Investment?",
+      "tag": "signal",
+      "detail": "Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now."
     },
     {
       "title": "Agency - GO / NO-GO Decision",
