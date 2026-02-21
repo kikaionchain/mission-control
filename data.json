@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-20T20:25:05.796588",
+  "updatedAt": "2026-02-20T22:25:06.043042",
   "agents": {
     "kikai": {
       "status": "working",
@@ -70,12 +70,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771650111695,
-      "lastRunMs": 1771635711703,
+      "nextRunMs": 1771664511695,
+      "lastRunMs": 1771650111706,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 4983
+      "lastDurationMs": 4509
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -148,12 +148,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771647902456,
-      "lastRunMs": 1771640702464,
+      "nextRunMs": 1771655102456,
+      "lastRunMs": 1771647902467,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 7118
+      "lastDurationMs": 6624
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
