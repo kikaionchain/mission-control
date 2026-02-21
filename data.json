@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T12:25:04.680342",
+  "updatedAt": "2026-02-21T14:25:05.448405",
   "agents": {
     "kikai": {
       "status": "working",
@@ -16,36 +16,124 @@
     }
   },
   "activeTask": {
-    "name": "For Crypto Bot API Testing - Phased",
+    "name": "For Crypto - Full Testing Infrastructure",
     "status": "IN_PROGRESS",
     "checklist": [
       {
         "done": false,
-        "text": "Find working path to get Privy email OTP from yamaonchain@gmail.com"
+        "text": "Download Phantom extension zip (from phantom.app or crxextractor)"
       },
       {
         "done": false,
-        "text": "Once authed: create bot + generate API key"
+        "text": "Download MetaMask extension zip"
       },
       {
         "done": false,
-        "text": "Save API key to ops/output/for-crypto-bot-apikey.txt (chmod 600)"
+        "text": "Download Coinbase Wallet extension zip"
       },
       {
         "done": false,
-        "text": "GET /api/bot/categories \u2192 pick a real category ID"
+        "text": "Download Backpack extension zip"
       },
       {
         "done": false,
-        "text": "POST /api/bot/listings \u2192 create draft test listing"
+        "text": "Download SolFlare extension zip"
       },
       {
         "done": false,
-        "text": "GET /api/bot/listings/{id} \u2192 verify listing data"
+        "text": "Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)"
       },
       {
         "done": false,
-        "text": "PUT /api/bot/listings/{id} \u2192 update listing"
+        "text": "Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)"
+      },
+      {
+        "done": false,
+        "text": "Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there"
+      },
+      {
+        "done": false,
+        "text": "Document extension paths in ops/output/wallet-extensions.md"
+      },
+      {
+        "done": false,
+        "text": "Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app"
+      },
+      {
+        "done": false,
+        "text": "If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)"
+      },
+      {
+        "done": false,
+        "text": "Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)"
+      },
+      {
+        "done": false,
+        "text": "Create bot in UI, generate API key"
+      },
+      {
+        "done": false,
+        "text": "Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)"
+      },
+      {
+        "done": false,
+        "text": "Save session cookies: ops/output/for-crypto-session.json"
+      },
+      {
+        "done": false,
+        "text": "Add API key to Bitwarden as \"For Crypto Bot API Key\""
+      },
+      {
+        "done": false,
+        "text": "GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery"
+      },
+      {
+        "done": false,
+        "text": "GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference"
+      },
+      {
+        "done": false,
+        "text": "GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive"
+      },
+      {
+        "done": false,
+        "text": "GET /api/llm/listings \u2192 should return markdown listing feed"
+      },
+      {
+        "done": false,
+        "text": "GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)"
+      },
+      {
+        "done": false,
+        "text": "GET /api/sitemap.xml \u2192 should include dynamic listings"
+      },
+      {
+        "done": false,
+        "text": "Verify checkout response includes `contracts` object"
+      },
+      {
+        "done": false,
+        "text": "Run: bun audit --production (check CI result)"
+      },
+      {
+        "done": false,
+        "text": "Verify 0 TS errors, 0 ESLint errors still hold"
+      },
+      {
+        "done": false,
+        "text": "GET /api/bot/categories \u2192 pick real category ID"
+      },
+      {
+        "done": false,
+        "text": "POST /api/bot/listings \u2192 create draft listing"
+      },
+      {
+        "done": false,
+        "text": "GET /api/bot/listings/{id} \u2192 verify data"
+      },
+      {
+        "done": false,
+        "text": "PUT /api/bot/listings/{id} \u2192 update"
       },
       {
         "done": false,
@@ -53,11 +141,7 @@
       },
       {
         "done": false,
-        "text": "GET /api/bot/discover \u2192 listing appears in results"
-      },
-      {
-        "done": false,
-        "text": "POST /api/bot/webhooks \u2192 register webhook endpoint"
+        "text": "GET /api/bot/discover \u2192 listing appears"
       },
       {
         "done": false,
@@ -65,7 +149,7 @@
       },
       {
         "done": false,
-        "text": "Buy button visible and clickable on a real listing"
+        "text": "Buy button visible + clickable"
       },
       {
         "done": false,
@@ -81,7 +165,7 @@
       },
       {
         "done": true,
-        "text": "44/44 Playwright E2E tests passing"
+        "text": "44/44 Playwright E2E tests"
       },
       {
         "done": true,
@@ -89,18 +173,18 @@
       },
       {
         "done": true,
-        "text": "12/12 Anvil payment flow tests (V3 + V4)"
+        "text": "12/12 Anvil payment flow tests"
       },
       {
         "done": true,
-        "text": "5/5 API error handling tests"
+        "text": "5/5 API error handling"
       },
       {
         "done": true,
-        "text": "Auth flow verification (protected routes redirect correctly)"
+        "text": "Auth flow verification"
       }
     ],
-    "fullMarkdown": "# ACTIVE TASK: For Crypto Bot API Testing - Phased\n\n**Status:** IN_PROGRESS\n**Owner:** Kikai (picking up from Yama)\n**Approach:** One phase per session. Spawn sub-agent per phase. Never all at once.\n\n---\n\n## Phase 1 - Auth Setup (BLOCKED - needs Gmail OTP strategy)\n- [ ] Find working path to get Privy email OTP from yamaonchain@gmail.com\n  - Option A: Playwright on Yama using saved browser session (tried - Google blocked headless)\n  - Option B: Ask WJP to forward one OTP manually (one-time, then session is saved)\n  - Option C: Check if Yama's Chrome has a saved Gmail session we can reuse via CDP\n- [ ] Once authed: create bot + generate API key\n- [ ] Save API key to ops/output/for-crypto-bot-apikey.txt (chmod 600)\n\n## Phase 2 - Bot API Lifecycle (needs Phase 1)\n- [ ] GET /api/bot/categories \u2192 pick a real category ID\n- [ ] POST /api/bot/listings \u2192 create draft test listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify listing data\n- [ ] PUT /api/bot/listings/{id} \u2192 update listing\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears in results\n- [ ] POST /api/bot/webhooks \u2192 register webhook endpoint\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase 3 - Listing-Dependent UI Tests (needs Phase 1 + a public listing)\n- [ ] Buy button visible and clickable on a real listing\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests passing\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests (V3 + V4)\n- [x] 5/5 API error handling tests\n- [x] Auth flow verification (protected routes redirect correctly)\n\n---\n\n## Notes\n- One phase per session. Spawn sub-agent. Report back. Move on.\n- Phase 1 blocker: getting an API key without hitting Google's headless browser block.\n- Easiest unblock: WJP forwards one Privy OTP. After that, session cookie persists.\n"
+    "fullMarkdown": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions (NEXT)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases (after Phase B)\nSub-agent task: Verify everything WJP's team shipped\n- [ ] GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery\n- [ ] GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference\n- [ ] GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive\n- [ ] GET /api/llm/listings \u2192 should return markdown listing feed\n- [ ] GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)\n- [ ] GET /api/sitemap.xml \u2192 should include dynamic listings\n- [ ] Verify checkout response includes `contracts` object\n- [ ] Run: bun audit --production (check CI result)\n- [ ] Verify 0 TS errors, 0 ESLint errors still hold\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n"
   },
   "crons": [
     {
@@ -115,7 +199,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 55186,
-      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 4h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 6h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
     },
     {
       "id": "e8c287df-4494-4d56-ab65-922b46095fc1",
@@ -129,7 +213,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 52276,
-      "markdown": "# memory-maintenance\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 14 * * 0,3` |\n| **Last Run** | 2d ago |\n| **Duration** | 52.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# memory-maintenance\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 14 * * 0,3` |\n| **Last Run** | 3d ago |\n| **Duration** | 52.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "18da42dd-f306-435e-9172-f5efa644a857",
@@ -137,13 +221,13 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771707711695,
-      "lastRunMs": 1771693311704,
+      "nextRunMs": 1771722111695,
+      "lastRunMs": 1771707711704,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 10199,
-      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 3h ago |\n| **Duration** | 10.2s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 10789,
+      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 10.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -157,7 +241,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 4445,
-      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 4h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 6h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "9761052a-e059-46b3-ae90-4b2917d3b36c",
@@ -171,7 +255,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 698576,
-      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 5h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 7h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "88e323d2-9330-4b25-9942-6c6fad4ecda0",
@@ -179,13 +263,13 @@
       "enabled": true,
       "schedule": "every 6h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771709025259,
-      "lastRunMs": 1771665825269,
+      "nextRunMs": 1771730625259,
+      "lastRunMs": 1771709025271,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 69049,
-      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 11h ago |\n| **Duration** | 1m 9s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 15293,
+      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 1h ago |\n| **Duration** | 15.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
@@ -199,7 +283,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 6977,
-      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 7.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 3h ago |\n| **Duration** | 7.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -221,13 +305,13 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771705502456,
-      "lastRunMs": 1771698302466,
+      "nextRunMs": 1771712702456,
+      "lastRunMs": 1771705502468,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 7357,
-      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 7.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 5796,
+      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 5.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -241,7 +325,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 12262,
-      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 5h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 7h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "3e85ec88-b298-4afd-adad-a357719fe5fd",
@@ -255,7 +339,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 8016,
-      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 1h ago |\n| **Duration** | 8.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 3h ago |\n| **Duration** | 8.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     }
   ],
   "goals": [
@@ -385,7 +469,7 @@
       "name": "Active Task",
       "icon": "\u26a1",
       "path": "ops/ACTIVE-TASK.md",
-      "content": "# ACTIVE TASK: For Crypto Bot API Testing - Phased\n\n**Status:** IN_PROGRESS\n**Owner:** Kikai (picking up from Yama)\n**Approach:** One phase per session. Spawn sub-agent per phase. Never all at once.\n\n---\n\n## Phase 1 - Auth Setup (BLOCKED - needs Gmail OTP strategy)\n- [ ] Find working path to get Privy email OTP from yamaonchain@gmail.com\n  - Option A: Playwright on Yama using saved browser session (tried - Google blocked headless)\n  - Option B: Ask WJP to forward one OTP manually (one-time, then session is saved)\n  - Option C: Check if Yama's Chrome has a saved Gmail session we can reuse via CDP\n- [ ] Once authed: create bot + generate API key\n- [ ] Save API key to ops/output/for-crypto-bot-apikey.txt (chmod 600)\n\n## Phase 2 - Bot API Lifecycle (needs Phase 1)\n- [ ] GET /api/bot/categories \u2192 pick a real category ID\n- [ ] POST /api/bot/listings \u2192 create draft test listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify listing data\n- [ ] PUT /api/bot/listings/{id} \u2192 update listing\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears in results\n- [ ] POST /api/bot/webhooks \u2192 register webhook endpoint\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase 3 - Listing-Dependent UI Tests (needs Phase 1 + a public listing)\n- [ ] Buy button visible and clickable on a real listing\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests passing\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests (V3 + V4)\n- [x] 5/5 API error handling tests\n- [x] Auth flow verification (protected routes redirect correctly)\n\n---\n\n## Notes\n- One phase per session. Spawn sub-agent. Report back. Move on.\n- Phase 1 blocker: getting an API key without hitting Google's headless browser block.\n- Easiest unblock: WJP forwards one Privy OTP. After that, session cookie persists.\n",
+      "content": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions (NEXT)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases (after Phase B)\nSub-agent task: Verify everything WJP's team shipped\n- [ ] GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery\n- [ ] GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference\n- [ ] GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive\n- [ ] GET /api/llm/listings \u2192 should return markdown listing feed\n- [ ] GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)\n- [ ] GET /api/sitemap.xml \u2192 should include dynamic listings\n- [ ] Verify checkout response includes `contracts` object\n- [ ] Run: bun audit --production (check CI result)\n- [ ] Verify 0 TS errors, 0 ESLint errors still hold\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n",
       "preview": "Status: IN_PROGRESS"
     },
     {
@@ -399,14 +483,14 @@
       "name": "Session State",
       "icon": "\ud83d\udcbe",
       "path": "SESSION-STATE.md",
-      "content": "# SESSION STATE - 2026-02-21\n\n**Context:** 80% - session ending intentionally per new hygiene rules\n\n## What got done today\n- Yama Bitwarden: fully autonomous \u2705\n- Mission Control: markdown reader, 10 file cards, click-to-expand modals \u2705\n- Rate limit root cause found: context bloat (136 API calls in one session)\n- Crons fixed: Nightly Sprint \u2192 Haiku + plan only (120s). Task Check \u2192 status only (45s)\n- AGENTS.md + CORRECTIONS.md updated on both Kikai and Yama with session hygiene rules\n- OpenClaw updated: 2026.2.19 \u2192 2026.2.21\n- For Crypto testing: 81 tests done by Yama. Phase 1 (auth/API key) still blocked on Gmail OTP\n\n## Active Task\nSee ops/ACTIVE-TASK.md - For Crypto Bot API Testing, 3 phases\n\n## Blocker for WJP\nFor Crypto Phase 1: Need Gmail OTP forwarded once to break the headless browser block.\nPrivy sends to yamaonchain@gmail.com - forward the 6-digit code when it arrives.\n\n## Next session priorities\n1. Fresh session - do NOT carry this context forward\n2. For Crypto Phase 1 (auth) if WJP provides OTP\n3. Otherwise pick next task from GOALS.md\n",
-      "preview": "Context: 80% - session ending intentionally per new hygiene rules"
+      "content": "# SESSION STATE - 2026-02-21\n\n**Last checked:** 1:23 PM PT (confirmed fresh)\n**Context:** 80% - session ending intentionally per new hygiene rules\n\n## What got done today\n- Yama Bitwarden: fully autonomous \u2705\n- Mission Control: markdown reader, 10 file cards, click-to-expand modals \u2705\n- Rate limit root cause found: context bloat (136 API calls in one session)\n- Crons fixed: Nightly Sprint \u2192 Haiku + plan only (120s). Task Check \u2192 status only (45s)\n- AGENTS.md + CORRECTIONS.md updated on both Kikai and Yama with session hygiene rules\n- OpenClaw updated: 2026.2.19 \u2192 2026.2.21\n- For Crypto testing: 81 tests done by Yama. Phase 1 (auth/API key) still blocked on Gmail OTP\n\n## Active Task\nops/ACTIVE-TASK.md - For Crypto Bot API Testing Phase 1 (BLOCKED on Gmail OTP)\n\n## Blocker for WJP\nFor Crypto Phase 1: Need Gmail OTP forwarded once to break the headless browser block.\nPrivy sends to yamaonchain@gmail.com - forward the 6-digit code when it arrives.\n\n## Next session priorities\n1. Fresh session - do NOT carry this context forward\n2. For Crypto Phase 1 (auth) if WJP provides OTP\n3. Otherwise pick next task from GOALS.md\n",
+      "preview": "Last checked: 1:23 PM PT (confirmed fresh)"
     },
     {
       "name": "Corrections",
       "icon": "\ud83d\udccb",
       "path": "CORRECTIONS.md",
-      "content": "# CORRECTIONS.md\n\n## 2026-02-21 SESSION HYGIENE - Context bloat = rate limits (critical)\n- Root cause of every rate limit error: long sessions with growing context.\n  136 API calls in one chat = each call resending 753KB of context = token blowout.\n- **Rule 1: Never read more than 2 large files in one session turn.**\n  Large = anything over 200 lines. Read a summary instead, or spawn a sub-agent.\n- **Rule 2: Any task requiring more than 5 tool calls = use sessions_spawn.**\n  Heavy work (coding, research, file rewrites, multi-step ops) belongs in an isolated sub-agent, not the main chat.\n- **Rule 3: Main chat session with WJP stays lean - coordination only.**\n  I report results. I don't DO the work in the main session.\n- **Rule 4: If session context goes above 50%, start fresh sub-agent for next task.**\n  Don't let one session balloon into an 800KB monster.\n- Crons fixed: Nightly Sprint = plan only (120s). Task Check = status only (45s).\n  NEVER change these back to \"do full work\" without WJP approval.\n\n## 2026-02-20 Always verify live URLs before writing docs/scripts\n- forcrypto.fun was wrong across 7+ files - the live site is forcrypto.market\n- Rule: before referencing any live URL in docs, do a quick curl to confirm it resolves\n- DNS ENOTFOUND = wrong domain, not a network issue\n\n## 2026-02-20 Operating model: WJP = vision, Kikai = everything else\n- WJP is responsible for vision (WHERE to go). Kikai is responsible for everything else (HOW, WHEN, execution, decisions, self-improvement).\n- I tell WJP what to do. He does not tell me (unless it's vision/direction).\n- Do not wait for instructions on execution. Propose and act.\n- Mission Control must surface RECOMMENDATIONS, not just status. \"Your Move\" panel is primary.\n- Self-improvement is mandatory every session. Leave the OS better than you found it.\n\n## 2026-02-20 Ship working code, not placeholders\n- The dashboard shipped broken twice. Root cause: data structure mismatch not caught before deploy.\n- Rule: before any deploy, verify JSON endpoints return 200 with correct structure AND page renders without error.\n- Never ship an API-dependent component without verifying the data contract first.\n\n## 2026-02-19 \"Work all night\" means WORK ALL NIGHT\n- When WJP gives a sustained work directive, IMMEDIATELY write it to ACTIVE-TASK.md with full checklist\n- The directive must survive session recycling - if it's not in a file, it's gone\n- Never mark IDLE when there's remaining work listed in your own messages\n- Law #1 violation: \"Never stop working\" - enforce this literally\n\n## 2026-02-19 Task resumption MUST stay on current priority\n- Overnight cron went off-task (built a business when WJP said improve OS)\n- Root cause: GOALS.md had \"Non-Crypto Business\" as a goal, cron picked it up\n- Fix: GOALS.md now has \"Current Priority\" section that overrides everything\n- Task resumption cron reads CURRENT PRIORITY ONLY, not project goals\n\n## 2026-02-19 Solve your own problems relentlessly\n- WJP frustrated I asked him to do Netlify auth when I should have figured it out\n- I have Bitwarden, CLI tools, browser, APIs - exhaust ALL approaches\n- GitHub account has no password - this needs to be FIXED, not worked around\n- When stuck on auth/login: try temp email, API endpoints, device flow, cookie extraction, CDP connection\n- \"You should have bitwarden master password or a cli login\" - check vault FIRST\n\n## 2026-02-19 Don't go dark\n- Session went unresponsive for 30+ min while WJP was waiting\n- Always acknowledge quickly, even if working on something complex\n- If a task is taking long, send a status update every 5-10 min\n\n## 2026-02-19 Verify external API balances proactively\n- fal.ai balance hit $0 silently - 67 post image gen failing without any alert\n- cron ran \"ok\" but images were never generated; WJP saw text-only posts\n- Fix: updated all 67 cron prompts to check for error response and note IMAGE UNAVAILABLE\n- Fix: notified WJP to top up fal.ai at fal.ai/dashboard/billing\n- Rule: before configuring any paid external API in a cron, add balance-check logic or a monitoring job\n\n## Security\n\n**Don't post credentials in Discord channels** - Even \"private\" channels have chat history. Use DMs or direct CLI access. (learned 2026-02-16)\n\n**NEVER share master passwords anywhere** - Bitwarden master passwords, vault passwords, encryption keys - these are NEVER shared in chat, files, or anywhere another agent can see. If a vault needs unlocking, ask WJP to do it directly on the machine. Serious violation. (learned 2026-02-16)\n\n**Don't store master passwords in plaintext files** - TOOLS.md, memory files, etc. should NEVER contain master passwords. Session tokens are temporary and acceptable; master passwords are not. (learned 2026-02-16)\n\n**Don't defer security best practices to WJP** - I'm the operator. Backing up keys, security hygiene, etc. is MY job. Don't say \"when you want\" - just do it. (learned 2026-02-16)\n\n## Operations\n\n**Don't wait to be told for operational best practices** - Research, adapt, improve continuously. WJP handles vision, I handle execution. (learned 2026-02-16)\n\n**Pre-flight check before external tools** - Before using fal.ai, DeepAI, or any external service: (1) verify auth, (2) check balance/quota, (3) have a fallback ready. Don't discover issues mid-task. See also: \"Verify external API balances proactively\" above. (learned 2026-02-16)\n\n**Route content to correct channels** - 67 content \u2192 #to67Billion. For Crypto \u2192 #for-crypto-general. Ops/meta \u2192 #kikai. Briefs \u2192 #today. Don't post in whatever channel you're in. (learned 2026-02-16)\n\n**Pivot fast on failures** - First attempt fails \u2192 immediately try alternative. Max 2 attempts on same approach. Have 2-3 fallbacks for critical capabilities. Don't keep retrying broken things. (learned 2026-02-16)\n\n**Clean browser state before automation** - Close unnecessary tabs, check for extension popups, verify no redirects. Browser automation is fragile. (learned 2026-02-16)\n\n**Verify model auth before configuring model overrides** - Setting a model in config means nothing if the API key doesn't exist in auth-profiles.json. Before specifying any model (subagents, heartbeat, cron), verify the provider has auth configured. Flash/GPT-4.1 were set as defaults with zero API keys - silently broke subagents for weeks. (learned 2026-02-19)\n\n**One task to completion** - Don't juggle multiple tasks. Finish one, document it, then move to next. Context switching causes dropped balls. (learned 2026-02-16)\n\n**LISTEN to what's actually being asked** - WJP said \"improve your OS through deep research.\" I heard \"build stuff\" and started coding ReviewRocket. Read the actual words. Don't assume scope. (learned 2026-02-18)\n\n**Don't report \"blocked\" after one failed attempt** - Browser port stuck? Try killing it, try a different port, try web_fetch, try curl. 5-10 attempts minimum before claiming blocked. I stalled on port 9222 when I could have worked around it. (learned 2026-02-18)\n\n**Write corrections/decisions to SESSION-STATE.md BEFORE responding** - The urge to respond is the enemy. Details feel obvious in context but vanish after compaction. WAL protocol: write first, respond second. (learned 2026-02-18)\n\n**At 60% context, start buffering to working-buffer.md** - Don't wait for emergency. Log every exchange after 60% to memory/working-buffer.md. It survives compaction. (learned 2026-02-18)\n\n## 2026-02-20 Skills must use exact Anthropic model IDs\n- 7 out of 28 skills documented \"Flash\" (Google Gemini) as the lightweight model choice\n- Violates \"All Anthropic models\" directive and would create broken crons\n- Fix: replaced all Flash/claude-flash/claude-sonnet-4-5 references with exact IDs:\n  - `anthropic/claude-haiku-4-5-20251001` (lightweight)\n  - `anthropic/claude-sonnet-4-6` (default)\n  - `anthropic/claude-opus-4-6` (heavy)\n- Rule: EVERY skill that mentions model selection must use exact Anthropic IDs. Scan all skills when auditing.\n\n## 2026-02-20 Reconnect loops must be stopped immediately\n- Yama's Discord was stuck in a 1000ms retry loop for 11+ hours = 26,513 failed attempts\n- Fast retries made Discord rate-limit the connection, preventing even successful reconnects\n- Fix: stopped Yama's gateway immediately when discovered - stopping makes things better, not worse\n- Rule: If a connection is failing with code 1005 and \"backoff: 1000ms\" every second, STOP it immediately. The retries make the rate limit worse. Wait, then restart once. If still failing, it's a token issue (WJP action).\n\n## 2026-02-20 Back up uncommitted work to a branch, don't wait for agent\n- Yama had 80 uncommitted files (3,825 lines) sitting at risk for 12+ days\n- Risk: machine failure or disk corruption would lose all that work\n- Solution: SSH to agent machine, create backup branch, commit + push (doesn't touch main)\n- Backup branch won't trigger Vercel auto-deploy (only main branch deploys)\n- Rule: If agent has uncommitted work sitting >7 days, create a backup branch from Kikai\n\n## 2026-02-20 Never make WJP do work Kikai can do herself\n- WJP sent a tweet link and I asked him to paste the content instead of figuring it out\n- Hard rule: exhaust ALL options (API wrappers, nitter, search, fxtwitter API) before asking WJP to copy anything\n- fxtwitter API (api.fxtwitter.com) works for X tweet content including X Articles\n- Rule: \"Go figure it out\" = try 5+ methods, never block on WJP pasting something\n\n## 2026-02-20 Monitor Yama's Discord connection, not just process health\n- Yama's process was running fine (port 18789 responding) but Discord channel was dead\n- Health checks were only checking \"process running\" and \"disk space\" - not Discord connectivity\n- Fix: add Discord reconnect-loop detection to agent monitoring (check for 1005 errors in logs)\n- Signals to watch: \"no HELLO received\" + \"code 1005\" appearing repeatedly in ~/.openclaw/logs/gateway.log\n",
+      "content": "# CORRECTIONS.md\n\n## 2026-02-21 SESSION HYGIENE - Context bloat = rate limits (critical)\n- Root cause of every rate limit error: long sessions with growing context.\n  136 API calls in one chat = each call resending 753KB of context = token blowout.\n- **Rule 1: Never read more than 2 large files in one session turn.**\n  Large = anything over 200 lines. Read a summary instead, or spawn a sub-agent.\n- **Rule 2: Any task requiring more than 5 tool calls = use sessions_spawn.**\n  Heavy work (coding, research, file rewrites, multi-step ops) belongs in an isolated sub-agent, not the main chat.\n- **Rule 3: Main chat session with WJP stays lean - coordination only.**\n  I report results. I don't DO the work in the main session.\n- **Rule 4: If session context goes above 50%, start fresh sub-agent for next task.**\n  Don't let one session balloon into an 800KB monster.\n- Crons fixed: Nightly Sprint = plan only (120s). Task Check = status only (45s).\n  NEVER change these back to \"do full work\" without WJP approval.\n\n## 2026-02-20 Always verify live URLs before writing docs/scripts\n- forcrypto.fun was wrong across 7+ files - the live site is forcrypto.market\n- Rule: before referencing any live URL in docs, do a quick curl to confirm it resolves\n- DNS ENOTFOUND = wrong domain, not a network issue\n\n## 2026-02-20 Operating model: WJP = vision, Kikai = everything else\n- WJP is responsible for vision (WHERE to go). Kikai is responsible for everything else (HOW, WHEN, execution, decisions, self-improvement).\n- I tell WJP what to do. He does not tell me (unless it's vision/direction).\n- Do not wait for instructions on execution. Propose and act.\n- Mission Control must surface RECOMMENDATIONS, not just status. \"Your Move\" panel is primary.\n- Self-improvement is mandatory every session. Leave the OS better than you found it.\n\n## 2026-02-20 Ship working code, not placeholders\n- The dashboard shipped broken twice. Root cause: data structure mismatch not caught before deploy.\n- Rule: before any deploy, verify JSON endpoints return 200 with correct structure AND page renders without error.\n- Never ship an API-dependent component without verifying the data contract first.\n\n## 2026-02-19 \"Work all night\" means WORK ALL NIGHT\n- When WJP gives a sustained work directive, IMMEDIATELY write it to ACTIVE-TASK.md with full checklist\n- The directive must survive session recycling - if it's not in a file, it's gone\n- Never mark IDLE when there's remaining work listed in your own messages\n- Law #1 violation: \"Never stop working\" - enforce this literally\n\n## 2026-02-19 Task resumption MUST stay on current priority\n- Overnight cron went off-task (built a business when WJP said improve OS)\n- Root cause: GOALS.md had \"Non-Crypto Business\" as a goal, cron picked it up\n- Fix: GOALS.md now has \"Current Priority\" section that overrides everything\n- Task resumption cron reads CURRENT PRIORITY ONLY, not project goals\n\n## 2026-02-19 Solve your own problems relentlessly\n- WJP frustrated I asked him to do Netlify auth when I should have figured it out\n- I have Bitwarden, CLI tools, browser, APIs - exhaust ALL approaches\n- GitHub account has no password - this needs to be FIXED, not worked around\n- When stuck on auth/login: try temp email, API endpoints, device flow, cookie extraction, CDP connection\n- \"You should have bitwarden master password or a cli login\" - check vault FIRST\n\n## 2026-02-19 Don't go dark\n- Session went unresponsive for 30+ min while WJP was waiting\n- Always acknowledge quickly, even if working on something complex\n- If a task is taking long, send a status update every 5-10 min\n\n## 2026-02-19 Verify external API balances proactively\n- fal.ai balance hit $0 silently - 67 post image gen failing without any alert\n- cron ran \"ok\" but images were never generated; WJP saw text-only posts\n- Fix: updated all 67 cron prompts to check for error response and note IMAGE UNAVAILABLE\n- Fix: notified WJP to top up fal.ai at fal.ai/dashboard/billing\n- Rule: before configuring any paid external API in a cron, add balance-check logic or a monitoring job\n\n## Security\n\n**Don't post credentials in Discord channels** - Even \"private\" channels have chat history. Use DMs or direct CLI access. (learned 2026-02-16)\n\n**NEVER share master passwords anywhere** - Bitwarden master passwords, vault passwords, encryption keys - these are NEVER shared in chat, files, or anywhere another agent can see. If a vault needs unlocking, ask WJP to do it directly on the machine. Serious violation. (learned 2026-02-16)\n\n**Don't store master passwords in plaintext files** - TOOLS.md, memory files, etc. should NEVER contain master passwords. Session tokens are temporary and acceptable; master passwords are not. (learned 2026-02-16)\n\n**Don't defer security best practices to WJP** - I'm the operator. Backing up keys, security hygiene, etc. is MY job. Don't say \"when you want\" - just do it. (learned 2026-02-16)\n\n## Operations\n\n**Don't wait to be told for operational best practices** - Research, adapt, improve continuously. WJP handles vision, I handle execution. (learned 2026-02-16)\n\n**Pre-flight check before external tools** - Before using fal.ai, DeepAI, or any external service: (1) verify auth, (2) check balance/quota, (3) have a fallback ready. Don't discover issues mid-task. See also: \"Verify external API balances proactively\" above. (learned 2026-02-16)\n\n**Route content to correct channels** - 67 content \u2192 #to67Billion. For Crypto \u2192 #for-crypto-general. Ops/meta \u2192 #kikai. Briefs \u2192 #today. Don't post in whatever channel you're in. (learned 2026-02-16)\n\n**Pivot fast on failures** - First attempt fails \u2192 immediately try alternative. Max 2 attempts on same approach. Have 2-3 fallbacks for critical capabilities. Don't keep retrying broken things. (learned 2026-02-16)\n\n**Clean browser state before automation** - Close unnecessary tabs, check for extension popups, verify no redirects. Browser automation is fragile. (learned 2026-02-16)\n\n**Verify model auth before configuring model overrides** - Setting a model in config means nothing if the API key doesn't exist in auth-profiles.json. Before specifying any model (subagents, heartbeat, cron), verify the provider has auth configured. Flash/GPT-4.1 were set as defaults with zero API keys - silently broke subagents for weeks. (learned 2026-02-19)\n\n**One task to completion** - Don't juggle multiple tasks. Finish one, document it, then move to next. Context switching causes dropped balls. (learned 2026-02-16)\n\n**LISTEN to what's actually being asked** - WJP said \"improve your OS through deep research.\" I heard \"build stuff\" and started coding ReviewRocket. Read the actual words. Don't assume scope. (learned 2026-02-18)\n\n**Don't report \"blocked\" after one failed attempt** - Browser port stuck? Try killing it, try a different port, try web_fetch, try curl. 5-10 attempts minimum before claiming blocked. I stalled on port 9222 when I could have worked around it. (learned 2026-02-18)\n\n**Write corrections/decisions to SESSION-STATE.md BEFORE responding** - The urge to respond is the enemy. Details feel obvious in context but vanish after compaction. WAL protocol: write first, respond second. (learned 2026-02-18)\n\n**At 60% context, start buffering to working-buffer.md** - Don't wait for emergency. Log every exchange after 60% to memory/working-buffer.md. It survives compaction. (learned 2026-02-18)\n\n## 2026-02-20 Skills must use exact Anthropic model IDs\n- 7 out of 28 skills documented \"Flash\" (Google Gemini) as the lightweight model choice\n- Violates \"All Anthropic models\" directive and would create broken crons\n- Fix: replaced all Flash/claude-flash/claude-sonnet-4-5 references with exact IDs:\n  - `anthropic/claude-haiku-4-5-20251001` (lightweight)\n  - `anthropic/claude-sonnet-4-6` (default)\n  - `anthropic/claude-opus-4-6` (heavy)\n- Rule: EVERY skill that mentions model selection must use exact Anthropic IDs. Scan all skills when auditing.\n\n## 2026-02-20 Reconnect loops must be stopped immediately\n- Yama's Discord was stuck in a 1000ms retry loop for 11+ hours = 26,513 failed attempts\n- Fast retries made Discord rate-limit the connection, preventing even successful reconnects\n- Fix: stopped Yama's gateway immediately when discovered - stopping makes things better, not worse\n- Rule: If a connection is failing with code 1005 and \"backoff: 1000ms\" every second, STOP it immediately. The retries make the rate limit worse. Wait, then restart once. If still failing, it's a token issue (WJP action).\n\n## 2026-02-20 Back up uncommitted work to a branch, don't wait for agent\n- Yama had 80 uncommitted files (3,825 lines) sitting at risk for 12+ days\n- Risk: machine failure or disk corruption would lose all that work\n- Solution: SSH to agent machine, create backup branch, commit + push (doesn't touch main)\n- Backup branch won't trigger Vercel auto-deploy (only main branch deploys)\n- Rule: If agent has uncommitted work sitting >7 days, create a backup branch from Kikai\n\n## 2026-02-20 Never make WJP do work Kikai can do herself\n- WJP sent a tweet link and I asked him to paste the content instead of figuring it out\n- Hard rule: exhaust ALL options (API wrappers, nitter, search, fxtwitter API) before asking WJP to copy anything\n- fxtwitter API (api.fxtwitter.com) works for X tweet content including X Articles\n- Rule: \"Go figure it out\" = try 5+ methods, never block on WJP pasting something\n\n## 2026-02-20 Monitor Yama's Discord connection, not just process health\n- Yama's process was running fine (port 18789 responding) but Discord channel was dead\n- Health checks were only checking \"process running\" and \"disk space\" - not Discord connectivity\n- Fix: add Discord reconnect-loop detection to agent monitoring (check for 1005 errors in logs)\n- Signals to watch: \"no HELLO received\" + \"code 1005\" appearing repeatedly in ~/.openclaw/logs/gateway.log\n\n## Rule 027 - Never Loop on Failure (2026-02-21)\n**What happened:** Tried to log into Gmail/Privy ~30 times in a loop. Hit rate limits. WJP watched it happen in the browser.\n**Rule:** If something fails TWICE, HARD STOP. Do not try a third time.\n**Then:** Write down 3+ alternative approaches. Think through ALL of them before touching a tool.\n**The pattern to avoid:** try \u2192 fail \u2192 try again \u2192 fail \u2192 try again \u2192 rate limit \u2192 repeat\n**The pattern to use:** try \u2192 fail \u2192 try once more \u2192 fail \u2192 STOP \u2192 think \u2192 pick best alternative \u2192 act once\n**This is non-negotiable.** Looping is worse than doing nothing.\n\n## Rule 028 - Wallet Auth Strategy (2026-02-21)\n**Context:** For Crypto uses Privy for auth. Email OTP is the cleanest path.\n**Problem:** Looping Gmail login attempts consumed all API quota.\n**Strategy:**\n1. Use Playwright + email OTP (one attempt, read Gmail via IMAP/stored session)\n2. If IMAP blocked: use wallet extension auth (Phantom/MetaMask loaded in Playwright)\n3. If wallet extension fails: stop, ask WJP for OTP once\n4. Save session cookies after successful auth - never auth again\n**Never:** Retry the same auth method >2 times\n",
       "preview": "Root cause of every rate limit error: long sessions with growing context."
     },
     {
