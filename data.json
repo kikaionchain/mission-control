@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T09:19:51.025808",
+  "updatedAt": "2026-02-21T10:25:05.294231",
   "agents": {
     "kikai": {
       "status": "working",
@@ -34,21 +34,21 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 55186,
-      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 1h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 2h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
     },
     {
       "id": "e8c287df-4494-4d56-ab65-922b46095fc1",
       "name": "memory-maintenance",
       "enabled": true,
       "schedule": "0 14 * * 0,3",
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "nextRunMs": 1771797600000,
       "lastRunMs": 1771452000012,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 52276,
-      "markdown": "# memory-maintenance\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 14 * * 0,3` |\n| **Last Run** | 2d ago |\n| **Duration** | 52.3s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# memory-maintenance\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 14 * * 0,3` |\n| **Last Run** | 2d ago |\n| **Duration** | 52.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "18da42dd-f306-435e-9172-f5efa644a857",
@@ -62,7 +62,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 10199,
-      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 17m ago |\n| **Duration** | 10.2s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 10.2s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -76,21 +76,21 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 4445,
-      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 1h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 2h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "9761052a-e059-46b3-ae90-4b2917d3b36c",
       "name": "Nightly Build Sprint",
       "enabled": true,
       "schedule": "0 23 * * *",
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "nextRunMs": 1771743600000,
       "lastRunMs": 1771687178520,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 698576,
-      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 2h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 3h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "88e323d2-9330-4b25-9942-6c6fad4ecda0",
@@ -104,21 +104,21 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 69049,
-      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 7h ago |\n| **Duration** | 1m 9s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 9h ago |\n| **Duration** | 1m 9s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
       "name": "Task Resumption Check",
       "enabled": true,
       "schedule": "every 4h",
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "nextRunMs": 1771701825272,
       "lastRunMs": 1771673025282,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 187523,
-      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 5h ago |\n| **Duration** | 3m 7s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 7h ago |\n| **Duration** | 3m 7s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -146,7 +146,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 6083,
-      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 54m ago |\n| **Duration** | 6.1s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 6.1s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -160,7 +160,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 12262,
-      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 2h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 3h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "3e85ec88-b298-4afd-adad-a357719fe5fd",
@@ -174,7 +174,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 8182,
-      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 4h ago |\n| **Duration** | 8.2s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 5h ago |\n| **Duration** | 8.2s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     }
   ],
   "goals": [
@@ -340,8 +340,8 @@
       "name": "Cron Registry",
       "icon": "\u23f1",
       "path": "ops/cron-registry.md",
-      "content": "# Cron Registry\n\nLast updated: 2026-02-21 00:15 PT (nightly sprint - Yama health monitor created)\n\n## Active Jobs\n\n| Name | ID | Schedule | Model | Session | Purpose | Last Status |\n|------|----|----------|-------|---------|---------|-------------|\n| morning-brief | 4f8ab010 | 8 AM daily PT | n/a (systemEvent) | main | Morning brief to WJP | OK |\n| 67 Post #1 - Morning Catalyst | 3101b1f2 | 9 AM daily PT | sonnet | isolated\u2192#67-general | 67 content 1/5 | OK (DISABLED) |\n| 67 Post #2 - Culture Drop | aed3274a | 11 AM daily PT | sonnet | isolated\u2192#67-general | 67 content 2/5 | ERROR rate-limit (DISABLED) |\n| 67 Post #5 - Night Cap | 2388e4d7 | 7 PM daily PT | sonnet | isolated\u2192#67-general | 67 content 5/5 | OK (DISABLED) |\n| Nightly Build Sprint | 9761052a | 11 PM daily PT | sonnet | isolated | Autonomous overnight work | OK (running now) |\n| OpenClaw Release Monitor | 5fac96d9 | Mon/Thu 9 AM PT | sonnet | isolated\u2192#openclaw | Version checks | ERROR (stale haiku error, 1 consec) |\n| memory-maintenance | e8c287df | Sun/Wed 2 PM PT | haiku | isolated | Distill daily logs \u2192 MEMORY.md | OK |\n| session-cleanup | 18da42dd | every 4h | haiku | isolated | Prune large session files | OK |\n| session-state-freshener | 88e323d2 | every 6h | haiku | isolated | Keep SESSION-STATE.md current | ERROR (rate limit 1 consec) |\n| Task Resumption Check | a43a4a47 | every 4h | sonnet | isolated\u2192#kikai | Resume tasks / generate from goals | ERROR (rate limit 1 consec) |\n| Mission Control Data Refresh | 56690660 | every 2h | haiku | isolated | Push data.json to GitHub Pages | OK |\n| Yama Health Monitor | 3e85ec88 | every 6h | haiku | isolated | Check Yama Discord + disk + process health. Auto-stops reconnect loops. | NEW (next: 5 AM PT) |\n| Monthly 30-Day Review | d7f3fbdf | 1st of month 6 AM PT | sonnet | isolated\u2192#kikai | Monthly retrospective | (never run) |\n\n## 67 Posts Status\n\nAll 3 active 67 posts are currently DISABLED (enabled: false). WJP disabled them - possibly while fal.ai balance is $0. Do NOT re-enable without WJP approval.\n\n- Posts #3 and #4 (midday posts) were already disabled before this.\n\n## Cron Health Notes (2026-02-20)\n\n**Stale errors (will self-clear on next run):**\n- OpenClaw Release Monitor: 1 consecutive error from old haiku model (model now fixed to sonnet). Next run Mon 9 AM - should clear.\n- session-state-freshener: 1 error = rate limit (transient). Next run will clear.\n- Task Resumption: 1 error = rate limit (transient). Next run will clear.\n\n**Rate limit pattern:** 67 Post #2 hit rate limit at 11 AM (same window as morning activity peak). This is expected and transient.\n\n## All Models Verified Anthropic-Only\n\nExact model IDs in use:\n- `anthropic/claude-sonnet-4-6` - all main-session and most isolated jobs\n- `anthropic/claude-haiku-4-5-20251001` - lightweight monitoring (cleanup, freshener, memory)\n\n**Note:** Flash (Google Gemini) is NOT used anywhere. All Anthropic.\n\n## Archived Jobs\n\n| ID | Reason Archived | Date Archived |\n|----|-----------------|---------------|\n| (none yet) | | |\n\n## When to Add a New Cron\n\n1. Read `skills/cron-templates/SKILL.md` for templates\n2. Use Sonnet for content/analysis, Haiku for monitoring\n3. Test the prompt manually first\n4. Add to this registry after creating\n5. Verify by checking `cron list` output\n",
-      "preview": "Last updated: 2026-02-21 00:15 PT (nightly sprint - Yama health monitor created)"
+      "content": "# Cron Registry\n\nLast updated: 2026-02-21 10:05 PT (model downgrades - rate limit mitigation)\n\n## Active Jobs\n\n| Name | ID | Schedule | Model | Session | Purpose | Last Status |\n|------|----|----------|-------|---------|---------|-------------|\n| morning-brief | 4f8ab010 | 8 AM daily PT | n/a (systemEvent) | main | Morning brief to WJP | OK |\n| 67 Post #1 - Morning Catalyst | 3101b1f2 | 9 AM daily PT | sonnet | isolated\u2192#67-general | 67 content 1/5 | OK (DISABLED) |\n| 67 Post #2 - Culture Drop | aed3274a | 11 AM daily PT | sonnet | isolated\u2192#67-general | 67 content 2/5 | ERROR rate-limit (DISABLED) |\n| 67 Post #5 - Night Cap | 2388e4d7 | 7 PM daily PT | sonnet | isolated\u2192#67-general | 67 content 5/5 | OK (DISABLED) |\n| Nightly Build Sprint | 9761052a | 11 PM daily PT | **haiku** *(was sonnet)* | isolated | Autonomous overnight work | OK |\n| OpenClaw Release Monitor | 5fac96d9 | Mon/Thu 9 AM PT | haiku | isolated\u2192#openclaw | Version checks | OK |\n| memory-maintenance | e8c287df | Sun/Wed 2 PM PT | **haiku** *(was sonnet)* | isolated | Distill daily logs \u2192 MEMORY.md | OK |\n| session-cleanup | 18da42dd | every 4h | haiku | isolated | Prune large session files | OK |\n| session-state-freshener | 88e323d2 | every 6h | haiku | isolated | Keep SESSION-STATE.md current | OK |\n| Task Resumption Check | a43a4a47 | every 4h | **haiku** *(was sonnet)* | isolated\u2192#kikai | Resume tasks / generate from goals | OK |\n| Mission Control Data Refresh | 56690660 | every 2h | haiku | isolated | Push data.json to GitHub Pages | OK |\n| Yama Health Monitor | 3e85ec88 | every 6h | haiku | isolated | Check Yama Discord + disk + process health. Auto-stops reconnect loops. | NEW (next: 5 AM PT) |\n| Monthly 30-Day Review | d7f3fbdf | 1st of month 6 AM PT | sonnet | isolated\u2192#kikai | Monthly retrospective | (never run) |\n\n## 67 Posts Status\n\nAll 3 active 67 posts are currently DISABLED (enabled: false). WJP disabled them - possibly while fal.ai balance is $0. Do NOT re-enable without WJP approval.\n\n- Posts #3 and #4 (midday posts) were already disabled before this.\n\n## Cron Health Notes (2026-02-20)\n\n**Stale errors (will self-clear on next run):**\n- OpenClaw Release Monitor: 1 consecutive error from old haiku model (model now fixed to sonnet). Next run Mon 9 AM - should clear.\n- session-state-freshener: 1 error = rate limit (transient). Next run will clear.\n- Task Resumption: 1 error = rate limit (transient). Next run will clear.\n\n**Rate limit pattern:** 67 Post #2 hit rate limit at 11 AM (same window as morning activity peak). This is expected and transient.\n\n## All Models Verified Anthropic-Only\n\nExact model IDs in use:\n- `anthropic/claude-sonnet-4-6` - all main-session and most isolated jobs\n- `anthropic/claude-haiku-4-5-20251001` - lightweight monitoring (cleanup, freshener, memory)\n\n**Note:** Flash (Google Gemini) is NOT used anywhere. All Anthropic.\n\n## Archived Jobs\n\n| ID | Reason Archived | Date Archived |\n|----|-----------------|---------------|\n| (none yet) | | |\n\n## When to Add a New Cron\n\n1. Read `skills/cron-templates/SKILL.md` for templates\n2. Use Sonnet for content/analysis, Haiku for monitoring\n3. Test the prompt manually first\n4. Add to this registry after creating\n5. Verify by checking `cron list` output\n",
+      "preview": "Last updated: 2026-02-21 10:05 PT (model downgrades - rate limit mitigation)"
     },
     {
       "name": "Today's Log",
