@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T04:25:05.088623",
+  "updatedAt": "2026-02-21T06:25:06.712109",
   "agents": {
     "kikai": {
       "status": "working",
@@ -53,12 +53,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771678911695,
-      "lastRunMs": 1771664511699,
+      "nextRunMs": 1771693311695,
+      "lastRunMs": 1771678911705,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 9772
+      "lastDurationMs": 25663
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -131,12 +131,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771676702456,
-      "lastRunMs": 1771669502466,
+      "nextRunMs": 1771683902456,
+      "lastRunMs": 1771676702464,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 10377
+      "lastDurationMs": 5895
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -157,12 +157,12 @@
       "enabled": true,
       "schedule": "every 6h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771678800000,
-      "lastRunMs": null,
-      "lastStatus": null,
+      "nextRunMs": 1771700400000,
+      "lastRunMs": 1771678800012,
+      "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": null
+      "lastDurationMs": 8182
     }
   ],
   "goals": [
