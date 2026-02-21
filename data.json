@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T02:25:08.941757",
+  "updatedAt": "2026-02-21T04:25:05.088623",
   "agents": {
     "kikai": {
       "status": "working",
@@ -105,12 +105,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-sonnet-4-6",
-      "nextRunMs": 1771673025272,
-      "lastRunMs": 1771658625283,
+      "nextRunMs": 1771687425272,
+      "lastRunMs": 1771673025282,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 136338
+      "lastDurationMs": 187523
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -131,12 +131,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771669502456,
-      "lastRunMs": 1771662302464,
+      "nextRunMs": 1771676702456,
+      "lastRunMs": 1771669502466,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 5591
+      "lastDurationMs": 10377
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -197,7 +197,13 @@
       "color": "#666"
     }
   ],
-  "activity": [],
+  "activity": [
+    {
+      "icon": "\ud83d\udcc4",
+      "text": "Built: sample audit parcl",
+      "time": "2026-02-21"
+    }
+  ],
   "pendingWjp": [
     {
       "title": "\ud83d\udea8 CRITICAL: forcrypto.market is DOWN (GoDaddy parking page)",
