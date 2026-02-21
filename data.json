@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T06:25:06.712109",
+  "updatedAt": "2026-02-21T08:25:05.142083",
   "agents": {
     "kikai": {
       "status": "working",
@@ -27,12 +27,12 @@
       "enabled": true,
       "schedule": "0 8 * * *",
       "model": "anthropic/claude-sonnet-4-6",
-      "nextRunMs": 1771689600000,
-      "lastRunMs": 1771603200009,
+      "nextRunMs": 1771776000000,
+      "lastRunMs": 1771689600005,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 4585
+      "lastDurationMs": 55186
     },
     {
       "id": "e8c287df-4494-4d56-ab65-922b46095fc1",
@@ -67,11 +67,11 @@
       "schedule": "0 9 * * 1,4",
       "model": "anthropic/claude-haiku-4-5-20251001",
       "nextRunMs": 1771866000000,
-      "lastRunMs": 1771570954662,
-      "lastStatus": "error",
-      "lastError": "Error: All models failed (3): anthropic/claude-sonnet-4-6: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit) | anthropic/claude-opus-4-6: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit) | anthropic/claude-haiku-4-5-20251001: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit)",
-      "consecutiveErrors": 2,
-      "lastDurationMs": 2375364
+      "lastRunMs": 1771687877102,
+      "lastStatus": "ok",
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": 4445
     },
     {
       "id": "9761052a-e059-46b3-ae90-4b2917d3b36c",
@@ -80,11 +80,11 @@
       "schedule": "0 23 * * *",
       "model": "anthropic/claude-sonnet-4-6",
       "nextRunMs": 1771743600000,
-      "lastRunMs": 1771570800011,
-      "lastStatus": "error",
+      "lastRunMs": 1771687178520,
+      "lastStatus": "ok",
       "lastError": "",
-      "consecutiveErrors": 1,
-      "lastDurationMs": 2530015
+      "consecutiveErrors": 0,
+      "lastDurationMs": 698576
     },
     {
       "id": "88e323d2-9330-4b25-9942-6c6fad4ecda0",
@@ -92,7 +92,7 @@
       "enabled": true,
       "schedule": "every 6h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771687425259,
+      "nextRunMs": 1771709025259,
       "lastRunMs": 1771665825269,
       "lastStatus": "ok",
       "lastError": "",
@@ -105,7 +105,7 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-sonnet-4-6",
-      "nextRunMs": 1771687425272,
+      "nextRunMs": 1771701825272,
       "lastRunMs": 1771673025282,
       "lastStatus": "ok",
       "lastError": "",
@@ -131,12 +131,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771683902456,
-      "lastRunMs": 1771676702464,
+      "nextRunMs": 1771691102456,
+      "lastRunMs": 1771683902467,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 5895
+      "lastDurationMs": 7871
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -144,12 +144,12 @@
       "enabled": true,
       "schedule": "0 7 * * *",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771686000000,
-      "lastRunMs": null,
-      "lastStatus": null,
+      "nextRunMs": 1771772400000,
+      "lastRunMs": 1771686000008,
+      "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": null
+      "lastDurationMs": 12262
     },
     {
       "id": "3e85ec88-b298-4afd-adad-a357719fe5fd",
@@ -200,7 +200,22 @@
   "activity": [
     {
       "icon": "\ud83d\udcc4",
+      "text": "Built: agency competitive landscape",
+      "time": "2026-02-21"
+    },
+    {
+      "icon": "\ud83d\udcc4",
+      "text": "Built: kanso website copy",
+      "time": "2026-02-21"
+    },
+    {
+      "icon": "\ud83d\udcc4",
       "text": "Built: sample audit parcl",
+      "time": "2026-02-21"
+    },
+    {
+      "icon": "\ud83d\udcc4",
+      "text": "Built: sample audit squads",
       "time": "2026-02-21"
     }
   ],
