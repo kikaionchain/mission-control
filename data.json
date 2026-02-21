@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-20T22:25:06.043042",
+  "updatedAt": "2026-02-21T00:25:05.009478",
   "agents": {
     "kikai": {
       "status": "working",
@@ -17,25 +17,8 @@
   },
   "activeTask": {
     "name": "None",
-    "status": "COMPLETE",
-    "checklist": [
-      {
-        "done": true,
-        "text": "Map 10 most common objections"
-      },
-      {
-        "done": true,
-        "text": "Write DM-ready responses (under 100 words each)"
-      },
-      {
-        "done": true,
-        "text": "Add follow-up moves for each objection"
-      },
-      {
-        "done": true,
-        "text": "Include \"when to let go\" signal per objection type"
-      }
-    ]
+    "status": "IDLE",
+    "checklist": []
   },
   "crons": [
     {
@@ -96,10 +79,10 @@
       "enabled": true,
       "schedule": "0 23 * * *",
       "model": "anthropic/claude-sonnet-4-6",
-      "nextRunMs": 1771657200000,
+      "nextRunMs": 1771743600000,
       "lastRunMs": 1771570800011,
       "lastStatus": "error",
-      "lastError": "Error: All models failed (3): anthropic/claude-sonnet-4-6: \u26a0\ufe0f API rate limit reached. Please try again later. (rate_limit) | anthropic/claude-opus-4-6: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit) | anthropic/claude-haiku-4-5-20251001: No available auth profile for anthropic (all in cooldown or unavailable). (rate_limit)",
+      "lastError": "",
       "consecutiveErrors": 1,
       "lastDurationMs": 2530015
     },
@@ -122,12 +105,12 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-sonnet-4-6",
-      "nextRunMs": 1771658625272,
-      "lastRunMs": 1771644268540,
+      "nextRunMs": 1771673025272,
+      "lastRunMs": 1771658625283,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 127085
+      "lastDurationMs": 136338
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -148,12 +131,12 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771655102456,
-      "lastRunMs": 1771647902467,
+      "nextRunMs": 1771662302456,
+      "lastRunMs": 1771655102464,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 6624
+      "lastDurationMs": 7205
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -162,6 +145,19 @@
       "schedule": "0 7 * * *",
       "model": "anthropic/claude-haiku-4-5-20251001",
       "nextRunMs": 1771686000000,
+      "lastRunMs": null,
+      "lastStatus": null,
+      "lastError": "",
+      "consecutiveErrors": 0,
+      "lastDurationMs": null
+    },
+    {
+      "id": "3e85ec88-b298-4afd-adad-a357719fe5fd",
+      "name": "Yama Health Monitor",
+      "enabled": true,
+      "schedule": "every 6h",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "nextRunMs": 1771678800000,
       "lastRunMs": null,
       "lastStatus": null,
       "lastError": "",
@@ -201,94 +197,13 @@
       "color": "#666"
     }
   ],
-  "activity": [
-    {
-      "icon": "\ud83d\udcc4",
-      "text": "Built: openclaw best practices 50 tips",
-      "time": "2026-02-20"
-    },
-    {
-      "icon": "\ud83d\udcc4",
-      "text": "Built: os state report",
-      "time": "2026-02-20"
-    },
-    {
-      "icon": "\ud83d\udcc4",
-      "text": "Built: overnight summary",
-      "time": "2026-02-20"
-    },
-    {
-      "icon": "\ud83d\udcc4",
-      "text": "Built: pr7 review brief",
-      "time": "2026-02-20"
-    },
-    {
-      "icon": "\ud83d\udcc4",
-      "text": "Built: skills audit",
-      "time": "2026-02-20"
-    },
-    {
-      "icon": "\u26a1",
-      "text": "Agency Objection Handler",
-      "time": "19:30 PT"
-    },
-    {
-      "icon": "\u23f1",
-      "text": "Session State Freshener Cron",
-      "time": "19:23 PT"
-    },
-    {
-      "icon": "\u26a1",
-      "text": "Maintenance Pass",
-      "time": "16:35 PT"
-    },
-    {
-      "icon": "\ud83d\udd27",
-      "text": "For Crypto Site Audit + Domain Bug Fix",
-      "time": "15:40 PT"
-    },
-    {
-      "icon": "\u26a1",
-      "text": "Agency Day 1 GO Script + Prospect List",
-      "time": "14:45 PT"
-    },
-    {
-      "icon": "\u26a1",
-      "text": "Agency + PR #7 Decision Briefs",
-      "time": "13:30 PT"
-    },
-    {
-      "icon": "\u23f1",
-      "text": "Mission Control Rebuild (Task Resumption Cron)",
-      "time": "11:23 PT"
-    },
-    {
-      "icon": "\u26a1",
-      "text": "Agency GTM Kit COMPLETE",
-      "time": "08:25 PT"
-    },
-    {
-      "icon": "\u23f1",
-      "text": "Non-Crypto Business Proposal (Autonomous - Task Resumption Cron)",
-      "time": "07:24 PT"
-    },
-    {
-      "icon": "\u2694\ufe0f",
-      "text": "For Crypto Codebase Audit (Task: Yama Activation Pack)",
-      "time": "03:30 PT"
-    },
-    {
-      "icon": "\u23f1",
-      "text": "OS Pass 5 (Cron Resumption)",
-      "time": "03:00 PT"
-    },
-    {
-      "icon": "\u23f1",
-      "text": "Session State Refresher Cron",
-      "time": "07:23 PT"
-    }
-  ],
+  "activity": [],
   "pendingWjp": [
+    {
+      "title": "\ud83d\udea8 CRITICAL: forcrypto.market is DOWN (GoDaddy parking page)",
+      "tag": "blocking",
+      "detail": "Fix DNS in GoDaddy. 2-minute task."
+    },
     {
       "title": "Agency - GO / NO-GO Decision",
       "tag": "signal",
