@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kikai Mission Control</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +16,14 @@
   body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
   @keyframes ping {
     75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes overlayIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
@@ -55,6 +64,20 @@
   .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
   .main-header h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
   .timestamp { font-size: 12px; color: var(--dim); }
+
+  /* Clickable */
+  .clickable {
+    cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .clickable:hover {
+    border-color: rgba(0,217,255,0.3) !important;
+    box-shadow: 0 0 0 1px rgba(0,217,255,0.15);
+  }
+  .clickable:hover .click-hint { opacity: 1; }
+  .click-hint {
+    font-size: 10px; color: var(--accent); opacity: 0;
+    transition: opacity 0.15s; font-weight: 600; letter-spacing: 0.3px;
+  }
 
   /* Grid */
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
@@ -110,6 +133,7 @@
   .tag-blocking { background: rgba(255,68,68,0.12); color: var(--red); }
   .tag-enabling { background: rgba(255,215,0,0.12); color: var(--yellow); }
   .tag-signal { background: rgba(100,100,100,0.15); color: #888; }
+  .wjp-content { flex: 1; min-width: 0; }
   .wjp-content .title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .wjp-content .detail { font-size: 11px; color: var(--dim); line-height: 1.5; }
 
@@ -118,6 +142,7 @@
   .task-item {
     display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px;
     background: var(--surface2); border-radius: 8px; font-size: 13px;
+    border: 1px solid transparent;
   }
   .task-check {
     width: 16px; height: 16px; border-radius: 3px; border: 2px solid var(--border);
@@ -134,6 +159,8 @@
   }
   .cron-table td { padding: 9px 12px; font-size: 12px; border-bottom: 1px solid #0f0f0f; }
   .cron-table tr:last-child td { border-bottom: none; }
+  .cron-table tbody tr { cursor: pointer; transition: background 0.12s; }
+  .cron-table tbody tr:hover { background: rgba(0,217,255,0.04); }
   .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 6px; }
   .dot-green { background: var(--green); box-shadow: 0 0 4px var(--green); }
   .dot-yellow { background: var(--yellow); }
@@ -141,14 +168,15 @@
   .dot-gray { background: #444; }
 
   /* Activity */
-  .log-entry { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid #0f0f0f; }
+  .log-entry { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid #0f0f0f; cursor: pointer; transition: background 0.12s; border-radius: 4px; }
   .log-entry:last-child { border-bottom: none; }
+  .log-entry:hover { background: rgba(255,255,255,0.02); padding-left: 4px; }
   .log-time { font-size: 11px; color: var(--dim); min-width: 55px; font-family: monospace; flex-shrink: 0; }
   .log-icon { font-size: 13px; min-width: 20px; text-align: center; flex-shrink: 0; }
-  .log-text { font-size: 12px; color: var(--text); line-height: 1.4; }
+  .log-text { font-size: 12px; color: var(--text); line-height: 1.4; flex: 1; }
 
   /* Goals */
-  .goal-item { padding: 14px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; }
+  .goal-item { padding: 14px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; border: 1px solid transparent; }
   .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .goal-name { font-size: 13px; font-weight: 700; }
   .goal-progress { font-size: 12px; color: var(--accent); font-weight: 600; }
@@ -162,18 +190,114 @@
   .section-wrap { margin-bottom: 28px; }
 
   /* Intel */
-  .intel-item { display: flex; gap: 10px; padding: 6px 0; }
+  .intel-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #0f0f0f; cursor: pointer; border-radius: 4px; }
+  .intel-item:last-child { border-bottom: none; }
+  .intel-item:hover { background: rgba(255,255,255,0.02); padding-left: 4px; }
   .intel-bullet { color: var(--yellow); font-size: 12px; flex-shrink: 0; margin-top: 2px; }
   .intel-text { font-size: 12px; color: var(--dim); line-height: 1.5; }
+
+  /* ─── MODAL ───────────────────────────────────────────────── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal-overlay.visible {
+    display: flex;
+    animation: overlayIn 0.15s ease;
+  }
+  .modal-box {
+    background: #131313; border: 1px solid #2a2a2a; border-radius: 12px;
+    width: 100%; max-width: 720px; max-height: 82vh;
+    display: flex; flex-direction: column;
+    animation: modalIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+  }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px 16px; border-bottom: 1px solid #222; flex-shrink: 0;
+  }
+  .modal-title { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+  .modal-close {
+    width: 28px; height: 28px; border-radius: 6px; border: 1px solid #2a2a2a;
+    background: #1a1a1a; color: var(--dim); cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.12s;
+    flex-shrink: 0;
+  }
+  .modal-close:hover { background: #222; color: var(--text); border-color: #333; }
+  .modal-body {
+    padding: 24px; overflow-y: auto; flex: 1;
+    /* Custom scrollbar */
+    scrollbar-width: thin; scrollbar-color: #2a2a2a transparent;
+  }
+  .modal-body::-webkit-scrollbar { width: 6px; }
+  .modal-body::-webkit-scrollbar-track { background: transparent; }
+  .modal-body::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+
+  /* Markdown styles inside modal */
+  .md-content { font-size: 13px; line-height: 1.7; color: var(--text); }
+  .md-content h1 { font-size: 18px; font-weight: 800; margin: 0 0 16px; letter-spacing: -0.3px; color: var(--text); }
+  .md-content h2 { font-size: 14px; font-weight: 700; margin: 20px 0 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+  .md-content h3 { font-size: 13px; font-weight: 700; margin: 16px 0 8px; color: var(--text); }
+  .md-content h4 { font-size: 12px; font-weight: 700; margin: 12px 0 6px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.4px; }
+  .md-content p { margin: 0 0 10px; }
+  .md-content ul, .md-content ol { margin: 0 0 10px 20px; }
+  .md-content li { margin-bottom: 4px; }
+  .md-content strong { color: #fff; font-weight: 700; }
+  .md-content em { color: var(--dim); font-style: italic; }
+  .md-content code {
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px;
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px;
+    padding: 1px 5px; color: var(--accent);
+  }
+  .md-content pre {
+    background: #0f0f0f; border: 1px solid #222; border-radius: 8px;
+    padding: 14px 16px; overflow-x: auto; margin: 0 0 12px;
+  }
+  .md-content pre code {
+    background: none; border: none; padding: 0; color: #ccc; font-size: 12px; line-height: 1.6;
+  }
+  .md-content blockquote {
+    border-left: 3px solid var(--accent); padding: 8px 14px;
+    background: rgba(0,217,255,0.04); border-radius: 0 6px 6px 0;
+    margin: 0 0 12px; color: var(--dim);
+  }
+  .md-content hr {
+    border: none; border-top: 1px solid #222; margin: 16px 0;
+  }
+  .md-content a { color: var(--accent); text-decoration: none; }
+  .md-content a:hover { text-decoration: underline; }
+  .md-content table { width: 100%; border-collapse: collapse; margin: 0 0 12px; font-size: 12px; }
+  .md-content th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--dim); padding: 6px 10px; border-bottom: 1px solid #222;
+  }
+  .md-content td { padding: 7px 10px; border-bottom: 1px solid #161616; color: var(--text); }
+  .md-content tr:last-child td { border-bottom: none; }
+  .md-content input[type="checkbox"] { accent-color: var(--green); margin-right: 6px; }
 
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; }
     .sidebar { display: none; }
     .agent-row { flex-direction: column; }
+    .modal-box { max-height: 90vh; }
   }
 </style>
 </head>
 <body>
+
+<!-- ─── MODAL ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="md-content" id="modal-content"></div>
+    </div>
+  </div>
+</div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -220,7 +344,7 @@
 
     <!-- Agent Status -->
     <div class="agent-row">
-      <div class="agent-card" id="kikai-card">
+      <div class="agent-card clickable" id="kikai-card">
         <div class="agent-avatar">🦊</div>
         <div class="agent-info">
           <h3>Kikai</h3>
@@ -228,13 +352,14 @@
           <div class="last-active" id="kikai-last-active"></div>
         </div>
         <div class="agent-status-wrap">
+          <span class="click-hint">expand ↗</span>
           <span class="agent-status-label" id="kikai-status-label">—</span>
           <div class="agent-status-dot" id="kikai-dot" style="background:#444;">
             <div class="agent-status-ping" id="kikai-ping" style="display:none; background:#39FF14; opacity:0.25;"></div>
           </div>
         </div>
       </div>
-      <div class="agent-card" id="yama-card">
+      <div class="agent-card clickable" id="yama-card">
         <div class="agent-avatar">⚡</div>
         <div class="agent-info">
           <h3>Yama</h3>
@@ -242,6 +367,7 @@
           <div class="last-active" id="yama-last-active"></div>
         </div>
         <div class="agent-status-wrap">
+          <span class="click-hint">expand ↗</span>
           <span class="agent-status-label" id="yama-status-label">—</span>
           <div class="agent-status-dot" id="yama-dot" style="background:#444;"></div>
         </div>
@@ -250,26 +376,35 @@
 
     <!-- Stats row -->
     <div class="grid">
-      <div class="card">
+      <div class="card clickable" id="active-task-card">
         <div class="card-header">
           <div class="card-title">Active Task</div>
-          <div class="card-status status-active" id="task-status-badge">IDLE</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="click-hint">expand ↗</span>
+            <div class="card-status status-active" id="task-status-badge">IDLE</div>
+          </div>
         </div>
         <div id="active-task-name" style="font-size:14px; font-weight:600; margin-bottom:4px; line-height:1.4;">—</div>
         <div id="active-task-progress" style="font-size:11px; color:var(--dim);"></div>
       </div>
-      <div class="card">
+      <div class="card clickable" id="cron-health-card">
         <div class="card-header">
           <div class="card-title">Cron Health</div>
-          <div class="card-status status-ok" id="cron-health-badge">ALL OK</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="click-hint">expand ↗</span>
+            <div class="card-status status-ok" id="cron-health-badge">ALL OK</div>
+          </div>
         </div>
         <div class="metric" id="cron-ok-count">—</div>
         <div class="metric-label">jobs healthy</div>
       </div>
-      <div class="card">
+      <div class="card clickable" id="priority-card">
         <div class="card-header">
           <div class="card-title">Current Priority</div>
-          <div class="card-status status-active">ACTIVE</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="click-hint">expand ↗</span>
+            <div class="card-status status-active">ACTIVE</div>
+          </div>
         </div>
         <div id="current-goal-name" style="font-size:14px; font-weight:600; margin-bottom:4px;">—</div>
         <div id="current-goal-detail" style="font-size:11px; color:var(--dim);">—</div>
@@ -307,7 +442,6 @@
       </div>
     </div>
 
-    <!-- Pending WJP items detail -->
     <!-- Goals -->
     <div class="section-wrap">
       <div class="section-header">Goals</div>
@@ -337,6 +471,37 @@
 </div>
 
 <script>
+// ─── Modal Registry ─────────────────────────────────────────────
+const MODALS = {};
+let _mid = 0;
+function reg(title, markdown) {
+  const k = 'm' + (++_mid);
+  MODALS[k] = { title, markdown };
+  return k;
+}
+function openModal(key) {
+  const m = MODALS[key];
+  if (!m) return;
+  document.getElementById('modal-title').textContent = m.title;
+  document.getElementById('modal-content').innerHTML = marked.parse(m.markdown || '_No content available._');
+  document.getElementById('modal-overlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Configure marked
+if (typeof marked !== 'undefined') {
+  marked.setOptions({ breaks: true, gfm: true });
+}
+
+// ─── Helpers ────────────────────────────────────────────────────
 function timeAgo(ms) {
   if (!ms) return 'never';
   const diff = Date.now() - ms;
@@ -347,42 +512,33 @@ function timeAgo(ms) {
   if (hrs < 24) return hrs + 'h ago';
   return Math.floor(hrs / 24) + 'd ago';
 }
-
 function cronDotClass(status, lastRunMs, errors) {
   if (errors > 0 || status === 'error') return 'dot-red';
   if (!lastRunMs) return 'dot-gray';
   if ((Date.now() - lastRunMs) > 26 * 3600000) return 'dot-yellow';
   return 'dot-green';
 }
-
 function modelShort(m) {
   if (!m) return 'default';
   return m.replace('anthropic/', '').replace('claude-', '').replace(/-20251001$/, '').replace(/-\d+$/, '');
 }
-
-async function loadData() {
-  try {
-    const t = Date.now();
-    const [dr, ir] = await Promise.allSettled([
-      fetch('data.json?t=' + t),
-      fetch('intel.json?t=' + t)
-    ]);
-    const data = dr.status === 'fulfilled' && dr.value.ok ? await dr.value.json() : null;
-    const intel = ir.status === 'fulfilled' && ir.value.ok ? await ir.value.json() : null;
-    return { data, intel };
-  } catch(e) { return { data: null, intel: null }; }
+function fmtDuration(ms) {
+  if (!ms) return '—';
+  if (ms < 1000) return ms + 'ms';
+  if (ms < 60000) return (ms/1000).toFixed(1) + 's';
+  return Math.floor(ms/60000) + 'm ' + Math.floor((ms%60000)/1000) + 's';
 }
 
-function renderAgent(prefix, agentData) {
+// ─── Agent rendering ────────────────────────────────────────────
+function renderAgent(prefix, agentData, allData) {
   if (!agentData) return;
   const dot = document.getElementById(prefix + '-dot');
   const label = document.getElementById(prefix + '-status-label');
   const card = document.getElementById(prefix + '-card');
   const ping = document.getElementById(prefix + '-ping');
-  const lastActive = document.getElementById(prefix + '-last-active');
-  const role = document.getElementById(prefix + '-role');
+  const lastActiveEl = document.getElementById(prefix + '-last-active');
+  const roleEl = document.getElementById(prefix + '-role');
 
-  // Support both string status and object status
   const status = typeof agentData === 'string' ? agentData : (agentData.status || 'unknown');
   const working = agentData.working === true;
   const lastActiveStr = typeof agentData === 'object' ? agentData.lastActive : null;
@@ -407,15 +563,13 @@ function renderAgent(prefix, agentData) {
     if (ping) ping.style.display = 'none';
     card.classList.remove('working');
   }
-
   if (status === 'ssh-only') card.classList.add('ssh-only');
   else card.classList.remove('ssh-only');
 
-  if (lastActiveStr && lastActive) lastActive.textContent = lastActiveStr;
-  if (role && model) {
+  if (lastActiveStr && lastActiveEl) lastActiveEl.textContent = lastActiveStr;
+  if (roleEl && model) {
     const ctxStr = ctx ? ` · ${ctx}% ctx` : '';
-    const roleEl = document.getElementById(prefix === 'kikai' ? 'kikai-role' : 'yama-role');
-    if (roleEl) roleEl.textContent = (prefix === 'kikai' ? 'Operator' : 'For Crypto CEO') + ' · ' + modelShort(model) + ctxStr;
+    roleEl.textContent = (prefix === 'kikai' ? 'Operator' : 'For Crypto CEO') + ' · ' + modelShort(model) + ctxStr;
   }
 
   // Sidebar
@@ -432,8 +586,30 @@ function renderAgent(prefix, agentData) {
         : '<span style="color:var(--green)">●</span> All systems operational';
     }
   }
+
+  // Modal content for agent card
+  const agentName = prefix === 'kikai' ? 'Kikai 🦊' : 'Yama ⚡';
+  const agentMd = agentData.fullMarkdown || [
+    `# ${agentName}`,
+    ``,
+    `| Field | Value |`,
+    `|-------|-------|`,
+    `| **Status** | ${status} |`,
+    `| **Model** | ${model || '—'} |`,
+    `| **Context** | ${ctx != null ? ctx + '%' : '—'} |`,
+    `| **Last Active** | ${lastActiveStr || '—'} |`,
+    `| **Working** | ${working ? 'Yes' : 'No'} |`,
+    ``,
+    prefix === 'kikai'
+      ? `## Role\nOperator. Runs all projects, manages Yama, chief of staff to WJP.`
+      : `## Role\nFor Crypto CEO. Handles all execution for the For Crypto project under Kikai's oversight.`,
+  ].join('\n');
+
+  const key = reg(agentName, agentMd);
+  card.setAttribute('onclick', `openModal('${key}')`);
 }
 
+// ─── Main render ────────────────────────────────────────────────
 function renderData(data, intel) {
   if (!data) return;
 
@@ -445,11 +621,11 @@ function renderData(data, intel) {
 
   // Agents
   if (data.agents) {
-    renderAgent('kikai', data.agents.kikai);
-    renderAgent('yama', data.agents.yama);
+    renderAgent('kikai', data.agents.kikai, data);
+    renderAgent('yama', data.agents.yama, data);
   }
 
-  // Active Task
+  // Active Task card
   if (data.activeTask) {
     const t = data.activeTask;
     document.getElementById('active-task-name').textContent = t.name || '—';
@@ -461,16 +637,31 @@ function renderData(data, intel) {
     badge.className = 'card-status ' + (t.status === 'IN_PROGRESS' ? 'status-active' : t.status === 'COMPLETE' ? 'status-ok' : 'status-warn');
     document.getElementById('nav-task-count').textContent = total - done;
 
+    // Active task modal
+    const taskMd = t.fullMarkdown || [
+      `# Active Task`,
+      `**Status:** ${t.status || 'IDLE'}`,
+      t.name ? `**Task:** ${t.name}` : '',
+      ``,
+      total ? `**Progress:** ${done}/${total} items complete` : '_No checklist items._',
+      ``,
+      (t.checklist || []).map(item => `- [${item.done ? 'x' : ' '}] ${item.text}`).join('\n')
+    ].filter(Boolean).join('\n');
+    const taskKey = reg('Active Task', taskMd);
+    document.getElementById('active-task-card').setAttribute('onclick', `openModal('${taskKey}')`);
+
     // Checklist
     const cl = document.getElementById('task-checklist');
     if (t.checklist && t.checklist.length) {
       document.getElementById('checklist-count-label').textContent = '(' + done + '/' + total + ' done)';
-      cl.innerHTML = t.checklist.map(item => `
-        <div class="task-item">
+      cl.innerHTML = t.checklist.map((item, i) => {
+        const itemMd = `# Task Item\n\n- [${item.done ? 'x' : ' '}] **${item.text}**\n\n_Part of: ${t.name || 'Active Task'}_\n\n**Status:** ${item.done ? '✅ Complete' : '⬜ Pending'}`;
+        const k = reg(item.text.slice(0, 50), itemMd);
+        return `<div class="task-item clickable" onclick="openModal('${k}')">
           <div class="task-check ${item.done ? 'done' : ''}"></div>
           <span style="${item.done ? 'text-decoration:line-through; color:var(--dim);' : ''}">${item.text}</span>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
     } else {
       cl.innerHTML = '<div class="task-item" style="color:var(--dim);">No active checklist</div>';
     }
@@ -499,9 +690,42 @@ function renderData(data, intel) {
       badge.textContent = 'ALL OK';
     }
 
+    // Cron health card modal - full table
+    const cronSummaryMd = [
+      `# Cron Health`,
+      ``,
+      `**${healthy.length}/${enabled.length}** jobs healthy` + (erroring.length ? ` · **${erroring.length} erroring**` : '') + (stale.length ? ` · **${stale.length} stale**` : ''),
+      ``,
+      `| Status | Job | Schedule | Last Run | Duration | Model |`,
+      `|--------|-----|----------|----------|----------|-------|`,
+      ...data.crons.map(c => {
+        const s = c.consecutiveErrors > 0 || c.lastStatus === 'error' ? '🔴 Error' : !c.lastRunMs ? '⚫ Never' : (Date.now() - c.lastRunMs) > 26*3600000 ? '🟡 Stale' : '🟢 OK';
+        return `| ${s} | **${c.name}** | \`${c.schedule}\` | ${c.lastRunMs ? timeAgo(c.lastRunMs) : 'never'} | ${fmtDuration(c.lastDurationMs)} | ${modelShort(c.model)} |`;
+      })
+    ].join('\n');
+    const cronHealthKey = reg('Cron Health', cronSummaryMd);
+    document.getElementById('cron-health-card').setAttribute('onclick', `openModal('${cronHealthKey}')`);
+
+    // Cron table rows
     document.getElementById('cron-tbody').innerHTML = data.crons.map(c => {
       const dc = cronDotClass(c.lastStatus, c.lastRunMs, c.consecutiveErrors);
-      return `<tr style="opacity:${c.enabled ? 1 : 0.4}">
+      const cronMd = [
+        `# ${c.name}`,
+        ``,
+        `| Field | Value |`,
+        `|-------|-------|`,
+        `| **Status** | ${c.consecutiveErrors > 0 ? '🔴 Erroring ×' + c.consecutiveErrors : c.lastStatus === 'ok' ? '🟢 OK' : '⚫ ' + (c.lastStatus || 'unknown')} |`,
+        `| **Enabled** | ${c.enabled ? 'Yes' : 'No'} |`,
+        `| **Schedule** | \`${c.schedule}\` |`,
+        `| **Last Run** | ${c.lastRunMs ? new Date(c.lastRunMs).toLocaleString() + ' (' + timeAgo(c.lastRunMs) + ')' : 'Never'} |`,
+        `| **Duration** | ${fmtDuration(c.lastDurationMs)} |`,
+        `| **Model** | ${c.model || 'default'} |`,
+        c.lastError ? `| **Last Error** | ${c.lastError} |` : '',
+        ``,
+        c.consecutiveErrors > 0 ? `> ⚠️ **${c.consecutiveErrors} consecutive error(s).** Check logs for details.` : '',
+      ].filter(Boolean).join('\n');
+      const k = reg(c.name, cronMd);
+      return `<tr onclick="openModal('${k}')" style="opacity:${c.enabled ? 1 : 0.4}">
         <td><span class="dot ${dc}"></span>${c.enabled ? (c.consecutiveErrors > 0 ? 'Error ×' + c.consecutiveErrors : 'OK') : 'Off'}</td>
         <td style="font-weight:600; max-width:200px;">${c.name}</td>
         <td style="color:var(--dim); font-family:monospace; font-size:11px;">${c.schedule}</td>
@@ -511,24 +735,37 @@ function renderData(data, intel) {
     }).join('');
   }
 
-  // Current Priority + Goals
+  // Goals
   const goals = data.goals || [];
   if (goals.length) {
     const current = data.currentPriority || { name: goals[0].name, detail: goals[0].detail };
     document.getElementById('current-goal-name').textContent = current.name || goals[0].name;
     document.getElementById('current-goal-detail').textContent = current.detail || goals[0].detail || '';
-    document.getElementById('goals-list').innerHTML = goals.map(g => `
-      <div class="goal-item">
+
+    // Priority card modal
+    const priorityMd = data.currentPriority && data.currentPriority.fullMarkdown
+      ? data.currentPriority.fullMarkdown
+      : `# Current Priority\n\n**${current.name || '—'}**\n\n${current.detail || ''}`;
+    const priorityKey = reg('Current Priority', priorityMd);
+    document.getElementById('priority-card').setAttribute('onclick', `openModal('${priorityKey}')`);
+
+    document.getElementById('goals-list').innerHTML = goals.map(g => {
+      const goalMd = g.fullMarkdown || `# ${g.name}\n\n${g.detail || ''}\n\n**Progress:** ${g.progress}%`;
+      const k = reg(g.name, goalMd);
+      return `<div class="goal-item clickable" onclick="openModal('${k}')">
         <div class="goal-header">
           <div class="goal-name">${g.name}</div>
-          <div class="goal-progress" style="color:${g.color || 'var(--accent)'};">${g.progress}%</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="click-hint">expand ↗</span>
+            <div class="goal-progress" style="color:${g.color || 'var(--accent)'};">${g.progress}%</div>
+          </div>
         </div>
         ${g.detail ? `<div class="goal-detail">${g.detail}</div>` : ''}
         <div class="progress-bar">
           <div class="progress-fill" style="width:${g.progress}%; background:${g.color || 'var(--accent)'};"></div>
         </div>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
   }
 
   // Pending WJP
@@ -541,40 +778,55 @@ function renderData(data, intel) {
     const enabling = wjpItems.filter(i => i.tag === 'enabling');
     document.getElementById('nav-blocking-count').textContent = blocking.length;
     document.getElementById('nav-enabling-count').textContent = enabling.length;
-    document.getElementById('wjp-list').innerHTML = wjpItems.map(item => `
-      <div class="wjp-item ${item.tag}">
+    document.getElementById('wjp-list').innerHTML = wjpItems.map(item => {
+      const wjpMd = item.fullMarkdown || [
+        `# ${item.title}`,
+        ``,
+        `**Priority:** ${item.tag.toUpperCase()}`,
+        ``,
+        item.detail ? `## What's Needed\n${item.detail}` : '',
+        item.impact ? `## Impact\n${item.impact}` : '',
+        item.brief ? `## Brief\nSee: \`${item.brief}\`` : '',
+      ].filter(Boolean).join('\n\n');
+      const k = reg(item.title, wjpMd);
+      return `<div class="wjp-item ${item.tag} clickable" onclick="openModal('${k}')">
         <div class="wjp-tag tag-${item.tag === 'critical' ? 'blocking' : item.tag}">${item.tag.toUpperCase()}</div>
         <div class="wjp-content">
           <div class="title">${item.title}</div>
           ${item.detail ? `<div class="detail">${item.detail}</div>` : ''}
         </div>
-      </div>
-    `).join('');
+        <span class="click-hint" style="margin-left:auto;flex-shrink:0;align-self:center;">expand ↗</span>
+      </div>`;
+    }).join('');
   } else {
     wjpSection.style.display = 'none';
   }
 
   // Activity
   if (data.activity && data.activity.length) {
-    document.getElementById('activity-log').innerHTML = data.activity.map(a => `
-      <div class="log-entry">
+    document.getElementById('activity-log').innerHTML = data.activity.map(a => {
+      const actMd = a.fullMarkdown || `# ${a.icon || '·'} ${a.text}\n\n**Time:** ${a.time || '—'}\n\n${a.detail || '_No additional detail._'}`;
+      const k = reg(a.text, actMd);
+      return `<div class="log-entry" onclick="openModal('${k}')">
         <div class="log-time">${a.time || ''}</div>
         <div class="log-icon">${a.icon || '·'}</div>
         <div class="log-text">${a.text}</div>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
   }
 
   // Intel
   if (intel && intel.items && intel.items.length) {
     document.getElementById('intel-section').style.display = 'block';
     document.getElementById('intel-time').textContent = '· ' + timeAgo(new Date(intel.generated_at).getTime());
-    document.getElementById('intel-list').innerHTML = intel.items.map(item => `
-      <div class="intel-item">
+    document.getElementById('intel-list').innerHTML = intel.items.map((item, i) => {
+      const intelMd = `# Intel Briefing\n\n${item}\n\n_Source: intel.json · Generated ${new Date(intel.generated_at).toLocaleString()}_`;
+      const k = reg('Intel #' + (i+1), intelMd);
+      return `<div class="intel-item" onclick="openModal('${k}')">
         <div class="intel-bullet">›</div>
         <div class="intel-text">${item}</div>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
   }
 
   // Sidebar model
@@ -582,6 +834,20 @@ function renderData(data, intel) {
     const m = data.agents.kikai.model || 'sonnet-4-6';
     document.getElementById('sidebar-model').textContent = 'Model: ' + modelShort(m);
   }
+}
+
+// ─── Fetch & refresh ────────────────────────────────────────────
+async function loadData() {
+  try {
+    const t = Date.now();
+    const [dr, ir] = await Promise.allSettled([
+      fetch('data.json?t=' + t),
+      fetch('intel.json?t=' + t)
+    ]);
+    const data = dr.status === 'fulfilled' && dr.value.ok ? await dr.value.json() : null;
+    const intel = ir.status === 'fulfilled' && ir.value.ok ? await ir.value.json() : null;
+    return { data, intel };
+  } catch(e) { return { data: null, intel: null }; }
 }
 
 async function refresh() {
