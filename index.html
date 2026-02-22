@@ -47,20 +47,16 @@ body {
   background: rgba(0,0,0,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border2);
-  padding: 12px 0;
-  display: flex;
-  justify-content: center;
-}
-
-.header-inner {
-  width: 100%;
-  max-width: 1600px;
-  padding: 0 48px;
+  padding: 12px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.header-inner {
+  display: contents;
 }
 
 .header-left {
@@ -136,12 +132,10 @@ body {
 /* ─── MAIN ────────────────────────────────────────────── */
 .main {
   width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 32px 48px;
+  padding: 24px 32px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
   box-sizing: border-box;
 }
 
@@ -608,21 +602,18 @@ body {
 /* ─── HEALTH FOOTER ───────────────────────────────────── */
 .health-bar {
   display: flex;
-  justify-content: center;
-  border-top: 1px solid var(--border);
-}
-
-.health-bar-inner {
-  width: 100%;
-  max-width: 1600px;
-  padding: 14px 48px;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
+  padding: 14px 32px;
+  border-top: 1px solid var(--border);
   font-size: 16px;
   color: var(--text2);
+}
+
+.health-bar-inner {
+  display: contents;
   font-size: 16px;
   color: var(--text2);
 }
@@ -693,8 +684,8 @@ body {
 /* ─── DASHBOARD LAYOUT ───────────────────────────────── */
 .top-row {
   display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 24px;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
   align-items: start;
 }
 
@@ -917,9 +908,9 @@ body {
 
 /* ─── MOBILE ──────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .header-inner { padding: 0 16px; }
+  .header { padding: 10px 16px; }
   .main { padding: 16px; gap: 20px; }
-  .health-bar-inner { padding: 12px 16px; }
+  .health-bar { padding: 12px 16px; }
   .move-title { white-space: normal; }
 }
 </style>
