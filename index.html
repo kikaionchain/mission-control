@@ -229,13 +229,9 @@ body {
 
 /* ─── YOUR MOVE SECTION ───────────────────────────────── */
 .your-move-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-}
-
-@media (max-width: 640px) {
-  .your-move-grid { grid-template-columns: 1fr; }
 }
 
 .move-item {
@@ -284,9 +280,6 @@ body {
   font-weight: 600;
   color: var(--text);
   margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .move-ask {
@@ -1248,16 +1241,18 @@ function render(data, crons) {
         `;
       });
 
-      // Inject active task checklist if it belongs to this project
+      // Inject active task checklist — pending items only
       const projKey = proj.name.toLowerCase();
-      const checklistItems = activeTaskByProject[projKey] || [];
+      const allItems = activeTaskByProject[projKey] || [];
+      const pendingItems = allItems.filter(i => !i.done);
+      const doneCount = allItems.length - pendingItems.length;
       let checklistHtml = '';
-      if (checklistItems.length > 0) {
+      if (allItems.length > 0) {
         checklistHtml = `<div class="project-divider"></div><div class="project-checklist">`;
-        if (activeTaskStatus) {
-          checklistHtml += `<div class="checklist-status">${escHtml(activeTaskStatus)}</div>`;
+        if (activeTaskStatus || doneCount > 0) {
+          checklistHtml += `<div class="checklist-status">${escHtml(activeTaskStatus)}${doneCount > 0 ? ` — ${doneCount}/${allItems.length} done` : ''}</div>`;
         }
-        checklistItems.forEach(item => {
+        (pendingItems.length > 0 ? pendingItems : allItems.slice(-3)).forEach(item => {
           checklistHtml += `
             <div class="task-line">
               <div class="task-check ${item.done ? 'done' : 'todo'}">${item.done ? '✓' : ''}</div>
@@ -1318,6 +1313,17 @@ function render(data, crons) {
         <div class="task-label ${item.done ? 'done-label' : 'todo-label'}">${escHtml(item.label)}</div>
       </div>`).join('');
 
+    // Fill Other card with intel if no unassigned items
+    const intelItems = Array.isArray(data.intel) ? data.intel : [];
+    let otherIntelHtml = '';
+    if (!otherNeedsHtml && !otherCheckHtml && intelItems.length > 0) {
+      otherIntelHtml = '<div class="project-divider"></div><div class="project-task">';
+      intelItems.slice(0, 4).forEach(item => {
+        otherIntelHtml += `<div class="task-row"><div class="task-dot dot-active"></div><div class="task-text">${escHtml(item.text || String(item))}</div></div>`;
+      });
+      otherIntelHtml += '</div>';
+    }
+
     otherCard.innerHTML = `
       <div class="project-header">
         <div>
@@ -1326,10 +1332,11 @@ function render(data, crons) {
         </div>
         <span class="project-status queued">misc</span>
       </div>
-      <div class="project-desc">Unassigned tasks and items.</div>
-      ${otherNeedsHtml || otherCheckHtml ? '<div class="project-divider"></div>' : ''}
-      ${otherNeedsHtml ? '<div class="project-needs">' + otherNeedsHtml + '</div>' : ''}
+      <div class="project-desc">Unassigned items + market intel.</div>
+      ${otherNeedsHtml || otherCheckHtml || otherIntelHtml ? '' : ''}
+      ${otherNeedsHtml ? '<div class="project-divider"></div><div class="project-needs">' + otherNeedsHtml + '</div>' : ''}
       ${otherCheckHtml ? '<div class="project-checklist">' + otherCheckHtml + '</div>' : ''}
+      ${otherIntelHtml}
     `;
     projectsGrid.appendChild(otherCard);
 
