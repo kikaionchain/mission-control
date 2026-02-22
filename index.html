@@ -3,1432 +3,982 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kikai Mission Control</title>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<title>Mission Control</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #111111;
-  --surface2: #161616;
-  --surface3: #1c1c1c;
-  --border: #1e1e1e;
-  --border2: #272727;
-  --text: #e5e5e5;
-  --text2: #aaa;
-  --dim: #666;
-  --dim2: #888;
+  --bg: #000000;
+  --surface: #0d0d0d;
+  --surface2: #141414;
+  --border: #1a1a1a;
+  --border2: #242424;
+  --text: #f0f0f0;
+  --text2: #888;
+  --dim: #555;
   --accent: #00D9FF;
   --green: #39FF14;
-  --yellow: #FFD700;
-  --red: #ff4444;
-  --orange: #ff8c00;
+  --gold: #FFD700;
+  --red: #FF3B3B;
+  --orange: #FF8C00;
   --purple: #a78bfa;
   --pink: #f472b6;
-  --sidebar-w: 200px;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-/* ═══════════════════════════════════════════
-   LAYOUT
-═══════════════════════════════════════════ */
-.app {
-  display: flex;
-  flex: 1;
-  min-height: 100vh;
-}
-
-/* ═══════════════════════════════════════════
-   SIDEBAR
-═══════════════════════════════════════════ */
-.sidebar {
-  width: var(--sidebar-w);
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  position: fixed;
+/* ─── HEADER ──────────────────────────────────────────── */
+.header {
+  position: sticky;
   top: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 20;
-  overflow-y: auto;
-}
-
-.sidebar-logo {
-  padding: 20px 16px 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.sidebar-logo-name {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  line-height: 1;
-}
-
-.sidebar-logo-name span { color: var(--accent); }
-
-.sidebar-logo-sub {
-  font-size: 10px;
-  color: var(--dim2);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-top: 4px;
-}
-
-.sidebar-nav {
-  padding: 12px 8px;
-  flex: 1;
-}
-
-.nav-item {
+  z-index: 100;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border2);
+  padding: 12px 20px;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 10px;
-  border-radius: 7px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--dim2);
-  cursor: pointer;
-  transition: background 0.12s, color 0.12s;
-  user-select: none;
-  margin-bottom: 2px;
-  position: relative;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.nav-item:hover { background: var(--surface2); color: var(--text2); }
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-.nav-item.active {
-  background: rgba(0, 217, 255, 0.08);
+.header-logo {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
   color: var(--accent);
 }
 
-.nav-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
-
-.nav-badge {
-  margin-left: auto;
-  font-size: 10px;
-  font-weight: 700;
-  background: rgba(255, 68, 68, 0.15);
-  color: var(--red);
-  border-radius: 8px;
-  padding: 1px 6px;
-  min-width: 18px;
-  text-align: center;
+.header-logo span {
+  color: var(--text2);
+  font-weight: 400;
 }
 
-.sidebar-footer {
-  padding: 12px 16px;
-  border-top: 1px solid var(--border);
-}
-
-.sidebar-updated {
-  font-size: 10px;
-  color: var(--dim);
+.header-right {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text2);
 }
 
-.live-dot {
+.refresh-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.refresh-badge:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.refresh-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--green);
-  flex-shrink: 0;
-  animation: livepulse 2s infinite;
+  animation: pulse 2s infinite;
 }
 
-@keyframes livepulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.refresh-dot.stale {
+  background: var(--gold);
+  animation: none;
+}
 
-/* ═══════════════════════════════════════════
-   MAIN CONTENT
-═══════════════════════════════════════════ */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ─── MAIN ────────────────────────────────────────────── */
 .main {
-  margin-left: var(--sidebar-w);
-  flex: 1;
-  min-height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
+  gap: 28px;
 }
 
-.main-header {
-  padding: 18px 28px 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--surface);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.main-title {
-  font-size: 17px;
+/* ─── SECTION TITLE ───────────────────────────────────── */
+.section-title {
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-.main-subtitle {
-  font-size: 12px;
-  color: var(--dim2);
-  margin-top: 1px;
-}
-
-.content {
-  padding: 24px 28px 60px;
-  max-width: 960px;
-}
-
-/* ═══════════════════════════════════════════
-   SECTION VISIBILITY
-═══════════════════════════════════════════ */
-.section { display: none; }
-.section.active { display: block; }
-
-/* ═══════════════════════════════════════════
-   PROJECT CARDS
-═══════════════════════════════════════════ */
-.project-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  transition: border-color 0.15s;
-}
-
-.project-card:hover { border-color: var(--border2); }
-
-.project-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.12s;
-}
-
-.project-header:hover { background: var(--surface2); }
-
-.project-color-bar {
-  width: 4px;
-  height: 36px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.project-info { flex: 1; min-width: 0; }
-
-.project-name {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.2px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.project-desc {
-  font-size: 12px;
-  color: var(--dim2);
-  margin-top: 3px;
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── CARD ────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+/* ─── ERROR BANNER ────────────────────────────────────── */
+#error-banner {
+  background: rgba(255, 59, 59, 0.08);
+  border: 1px solid rgba(255, 59, 59, 0.4);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  display: none;
+}
+
+#error-banner.visible { display: block; }
+
+.error-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.error-url {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text2);
+  background: var(--surface2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin: 8px 0;
+  word-break: break-all;
+}
+
+.retry-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ─── YOUR MOVE SECTION ───────────────────────────────── */
+.your-move-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.move-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  border-left-width: 3px;
+  transition: background 0.15s;
+}
+
+.move-item:hover { background: var(--surface2); }
+
+.move-item.critical { border-left-color: var(--red); }
+.move-item.high { border-left-color: var(--orange); }
+.move-item.medium { border-left-color: var(--gold); }
+.move-item.low { border-left-color: var(--text2); }
+
+.move-urgency {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.urgency-critical { background: rgba(255,59,59,0.15); color: var(--red); }
+.urgency-high { background: rgba(255,140,0,0.15); color: var(--orange); }
+.urgency-medium { background: rgba(255,215,0,0.15); color: var(--gold); }
+.urgency-low { background: rgba(136,136,136,0.15); color: var(--text2); }
+
+.move-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.move-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.project-badges {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.status-pill {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 3px 8px;
-  border-radius: 5px;
-}
-
-.pill-active   { background: rgba(0,217,255,0.12);  color: var(--accent); }
-.pill-paused   { background: rgba(255,215,0,0.12);  color: var(--yellow); }
-.pill-building { background: rgba(244,114,182,0.12);color: var(--pink);   }
-.pill-backlog  { background: rgba(255,255,255,0.05);color: var(--dim2);   }
-
-.priority-tag {
-  font-size: 10px;
-  color: var(--dim);
-  font-weight: 600;
-}
-
-.project-chevron {
-  font-size: 11px;
-  color: var(--dim);
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.project-card.collapsed .project-chevron { transform: rotate(-90deg); }
-
-.project-body {
-  border-top: 1px solid var(--border);
-  padding: 0 20px 20px;
-}
-
-.project-card.collapsed .project-body { display: none; }
-
-/* Tasks */
-.section-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--dim);
-  margin: 16px 0 8px;
-}
-
-.task-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  transition: border-color 0.12s, background 0.12s;
-}
-
-.task-row:hover {
-  border-color: var(--border2);
-  background: var(--surface3);
-}
-
-.task-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  margin-top: 5px;
-}
-
-.dot-active   { background: var(--accent); box-shadow: 0 0 6px rgba(0,217,255,0.5); }
-.dot-blocked  { background: var(--red); }
-.dot-paused   { background: var(--yellow); }
-.dot-queued   { background: var(--dim); }
-.dot-done     { background: var(--green); }
-
-.task-body { flex: 1; min-width: 0; }
-
-.task-title {
+.move-ask {
   font-size: 13px;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--text);
-}
-
-.task-last {
-  font-size: 11px;
-  color: var(--dim2);
-  margin-top: 3px;
+  color: var(--text2);
   line-height: 1.4;
 }
 
-.task-next {
+.move-project {
   font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface2);
   color: var(--text2);
-  margin-top: 4px;
-  font-weight: 500;
-}
-
-.task-next::before { content: '→ '; color: var(--dim); }
-
-.task-owner {
-  font-size: 12px;
   flex-shrink: 0;
-  color: var(--dim2);
+  white-space: nowrap;
 }
 
-/* Needs To Do checklist */
-.needs-list { margin-top: 4px; }
-
-.needs-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px;
+.all-clear {
+  padding: 24px;
+  text-align: center;
   color: var(--text2);
-  line-height: 1.5;
+  font-size: 14px;
 }
 
-.needs-item:last-child { border-bottom: none; }
+.all-clear .icon { font-size: 28px; margin-bottom: 8px; }
+.all-clear .label { color: var(--green); font-weight: 600; }
 
-.needs-icon { flex-shrink: 0; font-size: 13px; margin-top: 0px; }
-
-.needs-text { flex: 1; }
-
-.needs-urgent { color: var(--red); }
-.needs-wjp-tag {
-  flex-shrink: 0;
-  font-size: 9px;
-  font-weight: 700;
-  background: rgba(255,68,68,0.1);
-  color: var(--red);
-  padding: 2px 5px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.empty-list {
-  padding: 12px 0;
-  font-size: 12px;
-  color: var(--dim);
-  font-style: italic;
-}
-
-/* ═══════════════════════════════════════════
-   AGENT MONITOR
-═══════════════════════════════════════════ */
+/* ─── AGENTS SECTION ──────────────────────────────────── */
 .agents-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .agents-grid { grid-template-columns: 1fr; }
 }
 
 .agent-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 20px;
-  transition: border-color 0.15s;
+  padding: 16px;
 }
 
-.agent-card.agent-active { border-color: rgba(0,217,255,0.2); }
-.agent-card.agent-idle   { border-color: var(--border); }
-.agent-card.agent-offline{ border-color: rgba(255,68,68,0.15); }
+.agent-card.rate-limited {
+  border-color: rgba(255,59,59,0.4);
+  background: rgba(255,59,59,0.03);
+}
 
 .agent-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
-
-.agent-emoji { font-size: 24px; }
-
-.agent-name-block { flex: 1; }
 
 .agent-name {
   font-size: 15px;
   font-weight: 700;
-  letter-spacing: -0.2px;
-}
-
-.agent-model {
-  font-size: 11px;
-  color: var(--dim2);
-  margin-top: 2px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-}
-
-.agent-status-badge {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 3px 8px;
-  border-radius: 5px;
-}
-
-.badge-active   { background: rgba(0,217,255,0.12); color: var(--accent); }
-.badge-idle     { background: rgba(255,215,0,0.12);  color: var(--yellow); }
-.badge-offline  { background: rgba(255,68,68,0.12);  color: var(--red); }
-.badge-ssh      { background: rgba(255,140,0,0.12);  color: var(--orange); }
-.badge-ratelimited { background: rgba(255,68,68,0.2); color: var(--red); }
-
-.agent-working-on {
-  font-size: 12px;
-  color: var(--text2);
-  margin-bottom: 14px;
-  padding: 8px 10px;
-  background: var(--surface2);
-  border-radius: 6px;
-  line-height: 1.4;
-}
-
-.agent-working-label {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--dim);
-  margin-bottom: 3px;
-}
-
-.agent-working-text {
-  font-size: 12px;
   color: var(--text);
-  font-weight: 500;
 }
 
-/* Context bar */
-.context-bar-wrap { margin-bottom: 14px; }
+.status-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
 
-.context-bar-header {
+.status-active { background: rgba(57,255,20,0.12); color: var(--green); }
+.status-online { background: rgba(0,217,255,0.12); color: var(--accent); }
+.status-ssh-only { background: rgba(255,215,0,0.12); color: var(--gold); }
+.status-offline { background: rgba(255,59,59,0.12); color: var(--red); }
+.status-unknown { background: rgba(136,136,136,0.12); color: var(--text2); }
+
+.agent-field {
+  margin-bottom: 10px;
+}
+
+.field-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+
+.field-value {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.field-value.muted { color: var(--text2); }
+
+/* context fuel gauge */
+.fuel-gauge {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.fuel-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.fuel-green { background: var(--green); }
+.fuel-yellow { background: var(--gold); }
+.fuel-red { background: var(--red); }
+
+.context-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
 }
 
-.context-bar-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--dim);
-}
-
-.context-bar-pct {
+.context-pct {
   font-size: 12px;
   font-weight: 700;
-  font-family: 'SF Mono', 'Fira Code', monospace;
 }
 
-.context-bar-bg {
-  height: 5px;
-  background: var(--border2);
-  border-radius: 3px;
+.context-pct.low { color: var(--green); }
+.context-pct.mid { color: var(--gold); }
+.context-pct.high { color: var(--red); }
+
+.rate-limit-warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(255,59,59,0.08);
+  border: 1px solid rgba(255,59,59,0.25);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ─── PROJECTS SECTION ────────────────────────────────── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .projects-grid { grid-template-columns: 1fr; }
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  border-left-width: 3px;
   overflow: hidden;
 }
 
-.context-bar-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.6s ease;
-}
-
-.agent-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.project-header {
+  padding: 14px 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
-.agent-stat {
-  background: var(--surface2);
-  border-radius: 6px;
-  padding: 8px 10px;
-}
-
-.agent-stat-label {
-  font-size: 9px;
+.project-name {
+  font-size: 15px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--dim);
-  margin-bottom: 3px;
-}
-
-.agent-stat-val {
-  font-size: 13px;
-  font-weight: 600;
   color: var(--text);
-  font-family: 'SF Mono', 'Fira Code', monospace;
 }
 
-.agent-stat-val.muted { color: var(--dim2); font-family: inherit; font-size: 12px; }
+.project-priority {
+  font-size: 10px;
+  color: var(--text2);
+  font-weight: 600;
+}
 
-/* ═══════════════════════════════════════════
-   INTEL
-═══════════════════════════════════════════ */
-.intel-list { display: flex; flex-direction: column; gap: 8px; }
+.project-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
 
-.intel-item {
+.project-status.active { background: rgba(57,255,20,0.1); color: var(--green); }
+.project-status.building { background: rgba(0,217,255,0.1); color: var(--accent); }
+.project-status.paused { background: rgba(255,215,0,0.1); color: var(--gold); }
+.project-status.blocked { background: rgba(255,59,59,0.1); color: var(--red); }
+.project-status.queued { background: rgba(136,136,136,0.1); color: var(--text2); }
+
+.project-desc {
+  padding: 0 16px 12px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.project-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 16px;
+}
+
+.project-task {
+  padding: 12px 16px;
+}
+
+.task-row {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.5;
-}
-
-.intel-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-  margin-top: 5px;
-}
-
-.intel-time {
-  font-size: 10px;
-  color: var(--dim);
-  margin-top: 4px;
-}
-
-/* ═══════════════════════════════════════════
-   FILES
-═══════════════════════════════════════════ */
-.files-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 10px;
-}
-
-.file-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px;
-  cursor: pointer;
-  transition: border-color 0.12s, background 0.12s;
-}
-
-.file-card:hover {
-  border-color: var(--border2);
-  background: var(--surface2);
-}
-
-.file-card-header {
-  display: flex;
-  align-items: center;
   gap: 8px;
   margin-bottom: 6px;
 }
 
-.file-icon { font-size: 16px; }
-
-.file-name {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text2);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.file-preview {
-  font-size: 12px;
-  color: var(--dim2);
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.file-path {
-  font-size: 10px;
-  color: var(--dim);
-  margin-top: 6px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-}
-
-/* ═══════════════════════════════════════════
-   NEEDS WJP SUMMARY BANNER (projects page)
-═══════════════════════════════════════════ */
-.wjp-banner {
-  background: rgba(255,68,68,0.06);
-  border: 1px solid rgba(255,68,68,0.15);
-  border-radius: 10px;
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  transition: background 0.12s;
-}
-
-.wjp-banner:hover { background: rgba(255,68,68,0.09); }
-
-.wjp-banner-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.wjp-banner-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--red);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
-.wjp-banner-items { display: flex; flex-direction: column; gap: 4px; }
-
-.wjp-banner-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text2);
-}
-
-.wjp-urgency-dot {
+.task-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  margin-top: 5px;
   flex-shrink: 0;
 }
 
-.u-critical { background: var(--red); }
-.u-high     { background: var(--orange); }
-.u-medium   { background: var(--yellow); }
-.u-low      { background: var(--dim); }
+.dot-active { background: var(--green); }
+.dot-blocked { background: var(--red); }
+.dot-paused { background: var(--gold); }
+.dot-queued { background: var(--text2); }
 
-/* ═══════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════ */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.task-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.4;
 }
 
-.overlay.open { display: flex; animation: fadein 0.15s ease; }
-
-@keyframes fadein { from{opacity:0} to{opacity:1} }
-
-.modal {
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  width: 100%;
-  max-width: 600px;
-  max-height: 86vh;
-  display: flex;
-  flex-direction: column;
-  animation: slidein 0.18s ease;
+.task-text strong {
+  color: var(--text);
+  font-weight: 600;
 }
 
-@keyframes slidein {
-  from { opacity:0; transform: translateY(10px) scale(0.98); }
-  to   { opacity:1; transform: translateY(0) scale(1); }
+.next-action {
+  padding: 8px 10px;
+  background: var(--surface2);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text2);
+  border-left: 2px solid var(--border2);
 }
 
-.modal-head {
-  padding: 18px 22px 14px;
-  border-bottom: 1px solid var(--border);
+.next-action::before {
+  content: "→ ";
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.project-needs {
+  padding: 0 16px 12px;
+}
+
+.need-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.4;
 }
 
-.modal-title {
-  font-size: 16px;
-  font-weight: 700;
-  flex: 1;
-  line-height: 1.3;
-}
-
-.modal-x {
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: var(--surface2);
-  color: var(--dim2);
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.need-icon {
   flex-shrink: 0;
-  transition: background 0.12s, color 0.12s;
+  font-size: 13px;
+  margin-top: 1px;
 }
 
-.modal-x:hover { background: var(--border2); color: var(--text); }
-
-.modal-body {
-  padding: 18px 22px;
-  overflow-y: auto;
-  flex: 1;
-  line-height: 1.6;
+.need-text {
+  color: var(--text2);
 }
 
-/* Markdown rendering */
-.md-content { font-size: 13px; color: var(--text2); }
-.md-content h1 { font-size:16px; color:var(--text); margin-bottom:12px; }
-.md-content h2 { font-size:14px; color:var(--text); margin:14px 0 8px; }
-.md-content h3 { font-size:13px; color:var(--text2); margin:12px 0 6px; }
-.md-content p  { margin-bottom:10px; }
-.md-content ul,
-.md-content ol { padding-left:18px; margin-bottom:10px; }
-.md-content li { margin-bottom:4px; }
-.md-content code { background:var(--surface2); padding:1px 5px; border-radius:4px; font-size:12px; font-family: 'SF Mono','Fira Code',monospace; }
-.md-content pre { background:var(--surface2); border-radius:6px; padding:12px; overflow-x:auto; margin-bottom:10px; }
-.md-content pre code { background:none; padding:0; }
-.md-content strong { color:var(--text); font-weight:600; }
-.md-content a { color:var(--accent); text-decoration:none; }
-.md-content blockquote { border-left:3px solid var(--border2); padding-left:12px; color:var(--dim2); margin:10px 0; }
-.md-content table { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:10px; }
-.md-content th { padding:6px 8px; border-bottom:1px solid var(--border2); text-align:left; color:var(--dim2); font-weight:600; }
-.md-content td { padding:6px 8px; border-bottom:1px solid var(--border); }
-
-/* Detail modal sections */
-.detail-section { margin-bottom:16px; }
-.detail-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:var(--dim); margin-bottom:5px; }
-.detail-value { font-size:13px; color:var(--text); line-height:1.5; }
-.detail-value.dim { color:var(--dim2); }
-.detail-tags { display:flex; flex-wrap:wrap; gap:6px; }
-
-/* ═══════════════════════════════════════════
-   CRON FOOTER (collapsible)
-═══════════════════════════════════════════ */
-.cron-footer {
-  margin-top: 32px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
+.need-text.wjp {
+  color: var(--text);
 }
 
-.cron-footer-toggle {
+.need-item.urgent .need-text { color: var(--red); }
+
+/* ─── HEALTH FOOTER ───────────────────────────────────── */
+.health-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
-  cursor: pointer;
-  font-size: 11px;
-  color: var(--dim);
-  user-select: none;
-  transition: background 0.12s;
-}
-
-.cron-footer-toggle:hover { background: var(--surface2); }
-
-.cron-footer-body {
-  display: none;
-  padding: 12px 14px;
-  border-top: 1px solid var(--border);
-  font-size: 11px;
-  color: var(--dim2);
-  gap: 16px;
   flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text2);
 }
 
-.cron-footer-body.open { display: flex; }
-
-/* ═══════════════════════════════════════════
-   RESPONSIVE — mobile
-═══════════════════════════════════════════ */
-@media (max-width: 768px) {
-  :root { --sidebar-w: 0px; }
-
-  .sidebar { display: none; }
-
-  .main { margin-left: 0; }
-
-  /* Bottom tab bar */
-  .mobile-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    z-index: 20;
-    padding: 4px 0 env(safe-area-inset-bottom, 4px);
-  }
-
-  .mobile-nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 6px 0;
-    font-size: 9px;
-    font-weight: 600;
-    color: var(--dim);
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    transition: color 0.12s;
-    user-select: none;
-  }
-
-  .mobile-nav-item.active { color: var(--accent); }
-  .mobile-nav-item .mobile-nav-icon { font-size: 18px; }
-
-  .content { padding: 16px 16px 80px; }
-  .main-header { padding: 14px 16px 12px; }
-  .agents-grid { grid-template-columns: 1fr; }
+.health-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-@media (min-width: 769px) {
-  .mobile-nav { display: none; }
+.health-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ─── LOADING ─────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text2);
+  font-size: 14px;
+}
+
+.loading::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── UTIL ────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+.tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface2);
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.intel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.intel-item {
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+/* ─── MOBILE ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .header { padding: 10px 14px; }
+  .main { padding: 16px 12px; gap: 20px; }
+  .move-title { white-space: normal; }
 }
 </style>
 </head>
 <body>
 
-<div class="app">
-
-  <!-- ══ SIDEBAR ══ -->
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <div class="sidebar-logo-name">🦊 Kikai <span>MC</span></div>
-      <div class="sidebar-logo-sub">Mission Control</div>
-    </div>
-
-    <div class="sidebar-nav">
-      <div class="nav-item active" data-section="projects" onclick="switchSection('projects', this)">
-        <span class="nav-icon">📋</span> Projects
-      </div>
-      <div class="nav-item" data-section="agents" onclick="switchSection('agents', this)">
-        <span class="nav-icon">⚡</span> Agents
-      </div>
-      <div class="nav-item" data-section="intel" onclick="switchSection('intel', this)">
-        <span class="nav-icon">📡</span> Intel
-      </div>
-      <div class="nav-item" data-section="files" onclick="switchSection('files', this)">
-        <span class="nav-icon">📁</span> Files
-      </div>
-    </div>
-
-    <div class="sidebar-footer">
-      <div class="sidebar-updated">
-        <div class="live-dot"></div>
-        <span id="sidebar-updated">Loading...</span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ══ MAIN ══ -->
-  <main class="main">
-
-    <div class="main-header">
-      <div>
-        <div class="main-title" id="header-title">Projects</div>
-        <div class="main-subtitle" id="header-sub">Where everything is at + what needs to happen</div>
-      </div>
-    </div>
-
-    <div class="content">
-
-      <!-- PROJECTS -->
-      <div class="section active" id="section-projects">
-        <!-- WJP banner populated by JS -->
-        <div id="wjp-banner-container"></div>
-        <div id="projects-container"></div>
-        <div class="cron-footer" id="cron-footer">
-          <div class="cron-footer-toggle" onclick="toggleCronFooter()">
-            <span>🔧 System health</span>
-            <span id="cron-footer-summary">loading...</span>
-            <span id="cron-chevron">▾</span>
-          </div>
-          <div class="cron-footer-body" id="cron-footer-body"></div>
-        </div>
-      </div>
-
-      <!-- AGENTS -->
-      <div class="section" id="section-agents">
-        <div class="agents-grid" id="agents-grid"></div>
-        <p style="font-size:11px;color:var(--dim);margin-top:8px;">Refreshes every 30s · Context % estimated from session file size</p>
-      </div>
-
-      <!-- INTEL -->
-      <div class="section" id="section-intel">
-        <div class="intel-list" id="intel-list"></div>
-      </div>
-
-      <!-- FILES -->
-      <div class="section" id="section-files">
-        <div class="files-grid" id="files-grid"></div>
-      </div>
-
-    </div>
-  </main>
-</div>
-
-<!-- MOBILE NAV -->
-<div class="mobile-nav">
-  <div class="mobile-nav-item active" data-section="projects" onclick="switchSection('projects', this)">
-    <span class="mobile-nav-icon">📋</span>Projects
+<!-- ══════════════════════ HEADER ══════════════════════════ -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">Mission Control <span>/ WJP</span></div>
   </div>
-  <div class="mobile-nav-item" data-section="agents" onclick="switchSection('agents', this)">
-    <span class="mobile-nav-icon">⚡</span>Agents
-  </div>
-  <div class="mobile-nav-item" data-section="intel" onclick="switchSection('intel', this)">
-    <span class="mobile-nav-icon">📡</span>Intel
-  </div>
-  <div class="mobile-nav-item" data-section="files" onclick="switchSection('files', this)">
-    <span class="mobile-nav-icon">📁</span>Files
-  </div>
-</div>
-
-<!-- MODAL -->
-<div class="overlay" id="overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <div class="modal-head">
-      <div class="modal-title" id="modal-title"></div>
-      <button class="modal-x" onclick="closeModal()">✕</button>
+  <div class="header-right">
+    <div id="last-updated" style="font-size:11px;"></div>
+    <div class="refresh-badge" onclick="loadData()">
+      <div class="refresh-dot" id="refresh-dot"></div>
+      <span id="countdown">60s</span>
     </div>
-    <div class="modal-body" id="modal-body"></div>
+  </div>
+</header>
+
+<!-- ══════════════════════ MAIN ════════════════════════════ -->
+<main class="main" id="main">
+  <div class="loading" id="loading">Loading mission data...</div>
+</main>
+
+<!-- ══════════════════════ HEALTH BAR ══════════════════════ -->
+<div class="health-bar" id="health-bar" style="display:none;">
+  <div class="health-item">
+    <div class="health-dot" id="cron-dot" style="background:var(--text2);"></div>
+    <span id="cron-status">Crons: —</span>
+  </div>
+  <div class="health-item">
+    <span id="data-age">Data age: —</span>
+  </div>
+  <div class="health-item">
+    <a href="./data.json" target="_blank" style="color:var(--text2);font-size:11px;text-decoration:none;">data.json ↗</a>
   </div>
 </div>
 
 <script>
-'use strict';
+// ════════════════════════════════════════════════════════
+// CONFIG
+// ════════════════════════════════════════════════════════
+const DATA_URL = './data.json';
+const REFRESH_INTERVAL = 60; // seconds
 
-// ═══════════════════════════════════════════
-// CONSTANTS
-// ═══════════════════════════════════════════
-const PROJECT_COLORS = {
-  'for-crypto': '#00D9FF',
-  'for crypto': '#00D9FF',
-  'divvvy':     '#f472b6',
-  '67':         '#FFD700',
-  'os':         '#a78bfa',
-};
+let countdown = REFRESH_INTERVAL;
+let refreshTimer = null;
+let countdownTimer = null;
 
-const OWNER_EMOJI = { Kikai:'🦊', Yama:'🐺', Both:'🦊🐺', WJP:'👤' };
-const SECTION_LABELS = {
-  projects: ['Projects', 'Where everything is at + what needs to happen'],
-  agents:   ['Agent Monitor', 'Live status — refreshes every 30s'],
-  intel:    ['Intel', 'Market + project intelligence'],
-  files:    ['Files', 'Key workspace files'],
-};
-
-// ═══════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════
-let currentSection = 'projects';
-
-function switchSection(id, el) {
-  // Hide all sections
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('section-' + id).classList.add('active');
-
-  // Update sidebar nav
-  document.querySelectorAll('.sidebar .nav-item').forEach(n => n.classList.remove('active'));
-  // Update mobile nav
-  document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active'));
-  // Mark the clicked item active (both desktop and mobile)
-  document.querySelectorAll(`[data-section="${id}"]`).forEach(n => n.classList.add('active'));
-
-  const [title, sub] = SECTION_LABELS[id] || [id, ''];
-  document.getElementById('header-title').textContent = title;
-  document.getElementById('header-sub').textContent = sub;
-  currentSection = id;
-}
-
-// ═══════════════════════════════════════════
-// MODAL
-// ═══════════════════════════════════════════
-function openModal(title, bodyHTML) {
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-body').innerHTML = bodyHTML;
-  document.getElementById('overlay').classList.add('open');
-}
-
-function closeModal(e) {
-  if (e && e.target !== document.getElementById('overlay')) return;
-  document.getElementById('overlay').classList.remove('open');
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('overlay').classList.remove('open');
-});
-
-// ═══════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════
-function timeAgo(isoStr) {
-  if (!isoStr) return '—';
-  const diff = Date.now() - new Date(isoStr).getTime();
-  const m = Math.floor(diff / 60000);
-  if (m < 1) return 'just now';
-  if (m < 60) return m + 'm ago';
-  const h = Math.floor(m / 60);
-  if (h < 24) return h + 'h ago';
-  return Math.floor(h / 24) + 'd ago';
-}
-
-function fmtDuration(mins) {
-  if (mins == null) return '—';
-  if (mins < 60) return mins + 'm';
-  const h = Math.floor(mins / 60), m = mins % 60;
-  return m ? `${h}h ${m}m` : `${h}h`;
-}
-
-function getProjectColor(idOrName) {
-  if (!idOrName) return '#888';
-  const key = idOrName.toLowerCase();
-  for (const [k, v] of Object.entries(PROJECT_COLORS)) {
-    if (key.includes(k)) return v;
-  }
-  return '#888';
-}
-
-function statusDotClass(status) {
-  const s = (status || '').toLowerCase();
-  if (s === 'active') return 'dot-active';
-  if (s === 'blocked') return 'dot-blocked';
-  if (s === 'paused') return 'dot-paused';
-  if (s === 'done') return 'dot-done';
-  return 'dot-queued';
-}
-
-function pillClass(status) {
-  const s = (status || '').toLowerCase();
-  if (s === 'active') return 'pill-active';
-  if (s === 'paused') return 'pill-paused';
-  if (s === 'building') return 'pill-building';
-  return 'pill-backlog';
-}
-
-function ctxColor(pct) {
-  if (pct < 50) return '#39FF14';
-  if (pct < 75) return '#FFD700';
-  return '#ff4444';
-}
-
-// ═══════════════════════════════════════════
-// RENDER — PROJECTS
-// ═══════════════════════════════════════════
-function renderProjects(projects, needsWjp) {
-  // WJP banner
-  const bannerEl = document.getElementById('wjp-banner-container');
-  if (needsWjp && needsWjp.length) {
-    const urgencyOrder = { critical:0, high:1, medium:2, low:3 };
-    const sorted = [...needsWjp].sort((a,b) => (urgencyOrder[a.urgency]??9)-(urgencyOrder[b.urgency]??9));
-    bannerEl.innerHTML = `
-      <div class="wjp-banner" onclick="switchSection('files',document.querySelector('[data-section=files]'))">
-        <div class="wjp-banner-header">
-          <span style="font-size:14px">🔴</span>
-          <span class="wjp-banner-title">Needs WJP — ${sorted.length} item${sorted.length!==1?'s':''}</span>
-        </div>
-        <div class="wjp-banner-items">
-          ${sorted.map(item => `
-            <div class="wjp-banner-item" onclick="event.stopPropagation();openWjpModal(${safeJSON(item)})">
-              <div class="wjp-urgency-dot u-${item.urgency}"></div>
-              <span><strong style="color:var(--text)">${escHTML(item.title)}</strong> — ${escHTML(item.ask)}</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>`;
-  } else {
-    bannerEl.innerHTML = '';
-  }
-
-  const container = document.getElementById('projects-container');
-  container.innerHTML = projects.map((proj, i) => {
-    const color = proj.color || getProjectColor(proj.id);
-    const tasks = proj.tasks || [];
-    const needs = proj.needsToDo || [];
-    const priorityLabel = proj.priority <= 2 ? `Priority #${proj.priority}` : proj.priority === 3 ? 'Maintain' : 'Internal';
-
-    return `
-      <div class="project-card" id="proj-${proj.id}">
-        <div class="project-header" onclick="toggleProject('${proj.id}')">
-          <div class="project-color-bar" style="background:${color}"></div>
-          <div class="project-info">
-            <div class="project-name" style="color:${color}">
-              ${escHTML(proj.name)}
-            </div>
-            <div class="project-desc">${escHTML(proj.description || '')}</div>
-          </div>
-          <div class="project-badges">
-            <span class="priority-tag">${priorityLabel}</span>
-            <span class="status-pill ${pillClass(proj.status)}">${escHTML(proj.status)}</span>
-          </div>
-          <div class="project-chevron">▾</div>
-        </div>
-
-        <div class="project-body">
-          <!-- Tasks -->
-          <div class="section-label">Tasks</div>
-          ${tasks.length ? tasks.map(task => `
-            <div class="task-row" onclick="openTaskModal(${safeJSON(task)}, '${escHTML(proj.name)}', '${color}')">
-              <div class="task-status-dot ${statusDotClass(task.status)}"></div>
-              <div class="task-body">
-                <div class="task-title">${escHTML(task.title)}</div>
-                <div class="task-last">${escHTML(task.lastUpdate)}</div>
-                <div class="task-next">${escHTML(task.nextAction)}</div>
-              </div>
-              <div class="task-owner">${OWNER_EMOJI[task.owner] || '👤'}</div>
-            </div>
-          `).join('') : '<div class="empty-list">No active tasks</div>'}
-
-          <!-- What we need to do -->
-          <div class="section-label">What we need to do</div>
-          ${needs.length ? `<div class="needs-list">${needs.map(n => `
-            <div class="needs-item ${n.urgent ? 'needs-urgent' : ''}">
-              <span class="needs-icon">${n.urgent ? '🔴' : n.wjp ? '👤' : '🦊'}</span>
-              <span class="needs-text">${escHTML(n.text)}</span>
-              ${n.wjp ? '<span class="needs-wjp-tag">WJP</span>' : ''}
-            </div>
-          `).join('')}</div>` : '<div class="empty-list">Nothing blocked — good to go</div>'}
-        </div>
-      </div>`;
-  }).join('');
-}
-
-function toggleProject(id) {
-  document.getElementById('proj-' + id).classList.toggle('collapsed');
-}
-
-function openTaskModal(task, projName, color) {
-  const ownerEmoji = OWNER_EMOJI[task.owner] || '👤';
-  const dotClass = statusDotClass(task.status);
-  openModal(task.title, `
-    <div class="detail-section">
-      <div class="detail-tags">
-        <span style="font-size:11px;font-weight:700;color:${color};background:${color}18;padding:3px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:0.5px">${escHTML(projName)}</span>
-        <span style="font-size:11px;font-weight:600;color:var(--dim2)">${ownerEmoji} ${escHTML(task.owner||'')}</span>
-        <span style="font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 7px;border-radius:5px;background:var(--surface2);color:var(--dim2)">${escHTML(task.status||'')}</span>
-      </div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-label">Last update</div>
-      <div class="detail-value">${escHTML(task.lastUpdate||'—')}</div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-label">Next action</div>
-      <div class="detail-value">${escHTML(task.nextAction||'—')}</div>
-    </div>
-  `);
-}
-
-function openWjpModal(item) {
-  const color = getProjectColor(item.project || '');
-  openModal(item.title, `
-    <div class="detail-section">
-      <div class="detail-tags">
-        <span style="font-size:11px;font-weight:700;color:${color};background:${color}18;padding:3px 8px;border-radius:5px">${escHTML(item.project||'')}</span>
-        <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:rgba(255,68,68,0.12);color:var(--red);text-transform:uppercase">${escHTML(item.urgency||'')}</span>
-      </div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-label">What WJP needs to do</div>
-      <div class="detail-value" style="font-weight:600">${escHTML(item.ask||'')}</div>
-    </div>
-    ${item.impact ? `<div class="detail-section">
-      <div class="detail-label">Impact if not done</div>
-      <div class="detail-value dim">${escHTML(item.impact)}</div>
-    </div>` : ''}
-    <div class="detail-section">
-      <div class="detail-label">Added</div>
-      <div class="detail-value dim">${timeAgo(item.updatedAt)}</div>
-    </div>
-  `);
-}
-
-// ═══════════════════════════════════════════
-// RENDER — AGENTS
-// ═══════════════════════════════════════════
-function renderAgents(agents) {
-  const grid = document.getElementById('agents-grid');
-  const agentList = [
-    { key: 'kikai', name: 'Kikai', emoji: '🦊' },
-    { key: 'yama',  name: 'Yama',  emoji: '🐺' },
-  ];
-
-  grid.innerHTML = agentList.map(({ key, name, emoji }) => {
-    const a = (agents || {})[key] || {};
-    const pct = a.contextPct ?? 0;
-    const barColor = ctxColor(pct);
-
-    let statusClass = 'agent-idle', badgeClass = 'badge-idle', statusLabel = 'Idle';
-    if (a.rateLimit) { statusClass='agent-offline'; badgeClass='badge-ratelimited'; statusLabel='Rate Limited'; }
-    else if (a.status === 'active') { statusClass='agent-active'; badgeClass='badge-active'; statusLabel='Active'; }
-    else if (a.status === 'offline') { statusClass='agent-offline'; badgeClass='badge-offline'; statusLabel='Offline'; }
-    else if (a.status === 'ssh-only') { statusClass='agent-idle'; badgeClass='badge-ssh'; statusLabel='SSH only'; }
-    else if (a.status === 'online') { statusClass='agent-idle'; badgeClass='badge-idle'; statusLabel='Online'; }
-
-    const lastActText = a.lastActivityMin != null
-      ? (a.lastActivityMin < 1 ? 'just now' : a.lastActivityMin + 'm ago')
-      : '—';
-    const sessionText = fmtDuration(a.sessionDurationMin);
-
-    return `
-      <div class="agent-card ${statusClass}">
-        <div class="agent-header">
-          <div class="agent-emoji">${emoji}</div>
-          <div class="agent-name-block">
-            <div class="agent-name">${name}</div>
-            <div class="agent-model">${escHTML(a.model || 'claude-sonnet-4-6')}</div>
-          </div>
-          <div class="agent-status-badge ${badgeClass}">${statusLabel}</div>
-        </div>
-
-        <div class="agent-working-on">
-          <div class="agent-working-label">Working on</div>
-          <div class="agent-working-text">${escHTML(a.workingOn || 'idle')}</div>
-        </div>
-
-        <div class="context-bar-wrap">
-          <div class="context-bar-header">
-            <span class="context-bar-label">Context used</span>
-            <span class="context-bar-pct" style="color:${barColor}">${pct}%</span>
-          </div>
-          <div class="context-bar-bg">
-            <div class="context-bar-fill" style="width:${pct}%;background:${barColor}"></div>
-          </div>
-        </div>
-
-        <div class="agent-stats">
-          <div class="agent-stat">
-            <div class="agent-stat-label">Session</div>
-            <div class="agent-stat-val ${sessionText==='—'?'muted':''}">${sessionText}</div>
-          </div>
-          <div class="agent-stat">
-            <div class="agent-stat-label">Last active</div>
-            <div class="agent-stat-val ${lastActText==='—'?'muted':''}">${lastActText}</div>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-// ═══════════════════════════════════════════
-// RENDER — INTEL
-// ═══════════════════════════════════════════
-function renderIntel(items) {
-  const list = document.getElementById('intel-list');
-  if (!items || !items.length) {
-    list.innerHTML = '<div style="color:var(--dim);font-size:13px;padding:20px 0">No intel available</div>';
-    return;
-  }
-  list.innerHTML = items.map(item => `
-    <div class="intel-item">
-      <div class="intel-dot"></div>
-      <div>
-        <div>${escHTML(item.text || item)}</div>
-        ${item.time ? `<div class="intel-time">${timeAgo(item.time)}</div>` : ''}
-      </div>
-    </div>`).join('');
-}
-
-// ═══════════════════════════════════════════
-// RENDER — FILES
-// ═══════════════════════════════════════════
-function renderFiles(files) {
-  const grid = document.getElementById('files-grid');
-  if (!files || !files.length) {
-    grid.innerHTML = '<div style="color:var(--dim);font-size:13px;padding:20px 0">No files available</div>';
-    return;
-  }
-  grid.innerHTML = files.map(f => `
-    <div class="file-card" onclick="openFileModal(${safeJSON(f)})">
-      <div class="file-card-header">
-        <span class="file-icon">${escHTML(f.icon || '📄')}</span>
-        <span class="file-name">${escHTML(f.name)}</span>
-      </div>
-      <div class="file-preview">${escHTML(f.preview || '')}</div>
-      <div class="file-path">${escHTML(f.path || '')}</div>
-    </div>`).join('');
-}
-
-function openFileModal(f) {
-  const md = f.content || f.preview || '';
-  openModal((f.icon||'📄') + ' ' + f.name, `
-    <div class="md-content">
-      ${typeof marked !== 'undefined' ? marked.parse(md) : '<pre>' + escHTML(md) + '</pre>'}
-    </div>`);
-}
-
-// ═══════════════════════════════════════════
-// RENDER — CRON FOOTER
-// ═══════════════════════════════════════════
-let cronFooterOpen = false;
-
-function toggleCronFooter() {
-  cronFooterOpen = !cronFooterOpen;
-  document.getElementById('cron-footer-body').classList.toggle('open', cronFooterOpen);
-  document.getElementById('cron-chevron').textContent = cronFooterOpen ? '▴' : '▾';
-}
-
-function renderCronFooter(health) {
-  const crons = health?.crons || {};
-  const ok = crons.healthy ?? 0;
-  const err = crons.errors ?? 0;
-  const sum = err > 0
-    ? `<span style="color:var(--red)">${err} error${err!==1?'s':''}</span> · ${ok} healthy`
-    : `<span style="color:var(--green)">${ok} healthy</span>`;
-  document.getElementById('cron-footer-summary').innerHTML = sum;
-  document.getElementById('cron-footer-body').innerHTML = `
-    <span>Crons: ${ok} healthy, ${err} errors</span>
-    <span>Last heartbeat: ${timeAgo(health?.lastHeartbeat)}</span>`;
-}
-
-// ═══════════════════════════════════════════
-// UTILITY
-// ═══════════════════════════════════════════
-function escHTML(str) {
-  return String(str||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function safeJSON(obj) {
-  return JSON.stringify(obj).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-// ═══════════════════════════════════════════
-// DATA LOADING
-// ═══════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// FETCH
+// ════════════════════════════════════════════════════════
 async function loadData() {
+  clearTimers();
+
   try {
-    const res = await fetch('data.json?_=' + Date.now());
+    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-
-    // Timestamp
-    const ago = timeAgo(data.updatedAt);
-    document.getElementById('sidebar-updated').textContent = ago;
-
-    // Render sections
-    renderProjects(data.projects || [], data.needsWjp || []);
-    renderAgents(data.agents || {});
-    renderIntel(data.intel || []);
-    renderFiles(data.files || []);
-    renderCronFooter(data.health || {});
-
+    render(data);
+    startRefreshCycle();
   } catch (err) {
-    console.error('MC load error:', err);
-    document.getElementById('sidebar-updated').textContent = 'Load failed';
+    showError(DATA_URL, err.message);
+    // retry in 30s on error
+    refreshTimer = setTimeout(loadData, 30000);
   }
 }
 
+function clearTimers() {
+  if (refreshTimer) clearTimeout(refreshTimer);
+  if (countdownTimer) clearInterval(countdownTimer);
+}
+
+function startRefreshCycle() {
+  countdown = REFRESH_INTERVAL;
+  updateCountdown();
+  countdownTimer = setInterval(() => {
+    countdown--;
+    updateCountdown();
+    if (countdown <= 0) {
+      clearInterval(countdownTimer);
+      loadData();
+    }
+  }, 1000);
+}
+
+function updateCountdown() {
+  const el = document.getElementById('countdown');
+  if (el) el.textContent = countdown + 's';
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════════
+function render(data) {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  // Last updated
+  if (data.updatedAt) {
+    const el = document.getElementById('last-updated');
+    const d = new Date(data.updatedAt);
+    const age = Math.floor((Date.now() - d.getTime()) / 60000);
+    el.textContent = 'Updated ' + (age < 2 ? 'just now' : age + 'm ago');
+    const dot = document.getElementById('refresh-dot');
+    if (age > 180) {
+      dot.classList.add('stale');
+      el.style.color = 'var(--gold)';
+    }
+
+    // Health bar
+    const bar = document.getElementById('health-bar');
+    bar.style.display = 'flex';
+    document.getElementById('data-age').textContent = 'Data: ' + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  }
+
+  // Cron health
+  if (data.health && data.health.crons) {
+    const c = data.health.crons;
+    const dot = document.getElementById('cron-dot');
+    const label = document.getElementById('cron-status');
+    if (c.errors > 0) {
+      dot.style.background = 'var(--red)';
+      label.textContent = 'Crons: ' + c.healthy + ' ok / ' + c.errors + ' errors';
+    } else {
+      dot.style.background = 'var(--green)';
+      label.textContent = 'Crons: ' + c.healthy + ' healthy';
+    }
+  }
+
+  // ── YOUR MOVE ──────────────────────────────────────────
+  const needsWjp = (data.needsWjp || []).filter(n => n.urgency !== 'done');
+  const urgencyOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+  needsWjp.sort((a, b) => (urgencyOrder[a.urgency] || 2) - (urgencyOrder[b.urgency] || 2));
+
+  const yourMoveSection = document.createElement('section');
+  yourMoveSection.innerHTML = '<div class="section-title">⚡ Your Move</div>';
+  const moveGrid = document.createElement('div');
+  moveGrid.className = 'your-move-grid';
+
+  if (needsWjp.length === 0) {
+    moveGrid.innerHTML = `
+      <div class="all-clear">
+        <div class="icon">✓</div>
+        <div class="label">All clear — no action required</div>
+      </div>`;
+  } else {
+    needsWjp.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'move-item ' + (item.urgency || 'medium');
+      div.innerHTML = `
+        <span class="move-urgency urgency-${item.urgency || 'medium'}">${item.urgency || 'medium'}</span>
+        <div class="move-content">
+          <div class="move-title">${escHtml(item.title || item.ask || 'Action needed')}</div>
+          ${item.ask ? '<div class="move-ask">' + escHtml(item.ask) + '</div>' : ''}
+          ${item.impact ? '<div class="move-ask" style="margin-top:2px;color:var(--text2);">' + escHtml(item.impact) + '</div>' : ''}
+        </div>
+        ${item.project ? '<span class="move-project">' + escHtml(item.project) + '</span>' : ''}
+      `;
+      moveGrid.appendChild(div);
+    });
+  }
+
+  yourMoveSection.appendChild(moveGrid);
+  main.appendChild(yourMoveSection);
+
+  // ── AGENTS ────────────────────────────────────────────
+  if (data.agents) {
+    const agentsSection = document.createElement('section');
+    agentsSection.innerHTML = '<div class="section-title">🤖 Agents</div>';
+    const agentsGrid = document.createElement('div');
+    agentsGrid.className = 'agents-grid';
+
+    const agentList = [
+      { key: 'kikai', label: 'Kikai', icon: '🦀' },
+      { key: 'yama', label: 'Yama', icon: '🌊' },
+    ];
+
+    agentList.forEach(({ key, label, icon }) => {
+      const a = data.agents[key];
+      if (!a) return;
+
+      const ctx = a.contextPct || 0;
+      const ctxClass = ctx >= 75 ? 'high' : ctx >= 50 ? 'mid' : 'low';
+      const fuelClass = ctx >= 75 ? 'fuel-red' : ctx >= 50 ? 'fuel-yellow' : 'fuel-green';
+      const statusClass = 'status-' + (a.status || 'unknown').replace('_', '-').replace(' ', '-');
+
+      const card = document.createElement('div');
+      card.className = 'agent-card' + (a.rateLimit ? ' rate-limited' : '');
+      card.innerHTML = `
+        <div class="agent-header">
+          <div class="agent-name">${icon} ${label}</div>
+          <span class="status-pill ${statusClass}">${a.status || 'unknown'}</span>
+        </div>
+
+        <div class="agent-field">
+          <div class="field-label">Working on</div>
+          <div class="field-value ${!a.workingOn || a.workingOn === 'idle' ? 'muted' : ''}">${escHtml(a.workingOn || 'idle')}</div>
+        </div>
+
+        <div class="agent-field">
+          <div class="field-label">Context</div>
+          <div class="context-row">
+            <span class="context-pct ${ctxClass}">${ctx}%</span>
+            <span class="field-label">${a.model || ''}</span>
+          </div>
+          <div class="fuel-gauge">
+            <div class="fuel-fill ${fuelClass}" style="width:${ctx}%;"></div>
+          </div>
+        </div>
+
+        ${a.sessionDurationMin != null ? `
+        <div class="agent-field">
+          <div class="field-label">Session</div>
+          <div class="field-value">${a.sessionDurationMin}m duration${a.lastActivityMin != null ? ' / ' + a.lastActivityMin + 'm idle' : ''}</div>
+        </div>` : ''}
+
+        ${a.rateLimit ? '<div class="rate-limit-warning">⚠ Rate limited</div>' : ''}
+      `;
+      agentsGrid.appendChild(card);
+    });
+
+    agentsSection.appendChild(agentsGrid);
+    main.appendChild(agentsSection);
+  }
+
+  // ── PROJECTS ──────────────────────────────────────────
+  if (data.projects && data.projects.length > 0) {
+    const projectsSection = document.createElement('section');
+    projectsSection.innerHTML = '<div class="section-title">📋 Projects</div>';
+    const projectsGrid = document.createElement('div');
+    projectsGrid.className = 'projects-grid';
+
+    const sorted = [...data.projects].sort((a, b) => (a.priority || 99) - (b.priority || 99));
+
+    sorted.forEach(proj => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.style.borderLeftColor = proj.color || 'var(--border2)';
+
+      // Status
+      const statusStr = (proj.status || 'unknown').toLowerCase();
+      let statusClass = statusStr;
+      if (statusStr === 'active') statusClass = 'active';
+      else if (statusStr === 'building') statusClass = 'building';
+      else if (statusStr === 'paused') statusClass = 'paused';
+      else if (statusStr === 'blocked') statusClass = 'blocked';
+      else if (statusStr === 'queued') statusClass = 'queued';
+
+      // Tasks
+      const tasks = proj.tasks || [];
+      let tasksHtml = '';
+      tasks.forEach(t => {
+        const dotClass = 'dot-' + (t.status || 'queued');
+        tasksHtml += `
+          <div class="task-row">
+            <div class="task-dot ${dotClass}"></div>
+            <div class="task-text">
+              <strong>${escHtml(t.title || 'Task')}</strong>
+              ${t.lastUpdate ? ' — ' + escHtml(t.lastUpdate) : ''}
+            </div>
+          </div>
+          ${t.nextAction ? '<div class="next-action">' + escHtml(t.nextAction) + '</div>' : ''}
+        `;
+      });
+
+      // Needs
+      const needs = proj.needsToDo || [];
+      let needsHtml = '';
+      needs.forEach(n => {
+        const isUrgent = n.urgent ? ' urgent' : '';
+        const icon = n.wjp ? '🔴' : '🔵';
+        needsHtml += `
+          <div class="need-item${isUrgent}">
+            <span class="need-icon">${icon}</span>
+            <span class="need-text ${n.wjp ? 'wjp' : ''}">${escHtml(n.text || '')}</span>
+          </div>
+        `;
+      });
+
+      card.innerHTML = `
+        <div class="project-header">
+          <div>
+            <div class="project-name">${escHtml(proj.name)}</div>
+            <div class="project-priority">Priority ${proj.priority || '—'}</div>
+          </div>
+          <span class="project-status ${statusClass}">${escHtml(proj.status || 'unknown')}</span>
+        </div>
+        <div class="project-desc">${escHtml(proj.description || '')}</div>
+        ${tasksHtml || needs.length > 0 ? '<div class="project-divider"></div>' : ''}
+        ${tasksHtml ? '<div class="project-task">' + tasksHtml + '</div>' : ''}
+        ${needsHtml ? '<div class="project-needs">' + needsHtml + '</div>' : ''}
+      `;
+
+      projectsGrid.appendChild(card);
+    });
+
+    projectsSection.appendChild(projectsGrid);
+    main.appendChild(projectsSection);
+  }
+
+  // ── INTEL ─────────────────────────────────────────────
+  const intel = Array.isArray(data.intel) ? data.intel : [];
+  if (intel.length > 0) {
+    const intelSection = document.createElement('section');
+    intelSection.innerHTML = '<div class="section-title">🔭 Intel</div>';
+    const intelGrid = document.createElement('div');
+    intelGrid.className = 'intel-section';
+    intel.slice(0, 5).forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'intel-item';
+      div.textContent = item.text || String(item);
+      intelGrid.appendChild(div);
+    });
+    intelSection.appendChild(intelGrid);
+    main.appendChild(intelSection);
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// ERROR
+// ════════════════════════════════════════════════════════
+function showError(url, msg) {
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div id="error-banner" class="visible">
+      <div class="error-title">⚠ Failed to load mission data</div>
+      <div class="error-url">${escHtml(url)}</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:4px;">${escHtml(msg)}</div>
+      <button class="retry-btn" onclick="loadData()">Retry</button>
+    </div>
+  `;
+}
+
+// ════════════════════════════════════════════════════════
+// UTIL
+// ════════════════════════════════════════════════════════
+function escHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
 loadData();
-setInterval(loadData, 30000); // 30s refresh
 </script>
 </body>
 </html>
