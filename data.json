@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T18:25:07.002447",
+  "updatedAt": "2026-02-21T20:25:04.207937",
   "agents": {
     "kikai": {
       "status": "working",
@@ -183,7 +183,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 55186,
-      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 10h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 12h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
     },
     {
       "id": "e8c287df-4494-4d56-ab65-922b46095fc1",
@@ -211,7 +211,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 4708,
-      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 4.7s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 3h ago |\n| **Duration** | 4.7s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -225,7 +225,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 4445,
-      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 10h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 12h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "9761052a-e059-46b3-ae90-4b2917d3b36c",
@@ -239,7 +239,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 698576,
-      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 11h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 13h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "88e323d2-9330-4b25-9942-6c6fad4ecda0",
@@ -247,13 +247,13 @@
       "enabled": true,
       "schedule": "every 6h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771730625259,
-      "lastRunMs": 1771709025271,
+      "nextRunMs": 1771752225259,
+      "lastRunMs": 1771730625268,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 15293,
-      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 5h ago |\n| **Duration** | 15.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 18709,
+      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 1h ago |\n| **Duration** | 18.7s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
@@ -261,13 +261,13 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771730625272,
-      "lastRunMs": 1771716225285,
+      "nextRunMs": 1771745025272,
+      "lastRunMs": 1771730643984,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 4766,
-      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 3h ago |\n| **Duration** | 4.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 4366,
+      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -289,13 +289,13 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771727102456,
-      "lastRunMs": 1771719902469,
+      "nextRunMs": 1771734302456,
+      "lastRunMs": 1771727102468,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 6275,
-      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 6.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 8696,
+      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 8.7s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -309,7 +309,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 12262,
-      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 11h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 13h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "3e85ec88-b298-4afd-adad-a357719fe5fd",
@@ -323,7 +323,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 9128,
-      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 1h ago |\n| **Duration** | 9.1s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 3h ago |\n| **Duration** | 9.1s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     }
   ],
   "goals": [
@@ -467,8 +467,8 @@
       "name": "Session State",
       "icon": "\ud83d\udcbe",
       "path": "SESSION-STATE.md",
-      "content": "# SESSION STATE - 2026-02-21\n\n**Last checked:** 1:23 PM PT (confirmed fresh)\n**Context:** 80% - session ending intentionally per new hygiene rules\n\n## What got done today\n- Yama Bitwarden: fully autonomous \u2705\n- Mission Control: markdown reader, 10 file cards, click-to-expand modals \u2705\n- Rate limit root cause found: context bloat (136 API calls in one session)\n- Crons fixed: Nightly Sprint \u2192 Haiku + plan only (120s). Task Check \u2192 status only (45s)\n- AGENTS.md + CORRECTIONS.md updated on both Kikai and Yama with session hygiene rules\n- OpenClaw updated: 2026.2.19 \u2192 2026.2.21\n- For Crypto testing: 81 tests done by Yama. Phase 1 (auth/API key) still blocked on Gmail OTP\n\n## Active Task\nops/ACTIVE-TASK.md - For Crypto Bot API Testing Phase 1 (BLOCKED on Gmail OTP)\n\n## Blocker for WJP\nFor Crypto Phase 1: Need Gmail OTP forwarded once to break the headless browser block.\nPrivy sends to yamaonchain@gmail.com - forward the 6-digit code when it arrives.\n\n## Next session priorities\n1. Fresh session - do NOT carry this context forward\n2. For Crypto Phase 1 (auth) if WJP provides OTP\n3. Otherwise pick next task from GOALS.md\n",
-      "preview": "Last checked: 1:23 PM PT (confirmed fresh)"
+      "content": "# SESSION STATE - 2026-02-21\n\n**Last checked:** 7:23 PM PT\n**Status:** For Crypto testing progressing. Phase A + Phase C complete. Phase B (auth) pending.\n\n## What got done today (updated 7:23 PM)\n- Yama Bitwarden: fully autonomous \u2705\n- Mission Control: markdown reader, 10 file cards, click-to-expand modals \u2705\n- Rate limit root cause found: context bloat (136 API calls in one session)\n- Crons fixed: Nightly Sprint \u2192 Haiku + plan only (120s). Task Check \u2192 status only (45s)\n- AGENTS.md + CORRECTIONS.md updated on both Kikai and Yama with session hygiene rules\n- OpenClaw updated: 2026.2.19 \u2192 2026.2.21\n- For Crypto Phase A (wallet extensions): \u2705 All 5 extensions downloaded + stored (~/wallets/extensions/)\n- For Crypto Phase C (WJP's 3 phases): \u2705 llm.txt, llm-full.txt, /api/llm/*, sitemap all verified\n- For Crypto Phase B (auth) setup in progress\n\n## Active Task\nops/ACTIVE-TASK.md - For Crypto Full Testing Infrastructure (Phases A-E). Phase A \u2705, Phase C \u2705, Phase B next.\n\n## Blockers & Decisions Waiting\n1. **forcrypto.market DNS** (CRITICAL) - 2-min GoDaddy fix, moved to NEEDS-WJP.md\n2. **Agency GO/NO-GO** (medium) - 18-file package ready, awaits greenlight\n3. **67 brand re-activation** (medium) - market timing ideal, playbook complete\n4. **PR #7** (medium) - blocked on WJP direction\n\n## Next session priorities\n1. Continue Phase B (auth) \u2192 spawn sub-agent if needed\n2. Pick next task from GOALS.md if For Crypto paused\n3. Check NEEDS-WJP.md for any urgent decisions\n",
+      "preview": "Last checked: 7:23 PM PT"
     },
     {
       "name": "Corrections",
