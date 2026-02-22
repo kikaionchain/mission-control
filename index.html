@@ -6,7 +6,13 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Mission Control v8</title>
+<script>
+// Auto cache-bust: redirect to timestamped URL if no version param
+if (!location.search.includes('_v=')) {
+  location.replace(location.pathname + '?_v=' + Date.now());
+}
+</script>
+<title>Mission Control</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
@@ -953,6 +959,7 @@ body {
     </div>
     <div class="header-right">
       <div id="last-updated" style="font-size:14px;"></div>
+      <div style="font-size:12px;color:var(--dim);" id="build-stamp"></div>
       <div class="refresh-badge" onclick="loadData()">
         <div class="refresh-dot" id="refresh-dot"></div>
         <span id="countdown">60s</span>
@@ -1484,6 +1491,8 @@ function escHtml(str) {
 // ════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════
+const stamp = document.getElementById('build-stamp');
+if (stamp) stamp.textContent = 'loaded ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
 loadData();
 </script>
 </body>
