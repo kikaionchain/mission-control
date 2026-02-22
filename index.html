@@ -122,12 +122,12 @@ body {
 
 /* ─── MAIN ────────────────────────────────────────────── */
 .main {
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
   gap: 28px;
+  box-sizing: border-box;
 }
 
 /* ─── SECTION TITLE ───────────────────────────────────── */
@@ -148,6 +148,15 @@ body {
   flex: 1;
   height: 1px;
   background: var(--border);
+}
+
+.section-pfp {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
 }
 
 /* ─── CARD ────────────────────────────────────────────── */
@@ -208,7 +217,7 @@ body {
 /* ─── YOUR MOVE SECTION ───────────────────────────────── */
 .your-move-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 8px;
 }
 
@@ -297,7 +306,7 @@ body {
 /* ─── AGENTS SECTION ──────────────────────────────────── */
 .agents-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 12px;
 }
 
@@ -431,7 +440,7 @@ body {
 /* ─── PROJECTS SECTION ────────────────────────────────── */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 12px;
 }
 
@@ -796,7 +805,7 @@ function render(data) {
   needsWjp.sort((a, b) => (urgencyOrder[a.urgency] || 2) - (urgencyOrder[b.urgency] || 2));
 
   const yourMoveSection = document.createElement('section');
-  yourMoveSection.innerHTML = '<div class="section-title">Your Move</div>';
+  yourMoveSection.innerHTML = '<div class="section-title"><img class="section-pfp" src="./wjp-pfp.png" alt="WJP">WJP</div>';
   const moveGrid = document.createElement('div');
   moveGrid.className = 'your-move-grid';
 
