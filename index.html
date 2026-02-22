@@ -568,6 +568,20 @@ body {
   padding: 0 16px 12px;
 }
 
+.project-checklist {
+  padding: 8px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checklist-status {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
 .need-item {
   display: flex;
   align-items: flex-start;
@@ -1160,27 +1174,63 @@ function render(data, crons) {
   topRow.appendChild(topRight);
   main.appendChild(topRow);
 
+  // ── PARSE ACTIVE TASK (for injection into project cards) ─
+  const activeTaskFile = (data.files || []).find(f => f.name === 'ACTIVE TASK');
+  const activeTaskByProject = {}; // projectNameLower → [{done, label}]
+  let activeTaskStatus = '';
+
+  if (activeTaskFile && activeTaskFile.content) {
+    const lines = activeTaskFile.content.split('\n');
+    let taskTitle = '';
+    let matchedProject = null;
+
+    // Determine which project this task belongs to
+    const titleLine = lines.find(l => l.startsWith('# '));
+    if (titleLine) {
+      taskTitle = titleLine.replace('# ', '').trim();
+      activeTaskStatus = (lines.find(l => l.startsWith('**Status:**')) || '')
+        .replace('**Status:**', '').trim();
+      // Match against known project names
+      const projNames = (data.projects || []).map(p => p.name.toLowerCase());
+      matchedProject = projNames.find(n => taskTitle.toLowerCase().includes(n)) || 'other';
+    }
+
+    if (matchedProject) {
+      activeTaskByProject[matchedProject] = [];
+      lines.forEach(line => {
+        const doneMatch = line.match(/^[\s-]*\[x\]\s+(.+)/i);
+        const todoMatch = line.match(/^[\s-]*\[ \]\s+(.+)/);
+        if (doneMatch || todoMatch) {
+          activeTaskByProject[matchedProject].push({
+            done: !!doneMatch,
+            label: ((doneMatch || todoMatch)[1]).trim()
+          });
+        }
+      });
+    }
+  }
+
   // ── PROJECTS ──────────────────────────────────────────
-  if (data.projects && data.projects.length > 0) {
+  {
     const projectsSection = document.createElement('section');
     projectsSection.innerHTML = '<div class="section-title">Projects</div>';
     const projectsGrid = document.createElement('div');
     projectsGrid.className = 'projects-grid';
 
-    const sorted = [...data.projects].sort((a, b) => (a.priority || 99) - (b.priority || 99));
+    const projects = data.projects && data.projects.length > 0
+      ? [...data.projects].sort((a, b) => (a.priority || 99) - (b.priority || 99))
+      : [];
 
-    sorted.forEach(proj => {
+    // Track unclaimed needsWjp for "Other" card
+    const claimedNeedIds = new Set();
+
+    projects.forEach(proj => {
       const card = document.createElement('div');
       card.className = 'project-card';
       card.style.borderLeftColor = proj.color || 'var(--border2)';
 
       const statusStr = (proj.status || 'unknown').toLowerCase();
-      let statusClass = statusStr;
-      if (statusStr === 'active') statusClass = 'active';
-      else if (statusStr === 'building') statusClass = 'building';
-      else if (statusStr === 'paused') statusClass = 'paused';
-      else if (statusStr === 'blocked') statusClass = 'blocked';
-      else if (statusStr === 'queued') statusClass = 'queued';
+      const statusClass = ['active','building','paused','blocked','queued'].includes(statusStr) ? statusStr : 'queued';
 
       const tasks = proj.tasks || [];
       let tasksHtml = '';
@@ -1198,9 +1248,29 @@ function render(data, crons) {
         `;
       });
 
+      // Inject active task checklist if it belongs to this project
+      const projKey = proj.name.toLowerCase();
+      const checklistItems = activeTaskByProject[projKey] || [];
+      let checklistHtml = '';
+      if (checklistItems.length > 0) {
+        checklistHtml = `<div class="project-divider"></div><div class="project-checklist">`;
+        if (activeTaskStatus) {
+          checklistHtml += `<div class="checklist-status">${escHtml(activeTaskStatus)}</div>`;
+        }
+        checklistItems.forEach(item => {
+          checklistHtml += `
+            <div class="task-line">
+              <div class="task-check ${item.done ? 'done' : 'todo'}">${item.done ? '✓' : ''}</div>
+              <div class="task-label ${item.done ? 'done-label' : 'todo-label'}">${escHtml(item.label)}</div>
+            </div>`;
+        });
+        checklistHtml += `</div>`;
+      }
+
       const needs = proj.needsToDo || [];
       let needsHtml = '';
       needs.forEach(n => {
+        if (n.id) claimedNeedIds.add(n.id);
         const isUrgent = n.urgent ? ' urgent' : '';
         const dotClass = n.wjp ? 'wjp-dot' : 'agent-dot';
         needsHtml += `
@@ -1223,91 +1293,51 @@ function render(data, crons) {
         ${tasksHtml || needs.length > 0 ? '<div class="project-divider"></div>' : ''}
         ${tasksHtml ? '<div class="project-task">' + tasksHtml + '</div>' : ''}
         ${needsHtml ? '<div class="project-needs">' + needsHtml + '</div>' : ''}
+        ${checklistHtml}
       `;
 
       projectsGrid.appendChild(card);
     });
 
+    // ── OTHER PROJECT CARD ─────────────────────────────
+    const otherNeeds = (data.needsWjp || []).filter(n => !n.project || !projects.find(p => p.name === n.project));
+    const otherChecklist = activeTaskByProject['other'] || [];
+    const otherCard = document.createElement('div');
+    otherCard.className = 'project-card';
+    otherCard.style.borderLeftColor = 'var(--border2)';
+
+    let otherNeedsHtml = otherNeeds.map(n => `
+      <div class="need-item${n.urgent ? ' urgent' : ''}">
+        <div class="need-dot ${n.wjp ? 'wjp-dot' : 'agent-dot'}"></div>
+        <span class="need-text ${n.wjp ? 'wjp' : ''}">${escHtml(n.text || '')}</span>
+      </div>`).join('');
+
+    let otherCheckHtml = otherChecklist.map(item => `
+      <div class="task-line">
+        <div class="task-check ${item.done ? 'done' : 'todo'}">${item.done ? '✓' : ''}</div>
+        <div class="task-label ${item.done ? 'done-label' : 'todo-label'}">${escHtml(item.label)}</div>
+      </div>`).join('');
+
+    otherCard.innerHTML = `
+      <div class="project-header">
+        <div>
+          <div class="project-name">Other</div>
+          <div class="project-priority">General</div>
+        </div>
+        <span class="project-status queued">misc</span>
+      </div>
+      <div class="project-desc">Unassigned tasks and items.</div>
+      ${otherNeedsHtml || otherCheckHtml ? '<div class="project-divider"></div>' : ''}
+      ${otherNeedsHtml ? '<div class="project-needs">' + otherNeedsHtml + '</div>' : ''}
+      ${otherCheckHtml ? '<div class="project-checklist">' + otherCheckHtml + '</div>' : ''}
+    `;
+    projectsGrid.appendChild(otherCard);
+
     projectsSection.appendChild(projectsGrid);
     main.appendChild(projectsSection);
   }
 
-  // ── MIDDLE ROW: Active Task (left) + Crons (right) ────
-  const middleRow = document.createElement('div');
-  middleRow.className = 'middle-row';
-  const midLeft = document.createElement('div');
-  midLeft.className = 'section-block';
-  const midRight = document.createElement('div');
-  midRight.className = 'section-block';
-
-  // ── TASKS ─────────────────────────────────────────────
-  const activeTaskFile = (data.files || []).find(f => f.name === 'ACTIVE TASK');
-  if (activeTaskFile && activeTaskFile.content) {
-    const tasksSection = document.createElement('section');
-    tasksSection.innerHTML = '<div class="section-title">Active Task</div>';
-    const container = document.createElement('div');
-    container.className = 'tasks-container';
-
-    const lines = activeTaskFile.content.split('\n');
-    let taskTitle = '';
-    let currentPhase = '';
-    let taskCount = 0;
-
-    lines.forEach(line => {
-      // Title
-      if (line.startsWith('# ') && !taskTitle) {
-        taskTitle = line.replace('# ', '').trim();
-        const titleEl = document.createElement('div');
-        titleEl.className = 'task-status-row';
-        titleEl.innerHTML = `<strong style="color:var(--text);font-size:17px;">${escHtml(taskTitle)}</strong>`;
-        container.appendChild(titleEl);
-        return;
-      }
-
-      // Status line
-      if (line.startsWith('**Status:**')) {
-        const status = line.replace('**Status:**', '').trim();
-        const statusEl = document.createElement('div');
-        statusEl.className = 'task-status-row';
-        statusEl.innerHTML = `<span style="color:var(--text2);">${escHtml(status)}</span>`;
-        container.appendChild(statusEl);
-        return;
-      }
-
-      // Phase headers (## Phase)
-      if (line.startsWith('## Phase') || line.startsWith('## Phase')) {
-        currentPhase = line.replace(/^#+\s*/, '').trim();
-        const phaseEl = document.createElement('div');
-        phaseEl.className = 'task-section-header';
-        phaseEl.textContent = currentPhase;
-        container.appendChild(phaseEl);
-        return;
-      }
-
-      // Checkboxes
-      const doneMatch = line.match(/^[\s-]*\[x\]\s+(.+)/i);
-      const todoMatch = line.match(/^[\s-]*\[ \]\s+(.+)/);
-
-      if (doneMatch || todoMatch) {
-        const isDone = !!doneMatch;
-        const label = (doneMatch || todoMatch)[1].trim();
-        taskCount++;
-
-        const item = document.createElement('div');
-        item.className = 'task-line';
-        item.innerHTML = `
-          <div class="task-check ${isDone ? 'done' : 'todo'}">${isDone ? '✓' : ''}</div>
-          <div class="task-label ${isDone ? 'done-label' : 'todo-label'}">${escHtml(label)}</div>
-        `;
-        container.appendChild(item);
-      }
-    });
-
-    if (taskCount > 0) {
-      tasksSection.appendChild(container);
-      midLeft.appendChild(tasksSection);
-    }
-  }
+  // ── CRONS (full width, tasks are now inside project cards) ─
 
   // ── CRONS ─────────────────────────────────────────────
   if (Array.isArray(crons) && crons.length > 0) {
@@ -1339,12 +1369,8 @@ function render(data, crons) {
     });
 
     cronsSection.appendChild(cronsGrid);
-    midRight.appendChild(cronsSection);
+    main.appendChild(cronsSection);
   }
-
-  middleRow.appendChild(midLeft);
-  middleRow.appendChild(midRight);
-  main.appendChild(middleRow);
 
   // ── FILES ──────────────────────────────────────────────
   const files = Array.isArray(data.files) ? data.files : [];
