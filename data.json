@@ -1,93 +1,91 @@
 {
-  "updatedAt": "2026-02-22T04:59:48.040147+00:00",
+  "updatedAt": "2026-02-22T05:00:34.325742+00:00",
   "board": {
     "doing": [
       {
-        "id": "for-crypto---full-testing-infrastructure",
-        "project": "For Crypto",
-        "title": "For Crypto - Full Testing Infrastructure",
+        "id": "mission-control-redesign",
+        "project": "OS",
+        "title": "Mission Control redesign \u2014 project-based work board + live agent monitor",
         "owner": "Kikai",
-        "lastAction": "Phase A - Wallet Extensions done. Phase C - Test WJP's 3 Phases done.",
-        "nextAction": "Download Phantom extension zip (from phantom.app or crxextractor)",
-        "blockedOn": "Bot API lifecycle (needs auth) + listing UI tests (needs public listing)",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
+        "lastAction": "Sub-agent building new UI (project columns, live context %, Intel, Files)",
+        "nextAction": "Deploy when sub-agent finishes (~5 min)",
+        "blockedOn": null,
+        "updatedAt": "2026-02-22T05:00:34.325900+00:00"
+      },
+      {
+        "id": "for-crypto-testing",
+        "project": "For Crypto",
+        "title": "For Crypto \u2014 Bot API lifecycle tests",
+        "owner": "Kikai",
+        "lastAction": "LLM endpoints live \u2705. Wallet extensions staged \u2705. 5 issues filed on GitHub.",
+        "nextAction": "Waiting on Privy OTP from WJP to complete bot auth \u2192 run Phases D + E",
+        "blockedOn": "Privy OTP for kikaionchain@gmail.com",
+        "updatedAt": "2026-02-22T05:00:34.325903+00:00"
       }
     ],
     "needsWjp": [
       {
-        "id": "--critical--forcrypto-market-is-down--go",
+        "id": "dns-fix",
         "project": "For Crypto",
-        "title": "\ud83d\udea8 CRITICAL: forcrypto.market is DOWN (GoDaddy parking page)",
+        "title": "\ud83d\udea8 forcrypto.market DNS \u2014 site showing GoDaddy ads",
         "urgency": "critical",
-        "ask": "Fix DNS in GoDaddy. 2-minute task.",
-        "impact": "Anyone clicking any link to forcrypto.market sees ads. Bot API integrations broken. SEO damage accumulating.",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
+        "ask": "GoDaddy \u2192 forcrypto.market \u2192 Add A records: @ \u2192 76.76.21.61 and 76.76.21.98. CNAME: www \u2192 cname.vercel-dns.com. 2-minute fix.",
+        "impact": "Every forcrypto.market link shows a GoDaddy ad page instead of the app",
+        "updatedAt": "2026-02-22T05:00:34.325905+00:00"
       },
       {
-        "id": "1--67-brand---re-activate-posts---growth",
-        "project": "67",
-        "title": "1. 67 Brand - Re-Activate Posts + Growth Investment?",
+        "id": "privy-otp",
+        "project": "For Crypto",
+        "title": "Privy OTP for bot API testing",
+        "urgency": "high",
+        "ask": "Go to for-crypto.vercel.app \u2192 Connect \u2192 Email \u2192 kikaionchain@gmail.com \u2192 forward the 6-digit code here. One time only, session persists after.",
+        "impact": "Bot API lifecycle tests (Phases D + E) are fully queued and ready \u2014 just need this to run",
+        "updatedAt": "2026-02-22T05:00:34.325906+00:00"
+      },
+      {
+        "id": "pr-review",
+        "project": "For Crypto",
+        "title": "PR #8 review \u2014 production polish (audit/production-polish branch)",
         "urgency": "medium",
-        "ask": "Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now.",
-        "impact": "",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
-      },
-      {
-        "id": "2--agency---go---no-go-decision",
-        "project": "Kanso",
-        "title": "2. Agency - GO / NO-GO Decision",
-        "urgency": "critical",
-        "ask": "Do you want to launch the KANSO agency? Ready to execute same day.",
-        "impact": "",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
-      },
-      {
-        "id": "3--for-crypto---pr--7-merge-decision",
-        "project": "For Crypto",
-        "title": "3. For Crypto - PR #7 Merge Decision",
-        "urgency": "critical",
-        "ask": "Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?",
-        "impact": "",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
+        "ask": "Review and merge PR #8 on github.com/00onchain/for-crypto when ready",
+        "impact": "Support page, fee clarity, broken links, legal dates fix",
+        "updatedAt": "2026-02-22T05:00:34.325908+00:00"
       }
     ],
     "upNext": [
       {
-        "id": "kanso-launch",
-        "project": "Kanso",
-        "title": "Agency launch \u2014 18-file package ready",
-        "owner": "Kikai",
-        "readyToStart": true,
-        "blockedOn": "WJP GO signal",
-        "detail": "Domain reg, email setup, first 3 outreach DMs \u2014 all executable same day.",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
-      },
-      {
         "id": "for-crypto-bot-api",
         "project": "For Crypto",
-        "title": "Bot API lifecycle tests (Phases D + E)",
+        "title": "Bot API lifecycle tests \u2014 create listing, cosell, discover, delete",
         "owner": "Kikai",
         "readyToStart": false,
-        "blockedOn": "Auth (Phase B) must complete first",
-        "detail": "Full CRUD test of /api/bot/* endpoints.",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
+        "blockedOn": "Privy OTP (see NEEDS WJP)",
+        "updatedAt": "2026-02-22T05:00:34.325910+00:00"
       },
       {
-        "id": "67-reactivation",
-        "project": "67",
-        "title": "67 Brand Phase 1 \u2014 community rebuild",
+        "id": "for-crypto-mobile-fix",
+        "project": "For Crypto",
+        "title": "Fix mobile listings bug \u2014 listings not rendering on iPhone/Pixel (Issue #9)",
+        "owner": "Yama",
+        "readyToStart": true,
+        "blockedOn": null,
+        "updatedAt": "2026-02-22T05:00:34.325911+00:00"
+      },
+      {
+        "id": "divvvy-start",
+        "project": "Divvvy",
+        "title": "Divvvy \u2014 begin scoping after For Crypto ships",
         "owner": "Kikai",
         "readyToStart": false,
-        "blockedOn": "WJP GO on 67 re-activation",
-        "detail": "Enable posts + influencer partnerships.",
-        "updatedAt": "2026-02-22T04:59:48.040147+00:00"
+        "blockedOn": "For Crypto must ship first",
+        "updatedAt": "2026-02-22T05:00:34.325912+00:00"
       }
     ]
   },
   "health": {
     "kikai": "working",
-    "yama": "ssh-only",
-    "lastHeartbeat": "2026-02-22T04:59:48.040147+00:00",
+    "yama": "online",
+    "lastHeartbeat": "2026-02-22T05:00:34.325914+00:00",
     "crons": {
       "healthy": 11,
       "errors": 0
