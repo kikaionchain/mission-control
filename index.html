@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Mission Control v5</title>
+<title>Mission Control v6</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
@@ -676,6 +676,35 @@ body {
   color: var(--text2);
 }
 
+/* ─── DASHBOARD LAYOUT ───────────────────────────────── */
+.top-row {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+.middle-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.agent-sidebar .agents-grid {
+  grid-template-columns: 1fr;
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .top-row { grid-template-columns: 1fr; }
+  .middle-row { grid-template-columns: 1fr; }
+}
+
 /* ─── TASKS ───────────────────────────────────────────── */
 .tasks-container {
   display: flex;
@@ -753,7 +782,7 @@ body {
 /* ─── CRONS ───────────────────────────────────────────── */
 .crons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 8px;
 }
 
@@ -1045,9 +1074,18 @@ function render(data, crons) {
   }
 
   yourMoveSection.appendChild(moveGrid);
-  main.appendChild(yourMoveSection);
 
-  // ── AGENTS ────────────────────────────────────────────
+  // ── TOP ROW: WJP (left) + Agents (right) ──────────────
+  const topRow = document.createElement('div');
+  topRow.className = 'top-row';
+  const topLeft = document.createElement('div');
+  topLeft.className = 'section-block';
+  topLeft.appendChild(yourMoveSection);
+  topRow.appendChild(topLeft);
+
+  const topRight = document.createElement('div');
+  topRight.className = 'section-block agent-sidebar';
+
   if (data.agents) {
     const agentsSection = document.createElement('section');
     agentsSection.innerHTML = '<div class="section-title">Agents</div>';
@@ -1107,8 +1145,11 @@ function render(data, crons) {
     });
 
     agentsSection.appendChild(agentsGrid);
-    main.appendChild(agentsSection);
+    topRight.appendChild(agentsSection);
   }
+
+  topRow.appendChild(topRight);
+  main.appendChild(topRow);
 
   // ── PROJECTS ──────────────────────────────────────────
   if (data.projects && data.projects.length > 0) {
@@ -1182,6 +1223,14 @@ function render(data, crons) {
     main.appendChild(projectsSection);
   }
 
+  // ── MIDDLE ROW: Active Task (left) + Crons (right) ────
+  const middleRow = document.createElement('div');
+  middleRow.className = 'middle-row';
+  const midLeft = document.createElement('div');
+  midLeft.className = 'section-block';
+  const midRight = document.createElement('div');
+  midRight.className = 'section-block';
+
   // ── TASKS ─────────────────────────────────────────────
   const activeTaskFile = (data.files || []).find(f => f.name === 'ACTIVE TASK');
   if (activeTaskFile && activeTaskFile.content) {
@@ -1247,7 +1296,7 @@ function render(data, crons) {
 
     if (taskCount > 0) {
       tasksSection.appendChild(container);
-      main.appendChild(tasksSection);
+      midLeft.appendChild(tasksSection);
     }
   }
 
@@ -1281,8 +1330,12 @@ function render(data, crons) {
     });
 
     cronsSection.appendChild(cronsGrid);
-    main.appendChild(cronsSection);
+    midRight.appendChild(cronsSection);
   }
+
+  middleRow.appendChild(midLeft);
+  middleRow.appendChild(midRight);
+  main.appendChild(middleRow);
 
   // ── FILES ──────────────────────────────────────────────
   const files = Array.isArray(data.files) ? data.files : [];
