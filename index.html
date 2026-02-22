@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Mission Control v6</title>
+<title>Mission Control v7</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
@@ -73,7 +73,7 @@ body {
   font-size: 23px;
   font-weight: 800;
   letter-spacing: -0.5px;
-  color: var(--accent);
+  color: var(--text);
 }
 
 .header-logo span {
@@ -111,12 +111,12 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--green);
+  background: var(--dim);
   animation: pulse 2s infinite;
 }
 
 .refresh-dot.stale {
-  background: var(--gold);
+  background: var(--dim);
   animation: none;
 }
 
@@ -266,10 +266,10 @@ body {
   margin-top: 1px;
 }
 
-.urgency-critical { background: rgba(255,59,59,0.15); color: var(--red); }
-.urgency-high { background: rgba(255,140,0,0.15); color: var(--orange); }
-.urgency-medium { background: rgba(255,215,0,0.15); color: var(--gold); }
-.urgency-low { background: rgba(136,136,136,0.15); color: var(--text2); }
+.urgency-critical,
+.urgency-high,
+.urgency-medium,
+.urgency-low { background: var(--surface2); color: var(--text2); }
 
 .move-content {
   flex: 1;
@@ -311,7 +311,7 @@ body {
 }
 
 .all-clear .icon { font-size: 36px; margin-bottom: 8px; }
-.all-clear .label { color: var(--green); font-weight: 600; }
+.all-clear .label { color: var(--text2); font-weight: 600; }
 
 /* ─── AGENTS SECTION ──────────────────────────────────── */
 .agents-grid {
@@ -373,11 +373,11 @@ body {
   border-radius: 999px;
 }
 
-.status-active { background: rgba(57,255,20,0.12); color: var(--green); }
-.status-online { background: rgba(0,217,255,0.12); color: var(--accent); }
-.status-ssh-only { background: rgba(255,215,0,0.12); color: var(--gold); }
-.status-offline { background: rgba(255,59,59,0.12); color: var(--red); }
-.status-unknown { background: rgba(136,136,136,0.12); color: var(--text2); }
+.status-active,
+.status-online,
+.status-ssh-only,
+.status-offline,
+.status-unknown { background: var(--surface2); color: var(--text2); border: 1px solid var(--border2); }
 
 .agent-field {
   margin-bottom: 10px;
@@ -427,11 +427,8 @@ body {
 .context-pct {
   font-size: 16px;
   font-weight: 700;
+  color: var(--text2);
 }
-
-.context-pct.low { color: var(--green); }
-.context-pct.mid { color: var(--gold); }
-.context-pct.high { color: var(--red); }
 
 .rate-limit-warning {
   display: flex;
@@ -439,11 +436,11 @@ body {
   gap: 6px;
   margin-top: 8px;
   padding: 6px 10px;
-  background: rgba(255,59,59,0.08);
-  border: 1px solid rgba(255,59,59,0.25);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
   border-radius: 6px;
   font-size: 16px;
-  color: var(--red);
+  color: var(--text2);
   font-weight: 600;
 }
 
@@ -495,11 +492,11 @@ body {
   border-radius: 999px;
 }
 
-.project-status.active { background: rgba(57,255,20,0.1); color: var(--green); }
-.project-status.building { background: rgba(0,217,255,0.1); color: var(--accent); }
-.project-status.paused { background: rgba(255,215,0,0.1); color: var(--gold); }
-.project-status.blocked { background: rgba(255,59,59,0.1); color: var(--red); }
-.project-status.queued { background: rgba(136,136,136,0.1); color: var(--text2); }
+.project-status.active,
+.project-status.building,
+.project-status.paused,
+.project-status.blocked,
+.project-status.queued { background: var(--surface2); color: var(--text2); border: 1px solid var(--border2); }
 
 .project-desc {
   padding: 0 16px 12px;
@@ -533,10 +530,10 @@ body {
   flex-shrink: 0;
 }
 
-.dot-active { background: var(--green); }
-.dot-blocked { background: var(--red); }
-.dot-paused { background: var(--gold); }
-.dot-queued { background: var(--text2); }
+.dot-active { background: var(--text2); }
+.dot-blocked { background: var(--dim); }
+.dot-paused { background: var(--dim); }
+.dot-queued { background: var(--border2); }
 
 .task-text {
   font-size: 16px;
@@ -560,7 +557,7 @@ body {
 
 .next-action::before {
   content: "→ ";
-  color: var(--accent);
+  color: var(--dim);
   font-weight: 600;
 }
 
@@ -586,8 +583,8 @@ body {
   margin-top: 6px;
 }
 
-.need-dot.wjp-dot { background: var(--red); }
-.need-dot.agent-dot { background: var(--accent); }
+.need-dot.wjp-dot { background: var(--dim); }
+.need-dot.agent-dot { background: var(--border2); }
 
 .need-text {
   color: var(--text2);
@@ -597,7 +594,7 @@ body {
   color: var(--text);
 }
 
-.need-item.urgent .need-text { color: var(--red); }
+.need-item.urgent .need-text { color: var(--text); font-weight: 500; }
 
 /* ─── HEALTH FOOTER ───────────────────────────────────── */
 .health-bar {
@@ -744,9 +741,9 @@ body {
 }
 
 .task-check.done {
-  background: rgba(57,255,20,0.12);
-  border: 1px solid var(--green);
-  color: var(--green);
+  background: var(--surface2);
+  border: 1px solid var(--dim);
+  color: var(--text2);
 }
 
 .task-check.todo {
@@ -1035,7 +1032,7 @@ function render(data, crons) {
       dot.style.background = 'var(--red)';
       label.textContent = 'Crons: ' + c.healthy + ' ok / ' + c.errors + ' errors';
     } else {
-      dot.style.background = 'var(--green)';
+      dot.style.background = 'var(--dim)';
       label.textContent = 'Crons: ' + c.healthy + ' healthy';
     }
   }
@@ -1260,7 +1257,7 @@ function render(data, crons) {
         const status = line.replace('**Status:**', '').trim();
         const statusEl = document.createElement('div');
         statusEl.className = 'task-status-row';
-        statusEl.innerHTML = `<span style="color:var(--gold);">${escHtml(status)}</span>`;
+        statusEl.innerHTML = `<span style="color:var(--text2);">${escHtml(status)}</span>`;
         container.appendChild(statusEl);
         return;
       }
@@ -1310,7 +1307,7 @@ function render(data, crons) {
     crons.forEach(job => {
       const ok = job.lastStatus === 'ok' || job.consecutiveErrors === 0;
       const disabled = !job.enabled;
-      const dotColor = disabled ? 'var(--text2)' : ok ? 'var(--green)' : 'var(--red)';
+      const dotColor = disabled ? 'var(--border2)' : ok ? 'var(--dim)' : 'var(--red)';
 
       // Format last run
       let lastRun = '—';
