@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Mission Control v7</title>
+<title>Mission Control v8</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
@@ -43,11 +43,19 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  width: 100vw;
+  width: 100%;
   background: rgba(0,0,0,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border2);
-  padding: 12px 32px;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1600px;
+  padding: 0 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -127,9 +135,10 @@ body {
 
 /* ─── MAIN ────────────────────────────────────────────── */
 .main {
-  width: 100vw;
-  max-width: 100vw;
-  padding: 24px 32px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 48px;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -599,13 +608,21 @@ body {
 /* ─── HEALTH FOOTER ───────────────────────────────────── */
 .health-bar {
   display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+}
+
+.health-bar-inner {
+  width: 100%;
+  max-width: 1600px;
+  padding: 14px 48px;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  width: 100vw;
-  padding: 14px 32px;
-  border-top: 1px solid var(--border);
+  font-size: 16px;
+  color: var(--text2);
   font-size: 16px;
   color: var(--text2);
 }
@@ -900,8 +917,9 @@ body {
 
 /* ─── MOBILE ──────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .header { padding: 10px 14px; }
-  .main { padding: 16px 12px; gap: 20px; }
+  .header-inner { padding: 0 16px; }
+  .main { padding: 16px; gap: 20px; }
+  .health-bar-inner { padding: 12px 16px; }
   .move-title { white-space: normal; }
 }
 </style>
@@ -910,15 +928,16 @@ body {
 
 <!-- ══════════════════════ HEADER ══════════════════════════ -->
 <header class="header">
-  <div class="header-left">
-    <div class="header-logo">Mission Control</div>
-  </div>
-  <div class="header-right">
-    <div id="last-updated" style="font-size:14px;"></div>
-    <div style="font-size:11px;color:var(--border2);user-select:none;">v4</div>
-    <div class="refresh-badge" onclick="loadData()">
-      <div class="refresh-dot" id="refresh-dot"></div>
-      <span id="countdown">60s</span>
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-logo">Mission Control</div>
+    </div>
+    <div class="header-right">
+      <div id="last-updated" style="font-size:14px;"></div>
+      <div class="refresh-badge" onclick="loadData()">
+        <div class="refresh-dot" id="refresh-dot"></div>
+        <span id="countdown">60s</span>
+      </div>
     </div>
   </div>
 </header>
@@ -930,15 +949,17 @@ body {
 
 <!-- ══════════════════════ HEALTH BAR ══════════════════════ -->
 <div class="health-bar" id="health-bar" style="display:none;">
-  <div class="health-item">
-    <div class="health-dot" id="cron-dot" style="background:var(--text2);"></div>
-    <span id="cron-status">Crons: —</span>
-  </div>
-  <div class="health-item">
-    <span id="data-age">Data age: —</span>
-  </div>
-  <div class="health-item">
-    <a href="./data.json" target="_blank" style="color:var(--text2);font-size:14px;text-decoration:none;">data.json ↗</a>
+  <div class="health-bar-inner">
+    <div class="health-item">
+      <div class="health-dot" id="cron-dot" style="background:var(--dim);"></div>
+      <span id="cron-status">Crons: —</span>
+    </div>
+    <div class="health-item">
+      <span id="data-age">Data age: —</span>
+    </div>
+    <div class="health-item">
+      <a href="./data.json" target="_blank" style="color:var(--text2);font-size:14px;text-decoration:none;">data.json ↗</a>
+    </div>
   </div>
 </div>
 
