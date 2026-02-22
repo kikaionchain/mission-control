@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-21T14:25:05.448405",
+  "updatedAt": "2026-02-21T16:25:04.839835",
   "agents": {
     "kikai": {
       "status": "working",
@@ -184,7 +184,7 @@
         "text": "Auth flow verification"
       }
     ],
-    "fullMarkdown": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions (NEXT)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases (after Phase B)\nSub-agent task: Verify everything WJP's team shipped\n- [ ] GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery\n- [ ] GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference\n- [ ] GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive\n- [ ] GET /api/llm/listings \u2192 should return markdown listing feed\n- [ ] GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)\n- [ ] GET /api/sitemap.xml \u2192 should include dynamic listings\n- [ ] Verify checkout response includes `contracts` object\n- [ ] Run: bun audit --production (check CI result)\n- [ ] Verify 0 TS errors, 0 ESLint errors still hold\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n"
+    "fullMarkdown": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions \u2705 DONE (all 5 extensions at ~/wallets/extensions/, documented in ops/output/wallet-extensions.md)\n\n## Phase A - Wallet Extensions (NEXT - ARCHIVED)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases (after Phase B)\nSub-agent task: Verify everything WJP's team shipped\n- [ ] GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery\n- [ ] GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference\n- [ ] GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive\n- [ ] GET /api/llm/listings \u2192 should return markdown listing feed\n- [ ] GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)\n- [ ] GET /api/sitemap.xml \u2192 should include dynamic listings\n- [ ] Verify checkout response includes `contracts` object\n- [ ] Run: bun audit --production (check CI result)\n- [ ] Verify 0 TS errors, 0 ESLint errors still hold\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n"
   },
   "crons": [
     {
@@ -199,7 +199,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 55186,
-      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 6h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
+      "markdown": "# morning-brief\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 8 * * *` |\n| **Last Run** | 8h ago |\n| **Duration** | 55.2s |\n| **Model** | `anthropic/claude-sonnet-4-6` |\n\n\n"
     },
     {
       "id": "e8c287df-4494-4d56-ab65-922b46095fc1",
@@ -227,7 +227,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 10789,
-      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 10.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# session-cleanup\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 3h ago |\n| **Duration** | 10.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "5fac96d9-78e1-44ec-bde0-9a5818f3315a",
@@ -241,7 +241,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 4445,
-      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 6h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# OpenClaw Release Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 9 * * 1,4` |\n| **Last Run** | 8h ago |\n| **Duration** | 4.4s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "9761052a-e059-46b3-ae90-4b2917d3b36c",
@@ -255,7 +255,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 698576,
-      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 7h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Nightly Build Sprint\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 23 * * *` |\n| **Last Run** | 9h ago |\n| **Duration** | 11m 38s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "88e323d2-9330-4b25-9942-6c6fad4ecda0",
@@ -269,7 +269,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 15293,
-      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 1h ago |\n| **Duration** | 15.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# session-state-freshener\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 3h ago |\n| **Duration** | 15.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "a43a4a47-f66c-4f4c-b158-dc8117ea401d",
@@ -277,13 +277,13 @@
       "enabled": true,
       "schedule": "every 4h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771716225272,
-      "lastRunMs": 1771701825282,
+      "nextRunMs": 1771730625272,
+      "lastRunMs": 1771716225285,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 6977,
-      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 3h ago |\n| **Duration** | 7.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 4766,
+      "markdown": "# Task Resumption Check\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 4h` |\n| **Last Run** | 1h ago |\n| **Duration** | 4.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "d7f3fbdf-7f78-4c39-9215-be7eac636470",
@@ -305,13 +305,13 @@
       "enabled": true,
       "schedule": "every 2h",
       "model": "anthropic/claude-haiku-4-5-20251001",
-      "nextRunMs": 1771712702456,
-      "lastRunMs": 1771705502468,
+      "nextRunMs": 1771719902456,
+      "lastRunMs": 1771712702464,
       "lastStatus": "ok",
       "lastError": "",
       "consecutiveErrors": 0,
-      "lastDurationMs": 5796,
-      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 5.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "lastDurationMs": 7836,
+      "markdown": "# Mission Control Data Refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 2h` |\n| **Last Run** | 2h ago |\n| **Duration** | 7.8s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "085d0c88-7ab4-4601-b050-a238d4593544",
@@ -325,7 +325,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 12262,
-      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 7h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# intel-refresh\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `0 7 * * *` |\n| **Last Run** | 9h ago |\n| **Duration** | 12.3s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     },
     {
       "id": "3e85ec88-b298-4afd-adad-a357719fe5fd",
@@ -339,7 +339,7 @@
       "lastError": "",
       "consecutiveErrors": 0,
       "lastDurationMs": 8016,
-      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 3h ago |\n| **Duration** | 8.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
+      "markdown": "# Yama Health Monitor\n\n| Field | Value |\n|-------|-------|\n| **Status** | \ud83d\udfe2 OK |\n| **Enabled** | Yes |\n| **Schedule** | `every 6h` |\n| **Last Run** | 5h ago |\n| **Duration** | 8.0s |\n| **Model** | `anthropic/claude-haiku-4-5-20251001` |\n\n\n"
     }
   ],
   "goals": [
@@ -469,7 +469,7 @@
       "name": "Active Task",
       "icon": "\u26a1",
       "path": "ops/ACTIVE-TASK.md",
-      "content": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions (NEXT)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases (after Phase B)\nSub-agent task: Verify everything WJP's team shipped\n- [ ] GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery\n- [ ] GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference\n- [ ] GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive\n- [ ] GET /api/llm/listings \u2192 should return markdown listing feed\n- [ ] GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)\n- [ ] GET /api/sitemap.xml \u2192 should include dynamic listings\n- [ ] Verify checkout response includes `contracts` object\n- [ ] Run: bun audit --production (check CI result)\n- [ ] Verify 0 TS errors, 0 ESLint errors still hold\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n",
+      "content": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions \u2705 DONE (all 5 extensions at ~/wallets/extensions/, documented in ops/output/wallet-extensions.md)\n\n## Phase A - Wallet Extensions (NEXT - ARCHIVED)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases (after Phase B)\nSub-agent task: Verify everything WJP's team shipped\n- [ ] GET https://for-crypto.vercel.app/llm.txt \u2192 should return plain-text agent discovery\n- [ ] GET https://for-crypto.vercel.app/llm-full.txt \u2192 full API reference\n- [ ] GET https://for-crypto.vercel.app/robots.txt \u2192 should include LLM-Txt directive\n- [ ] GET /api/llm/listings \u2192 should return markdown listing feed\n- [ ] GET /api/llm/listings/:id \u2192 markdown listing detail (use a real ID)\n- [ ] GET /api/sitemap.xml \u2192 should include dynamic listings\n- [ ] Verify checkout response includes `contracts` object\n- [ ] Run: bun audit --production (check CI result)\n- [ ] Verify 0 TS errors, 0 ESLint errors still hold\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n",
       "preview": "Status: IN_PROGRESS"
     },
     {
