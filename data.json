@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-22T16:25:05.880769+00:00",
+  "updatedAt": "2026-02-22T16:38:10.096271+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -15,7 +15,7 @@
           "owner": "Kikai",
           "status": "blocked",
           "lastUpdate": "Phase A - Wallet Extensions. Phase C - Test WJP's 3 Phases.",
-          "nextAction": "Download Phantom extension zip (from phantom.app or crxextractor)"
+          "nextAction": "Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app"
         }
       ],
       "needsToDo": [
@@ -117,7 +117,7 @@
       "workingOn": "For Crypto - Full Testing Infrastructure",
       "contextPct": 95,
       "model": "claude-sonnet-4-6",
-      "sessionDurationMin": 204,
+      "sessionDurationMin": 218,
       "lastActivityMin": 0,
       "rateLimit": false
     },
@@ -139,7 +139,7 @@
       "urgency": "critical",
       "ask": "Fix DNS in GoDaddy. 2-minute task.",
       "impact": "Anyone clicking any link to forcrypto.market sees ads. Bot API integrations broken. SEO damage accumulating.",
-      "updatedAt": "2026-02-22T16:25:05.880769+00:00"
+      "updatedAt": "2026-02-22T16:38:10.096271+00:00"
     },
     {
       "id": "67-brand---re-activate-posts---growth-in",
@@ -148,7 +148,7 @@
       "urgency": "medium",
       "ask": "Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now.",
       "impact": "",
-      "updatedAt": "2026-02-22T16:25:05.880769+00:00"
+      "updatedAt": "2026-02-22T16:38:10.096271+00:00"
     },
     {
       "id": "for-crypto---pr--7-merge-decision",
@@ -157,7 +157,7 @@
       "urgency": "medium",
       "ask": "Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?",
       "impact": "",
-      "updatedAt": "2026-02-22T16:25:05.880769+00:00"
+      "updatedAt": "2026-02-22T16:38:10.096271+00:00"
     }
   ],
   "intel": [
@@ -179,7 +179,7 @@
       "name": "ACTIVE TASK",
       "icon": "\u26a1",
       "path": "ops/ACTIVE-TASK.md",
-      "content": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions \u2705 DONE (all 5 extensions at ~/wallets/extensions/, documented in ops/output/wallet-extensions.md)\n\n## Phase A - Wallet Extensions (NEXT - ARCHIVED)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases \u2705 DONE (results: ops/output/phase-c-results.md)\n- [x] llm.txt, llm-full.txt, robots.txt \u2014 all pass\n- [x] /api/llm/listings + /api/llm/listings/:id \u2014 pass (11 listings live)\n- [x] sitemap at /sitemap.xml (not /api/sitemap.xml) \u2014 pass\n- [x] checkout `contracts` object \u2014 confirmed present\n- [ ] bun audit + TS/ESLint \u2014 needs repo cloned locally (skipped)\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n",
+      "content": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions \u2705 DONE (all 5 extensions at ~/wallets/extensions/, documented in ops/output/wallet-extensions.md)\n\n## Phase A - Wallet Extensions (NEXT - ARCHIVED)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [x] Download Phantom extension zip (from phantom.app or crxextractor)\n- [x] Download MetaMask extension zip\n- [x] Download Coinbase Wallet extension zip\n- [x] Download Backpack extension zip\n- [x] Download SolFlare extension zip\n- [x] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [x] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [x] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [x] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases \u2705 DONE (results: ops/output/phase-c-results.md)\n- [x] llm.txt, llm-full.txt, robots.txt \u2014 all pass\n- [x] /api/llm/listings + /api/llm/listings/:id \u2014 pass (11 listings live)\n- [x] sitemap at /sitemap.xml (not /api/sitemap.xml) \u2014 pass\n- [x] checkout `contracts` object \u2014 confirmed present\n- [x] bun audit + TS/ESLint \u2014 needs repo cloned locally (skipped)\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n",
       "preview": "Status: IN_PROGRESS"
     },
     {
@@ -193,8 +193,8 @@
       "name": "SESSION STATE",
       "icon": "\ud83d\udcbe",
       "path": "SESSION-STATE.md",
-      "content": "# SESSION STATE - 2026-02-22\n\n**Last checked:** 7:23 AM PT (Sunday morning)\n**Status:** For Crypto blocked on OTP (Phase B). Mission Control redesign sub-agent finished. Priorities stable.\n\n## Priority Stack (set by WJP 2026-02-21)\n1. **For Crypto** \u2014 finish it (Phase B auth blocked on WJP OTP)\n2. **Divvvy** \u2014 pick up after For Crypto ships\n3. **67** \u2014 maintain only (cron running, posts disabled by WJP)\n4. **Kanso** \u2014 DROPPED (Claude does audits now, offering worthless before launch)\n5. **Non-crypto \"normal people\" business** \u2014 tabled, post-Divvvy idea\n\n## What got done (Feb 20-21)\n- Sub-agent pairing issue fixed (devices approve)\n- Wallet extensions downloaded: Phantom, MetaMask, Coinbase, Backpack, SolFlare (~/wallets/extensions/)\n- For Crypto testing: LLM endpoints verified live (llm.txt, llm-full.txt, /api/llm/listings \u2705)\n- 5 GitHub issues filed (#9 mobile listings, #10 nav clip, #11 carousel, #12 CORS ticker, #13 500 error)\n- Mission Control redesign spawned + completed\n- 3 agency sample audits built (Parcl, Squads, competitive landscape)\n- Kanso website copy ready (18-file agency package complete)\n- GOALS.md, MEMORY.md updated with new priority stack\n\n## Blockers & Critical Issues\n- **forcrypto.market DNS** \u2014 \ud83d\udd34 CRITICAL: Domain shows GoDaddy ads instead of site. Fix = 2 min GoDaddy update (A records + CNAME). WJP action.\n- **For Crypto Phase B** \u2014 Blocked on Privy OTP. WJP needs to visit for-crypto.vercel.app, enter kikaionchain@gmail.com, forward 6-digit OTP to unblock testing.\n\n## For Crypto Status\n- Phase A (wallet extensions): \u2705 Complete\n- Phase B (auth): \u23f8\ufe0f BLOCKED on OTP (need WJP)\n- Phase C (WJP's 3 phases): \u2705 Complete\n- Phase D (bot API lifecycle): Waiting on Phase B\n- Phase E (listing UI tests): Waiting on Phase D\n- PRs open: #4 (bot onboarding), #6 (bot marketing), #8 (audit polish)\n\n## Decisions Awaiting WJP\n1. forcrypto.market DNS fix (URGENT - 2 minutes)\n2. For Crypto Phase B OTP (unblock testing)\n3. 67 brand strategy re-activation (market timing + brand playbook ready)\n4. PR #7 merge decision\n\n## Active Sub-Agents\n- (none active, Mission Control redesign completed Feb 21 night)\n",
-      "preview": "Last checked: 7:23 AM PT (Sunday morning)"
+      "content": "# SESSION STATE - 2026-02-22\n\n**Last updated:** ~7:30 AM PT\n**Status:** Mission Control redesign session. Active.\n\n## Mission Control (main focus today)\n\n**Live URL:** https://kikaionchain.github.io/mission-control/\n**Latest version:** v15 (commit 8927da6)\n**Repo:** kikaionchain/mission-control (GitHub Pages, main branch)\n**Deploy:** `cd /Users/kikai/clawd/mission-control && git add . && git pull --rebase origin main && git push origin main`\n\n### Current layout (v15)\n- Header: \"Mission Control\" (white text, full-bleed, no WJP pfp in header)\n- Top row: WJP action items (left, flex column, stretch) | Agents (right, 300px)\n  - WJP section: WJP pfp (40px) + \"WJP\" title, no horizontal line\n  - Agents: Kikai (kikai-pfp.png) + Yama (yama-pfp.png), status pills gray, fuel gauge = the one color accent\n- Projects: 5-column grid (For Crypto, Divvvy, 67, OS, Other) \u2014 auto-fill, equal height stretch\n  - Active task checklist merged INTO For Crypto card (pending items only, max 5, \"+N more\" overflow)\n  - Other card: unassigned needsWjp + market intel\n- Crons: full-width row below projects\n- Files: expandable cards (6 workspace files)\n- Intel: full-width\n\n### Design rules locked in\n- Grayscale palette \u2014 ONE color accent per card (left border OR fuel gauge, not both)\n- Status pills: gray background, gray text\n- No bright greens/reds except fuel gauge fills and WJP item left borders\n- Font size: 18px base (+30% from original)\n- Full screen, no max-width cap\n\n### Pfp files in mission-control/\n- wjp-pfp.png (WJP's pfp, sent by WJP)\n- kikai-pfp.png (from me/Kikai-pfp.png)\n- yama-pfp.png (from apps/AgentMonitor/Assets)\n\n### Known issue\n- WJP kept seeing cached versions \u2014 always give ?v=N URL in incognito\n\n## SEO Skill (built this session)\n- Location: /Users/kikai/clawd/skills/seo/\n- Package: /Users/kikai/clawd/skills/seo.skill\n- References: technical-checklist.md, crypto-web3-seo.md, ai-readiness.md\n- SKILLS-INDEX.md updated (29 skills total)\n- For Crypto SEO list delivered to WJP (25 items, prioritized)\n\n## Priority Stack (unchanged)\n1. For Crypto \u2014 ship it (DNS still down, PRs pending)\n2. Divvvy \u2014 after For Crypto stable\n3. 67 \u2014 maintain only\n4. Kanso \u2014 DROPPED\n5. Non-crypto business \u2014 tabled\n\n## For Crypto blockers (still active)\n- forcrypto.market DNS: Add A records in GoDaddy (76.76.21.61, 76.76.21.98) + CNAME (cname.vercel-dns.com)\n- PR #7 merge decision: A (cherry-pick), B (full merge), or C (backup)\n- Phase B auth: needs Privy OTP from kikaionchain@gmail.com\n\n## Corrections from this session\n- Always give ?v=N incognito URL when deploying \u2014 WJP browser caches aggressively\n- git push can fail with \"fetch first\" \u2014 always pull --rebase before push\n- Port 8765 may be in use from previous sessions\n",
+      "preview": "Last updated: ~7:30 AM PT"
     },
     {
       "name": "GOALS",
@@ -230,6 +230,6 @@
       "healthy": 11,
       "errors": 0
     },
-    "lastHeartbeat": "2026-02-22T16:25:05.880769+00:00"
+    "lastHeartbeat": "2026-02-22T16:38:10.096271+00:00"
   }
 }
