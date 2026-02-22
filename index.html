@@ -244,6 +244,7 @@ body {
   border-radius: 10px;
   border-left-width: 3px;
   transition: background 0.15s;
+  flex: 1;
 }
 
 .move-item:hover { background: var(--surface2); }
@@ -457,6 +458,8 @@ body {
   border-radius: 12px;
   border-left-width: 3px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-header {
@@ -499,6 +502,7 @@ body {
   font-size: 16px;
   color: var(--text2);
   line-height: 1.4;
+  flex: 1;
 }
 
 .project-divider {
@@ -573,6 +577,13 @@ body {
   color: var(--text2);
   margin-bottom: 6px;
   font-weight: 500;
+}
+
+.checklist-overflow {
+  font-size: 13px;
+  color: var(--dim);
+  padding: 4px 0 0;
+  font-style: italic;
 }
 
 .need-item {
@@ -693,7 +704,17 @@ body {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 20px;
-  align-items: start;
+  align-items: stretch;
+}
+
+.top-row .section-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.top-row .your-move-grid {
+  flex: 1;
+  justify-content: space-between;
 }
 
 .middle-row {
@@ -1252,13 +1273,19 @@ function render(data, crons) {
         if (activeTaskStatus || doneCount > 0) {
           checklistHtml += `<div class="checklist-status">${escHtml(activeTaskStatus)}${doneCount > 0 ? ` — ${doneCount}/${allItems.length} done` : ''}</div>`;
         }
-        (pendingItems.length > 0 ? pendingItems : allItems.slice(-3)).forEach(item => {
+        const MAX = 5;
+        const showItems = (pendingItems.length > 0 ? pendingItems : allItems).slice(0, MAX);
+        const overflow = (pendingItems.length > 0 ? pendingItems : allItems).length - MAX;
+        showItems.forEach(item => {
           checklistHtml += `
             <div class="task-line">
               <div class="task-check ${item.done ? 'done' : 'todo'}">${item.done ? '✓' : ''}</div>
               <div class="task-label ${item.done ? 'done-label' : 'todo-label'}">${escHtml(item.label)}</div>
             </div>`;
         });
+        if (overflow > 0) {
+          checklistHtml += `<div class="checklist-overflow">+${overflow} more pending</div>`;
+        }
         checklistHtml += `</div>`;
       }
 
