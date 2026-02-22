@@ -6,9 +6,10 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Mission Control v4</title>
+<title>Mission Control v5</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
 
 :root {
   --bg: #000000;
@@ -42,6 +43,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100vw;
   background: rgba(0,0,0,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border2);
@@ -125,7 +127,8 @@ body {
 
 /* ─── MAIN ────────────────────────────────────────────── */
 .main {
-  width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
@@ -599,6 +602,7 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
+  width: 100vw;
   padding: 14px 32px;
   border-top: 1px solid var(--border);
   font-size: 16px;
@@ -681,8 +685,7 @@ body {
 <!-- ══════════════════════ HEADER ══════════════════════════ -->
 <header class="header">
   <div class="header-left">
-    <img class="wjp-avatar" src="./wjp-pfp.png" alt="WJP">
-    <div class="header-logo">Mission Control <span>/ WJP</span></div>
+    <div class="header-logo">Mission Control</div>
   </div>
   <div class="header-right">
     <div id="last-updated" style="font-size:14px;"></div>
