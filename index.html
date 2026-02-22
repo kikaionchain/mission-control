@@ -42,7 +42,7 @@ body {
   background: rgba(0,0,0,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border2);
-  padding: 12px 20px;
+  padding: 12px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,9 +122,9 @@ body {
 
 /* ─── MAIN ────────────────────────────────────────────── */
 .main {
-  max-width: 1100px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 24px 20px;
+  padding: 24px 32px;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -207,9 +207,13 @@ body {
 
 /* ─── YOUR MOVE SECTION ───────────────────────────────── */
 .your-move-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
   gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .your-move-grid { grid-template-columns: 1fr; }
 }
 
 .move-item {
@@ -293,7 +297,7 @@ body {
 /* ─── AGENTS SECTION ──────────────────────────────────── */
 .agents-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 12px;
 }
 
@@ -427,7 +431,7 @@ body {
 /* ─── PROJECTS SECTION ────────────────────────────────── */
 .projects-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
   gap: 12px;
 }
 
@@ -583,7 +587,7 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 14px 20px;
+  padding: 14px 32px;
   border-top: 1px solid var(--border);
   font-size: 16px;
   color: var(--text2);
