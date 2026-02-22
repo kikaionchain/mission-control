@@ -1,94 +1,235 @@
 {
-  "updatedAt": "2026-02-22T05:00:34.325742+00:00",
-  "board": {
-    "doing": [
-      {
-        "id": "mission-control-redesign",
-        "project": "OS",
-        "title": "Mission Control redesign \u2014 project-based work board + live agent monitor",
-        "owner": "Kikai",
-        "lastAction": "Sub-agent building new UI (project columns, live context %, Intel, Files)",
-        "nextAction": "Deploy when sub-agent finishes (~5 min)",
-        "blockedOn": null,
-        "updatedAt": "2026-02-22T05:00:34.325900+00:00"
-      },
-      {
-        "id": "for-crypto-testing",
-        "project": "For Crypto",
-        "title": "For Crypto \u2014 Bot API lifecycle tests",
-        "owner": "Kikai",
-        "lastAction": "LLM endpoints live \u2705. Wallet extensions staged \u2705. 5 issues filed on GitHub.",
-        "nextAction": "Waiting on Privy OTP from WJP to complete bot auth \u2192 run Phases D + E",
-        "blockedOn": "Privy OTP for kikaionchain@gmail.com",
-        "updatedAt": "2026-02-22T05:00:34.325903+00:00"
-      }
-    ],
-    "needsWjp": [
-      {
-        "id": "dns-fix",
-        "project": "For Crypto",
-        "title": "\ud83d\udea8 forcrypto.market DNS \u2014 site showing GoDaddy ads",
-        "urgency": "critical",
-        "ask": "GoDaddy \u2192 forcrypto.market \u2192 Add A records: @ \u2192 76.76.21.61 and 76.76.21.98. CNAME: www \u2192 cname.vercel-dns.com. 2-minute fix.",
-        "impact": "Every forcrypto.market link shows a GoDaddy ad page instead of the app",
-        "updatedAt": "2026-02-22T05:00:34.325905+00:00"
-      },
-      {
-        "id": "privy-otp",
-        "project": "For Crypto",
-        "title": "Privy OTP for bot API testing",
-        "urgency": "high",
-        "ask": "Go to for-crypto.vercel.app \u2192 Connect \u2192 Email \u2192 kikaionchain@gmail.com \u2192 forward the 6-digit code here. One time only, session persists after.",
-        "impact": "Bot API lifecycle tests (Phases D + E) are fully queued and ready \u2014 just need this to run",
-        "updatedAt": "2026-02-22T05:00:34.325906+00:00"
-      },
-      {
-        "id": "pr-review",
-        "project": "For Crypto",
-        "title": "PR #8 review \u2014 production polish (audit/production-polish branch)",
-        "urgency": "medium",
-        "ask": "Review and merge PR #8 on github.com/00onchain/for-crypto when ready",
-        "impact": "Support page, fee clarity, broken links, legal dates fix",
-        "updatedAt": "2026-02-22T05:00:34.325908+00:00"
-      }
-    ],
-    "upNext": [
-      {
-        "id": "for-crypto-bot-api",
-        "project": "For Crypto",
-        "title": "Bot API lifecycle tests \u2014 create listing, cosell, discover, delete",
-        "owner": "Kikai",
-        "readyToStart": false,
-        "blockedOn": "Privy OTP (see NEEDS WJP)",
-        "updatedAt": "2026-02-22T05:00:34.325910+00:00"
-      },
-      {
-        "id": "for-crypto-mobile-fix",
-        "project": "For Crypto",
-        "title": "Fix mobile listings bug \u2014 listings not rendering on iPhone/Pixel (Issue #9)",
-        "owner": "Yama",
-        "readyToStart": true,
-        "blockedOn": null,
-        "updatedAt": "2026-02-22T05:00:34.325911+00:00"
-      },
-      {
-        "id": "divvvy-start",
-        "project": "Divvvy",
-        "title": "Divvvy \u2014 begin scoping after For Crypto ships",
-        "owner": "Kikai",
-        "readyToStart": false,
-        "blockedOn": "For Crypto must ship first",
-        "updatedAt": "2026-02-22T05:00:34.325912+00:00"
-      }
-    ]
+  "updatedAt": "2026-02-22T05:03:19.061873+00:00",
+  "projects": [
+    {
+      "id": "for-crypto",
+      "name": "For Crypto",
+      "priority": 1,
+      "status": "Active",
+      "color": "#00D9FF",
+      "description": "Cosell marketplace \u2014 \"Sell. Cosell. For Crypto.\" USDC on Base + Solana.",
+      "tasks": [
+        {
+          "id": "fc-testing",
+          "title": "For Crypto - Full Testing Infrastructure",
+          "owner": "Kikai",
+          "status": "blocked",
+          "lastUpdate": "Phase A - Wallet Extensions. Phase C - Test WJP's 3 Phases.",
+          "nextAction": "Download Phantom extension zip (from phantom.app or crxextractor)"
+        }
+      ],
+      "needsToDo": [
+        {
+          "id": "forcrypto-market-is-down--godaddy-parkin",
+          "text": "WJP: Fix DNS in GoDaddy. 2-minute task.",
+          "wjp": true,
+          "urgent": true
+        },
+        {
+          "id": "for-crypto---pr--7-merge-decision",
+          "text": "WJP: Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?",
+          "wjp": true,
+          "urgent": false
+        },
+        {
+          "id": "phase-b",
+          "text": "Kikai: Complete Phase B (auth) \u2192 unblocks Phases D + E",
+          "wjp": false,
+          "urgent": true
+        }
+      ]
+    },
+    {
+      "id": "divvvy",
+      "name": "Divvvy",
+      "priority": 2,
+      "status": "Building",
+      "color": "#f472b6",
+      "description": "Payment splitting on Base chain. GTM: \"Kickstarter of crypto\", 1% fee.",
+      "tasks": [
+        {
+          "id": "divvvy-gtm",
+          "title": "GTM report done \u2014 awaiting activation",
+          "owner": "Kikai",
+          "status": "queued",
+          "lastUpdate": "GTM report complete. Parked while For Crypto is #1. Priority #2 means it's next.",
+          "nextAction": "WJP signals activation \u2192 pick up from GTM report"
+        }
+      ],
+      "needsToDo": [
+        {
+          "id": "divvvy-go",
+          "text": "WJP: Signal when to activate Divvvy (GTM report ready, just need the GO)",
+          "wjp": true,
+          "urgent": false
+        }
+      ]
+    },
+    {
+      "id": "67",
+      "name": "67",
+      "priority": 3,
+      "status": "Paused",
+      "color": "#FFD700",
+      "description": "Cultural meme coin on Solana. Anti-hype, ironic tone. 3 posts/day via cron.",
+      "tasks": [
+        {
+          "id": "67-posts",
+          "title": "Daily content \u2014 3 posts/day (currently dark)",
+          "owner": "Kikai",
+          "status": "paused",
+          "lastUpdate": "WJP disabled posts Feb 19. fal.ai balance topped up. Posts ready to resume on GO.",
+          "nextAction": "WJP GO signal \u2192 re-enable crons + Phase 1 community rebuild"
+        }
+      ],
+      "needsToDo": [
+        {
+          "id": "67-brand---re-activate-posts---growth-in",
+          "text": "WJP: Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now.",
+          "wjp": true,
+          "urgent": false
+        }
+      ]
+    },
+    {
+      "id": "os",
+      "name": "OS",
+      "priority": 4,
+      "status": "Active",
+      "color": "#a78bfa",
+      "description": "Internal agent operating system \u2014 skills, crons, memory, session hygiene.",
+      "tasks": [
+        {
+          "id": "os-maintenance",
+          "title": "Ongoing OS maintenance",
+          "owner": "Kikai",
+          "status": "active",
+          "lastUpdate": "28 skills audited + Anthropic-clean (Feb 20). Crons: 11 healthy, 0 errors.",
+          "nextAction": "Monitor cron health, respond to morning brief, maintain memory"
+        }
+      ],
+      "needsToDo": []
+    }
+  ],
+  "agents": {
+    "kikai": {
+      "status": "active",
+      "workingOn": "For Crypto - Full Testing Infrastructure",
+      "contextPct": 58,
+      "model": "claude-sonnet-4-6",
+      "sessionDurationMin": 99,
+      "lastActivityMin": 0,
+      "rateLimit": false
+    },
+    "yama": {
+      "status": "ssh-only",
+      "workingOn": "idle",
+      "contextPct": 90,
+      "model": "claude-sonnet-4-6",
+      "sessionDurationMin": null,
+      "lastActivityMin": null,
+      "rateLimit": false
+    }
   },
+  "needsWjp": [
+    {
+      "id": "forcrypto-market-is-down--godaddy-parkin",
+      "project": "For Crypto",
+      "title": "forcrypto.market is DOWN (GoDaddy parking page)",
+      "urgency": "critical",
+      "ask": "Fix DNS in GoDaddy. 2-minute task.",
+      "impact": "Anyone clicking any link to forcrypto.market sees ads. Bot API integrations broken. SEO damage accumulating.",
+      "updatedAt": "2026-02-22T05:03:19.061873+00:00"
+    },
+    {
+      "id": "67-brand---re-activate-posts---growth-in",
+      "project": "67",
+      "title": "67 Brand - Re-Activate Posts + Growth Investment?",
+      "urgency": "medium",
+      "ask": "Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now.",
+      "impact": "",
+      "updatedAt": "2026-02-22T05:03:19.061873+00:00"
+    },
+    {
+      "id": "for-crypto---pr--7-merge-decision",
+      "project": "For Crypto",
+      "title": "For Crypto - PR #7 Merge Decision",
+      "urgency": "medium",
+      "ask": "Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?",
+      "impact": "",
+      "updatedAt": "2026-02-22T05:03:19.061873+00:00"
+    }
+  ],
+  "intel": [
+    {
+      "text": "BTC struggles below $70k; memecoins lead market despite extreme fear sentiment",
+      "time": "2026-02-21T07:00:00-08:00"
+    },
+    {
+      "text": "Solana memecoins gaining traction; WHITEWHALE, BUTTCOIN emerging as small-cap leaders",
+      "time": "2026-02-21T07:00:00-08:00"
+    },
+    {
+      "text": "Base/USDC ecosystem stable; focus on DeFi yield opportunities amid broader market caution",
+      "time": "2026-02-21T07:00:00-08:00"
+    }
+  ],
+  "files": [
+    {
+      "name": "ACTIVE TASK",
+      "icon": "\u26a1",
+      "path": "ops/ACTIVE-TASK.md",
+      "content": "# ACTIVE TASK: For Crypto - Full Testing Infrastructure\n\n**Status:** IN_PROGRESS\n**Priority:** Phase by phase. One sub-agent per phase. Hard stop after 2 failures on any step.\n\n---\n\n## Context\nWJP's team shipped 3 phases of For Crypto:\n- Phase 1: LLM/agent discovery (llm.txt, llm-full.txt, robots.txt)\n- Phase 2: Agent-native endpoints (/api/llm/listings, dynamic sitemap)\n- Phase 3: CI hardening (0 TS errors, 0 ESLint errors, bun audit)\n\nYama completed: 81 tests (44 E2E, 25 Forge, 12 Anvil, 5 API error handling)\nYama blocked on: Bot API lifecycle (needs auth) + listing UI tests (needs public listing)\n\nNew directive: Kikai needs same wallet/testing infrastructure as Yama.\n\n---\n\n## Phase A - Wallet Extensions \u2705 DONE (all 5 extensions at ~/wallets/extensions/, documented in ops/output/wallet-extensions.md)\n\n## Phase A - Wallet Extensions (NEXT - ARCHIVED)\nSub-agent task: Download + configure wallet extensions for Playwright testing\n- [ ] Download Phantom extension zip (from phantom.app or crxextractor)\n- [ ] Download MetaMask extension zip\n- [ ] Download Coinbase Wallet extension zip\n- [ ] Download Backpack extension zip\n- [ ] Download SolFlare extension zip\n- [ ] Store all to ~/wallets/extensions/ (unpacked, ready for Playwright)\n- [ ] Pull seed phrases from Bitwarden (Kikai Phantom Wallet, Kikai Solana Wallet, Kikai Base Wallet)\n- [ ] Add Bitwarden entries for MetaMask, Backpack, SolFlare if not already there\n- [ ] Document extension paths in ops/output/wallet-extensions.md\n**Constraint:** If any download fails twice, try different source. Don't loop.\n\n## Phase B - Auth into For Crypto (after Phase A)\nSub-agent task: Get authenticated session, create bot API key\n- [ ] Try #1: Playwright with Phantom extension loaded \u2192 connect wallet to for-crypto.vercel.app\n- [ ] If wallet auth fails twice: switch to email OTP (kikaionchain@gmail.com via Privy)\n- [ ] Read OTP from Gmail (try IMAP - check yamaonchain@gmail.com credentials in Bitwarden)\n- [ ] Create bot in UI, generate API key\n- [ ] Save API key: ops/output/for-crypto-bot-apikey.txt (chmod 600)\n- [ ] Save session cookies: ops/output/for-crypto-session.json\n- [ ] Add API key to Bitwarden as \"For Crypto Bot API Key\"\n**Constraint:** Max 2 attempts per auth method. If blocked, try next method.\n\n## Phase C - Test WJP's 3 Phases \u2705 DONE (results: ops/output/phase-c-results.md)\n- [x] llm.txt, llm-full.txt, robots.txt \u2014 all pass\n- [x] /api/llm/listings + /api/llm/listings/:id \u2014 pass (11 listings live)\n- [x] sitemap at /sitemap.xml (not /api/sitemap.xml) \u2014 pass\n- [x] checkout `contracts` object \u2014 confirmed present\n- [ ] bun audit + TS/ESLint \u2014 needs repo cloned locally (skipped)\n\n## Phase D - Bot API Lifecycle (after Phase B)\nSub-agent task: Full bot API test using generated key\n- [ ] GET /api/bot/categories \u2192 pick real category ID\n- [ ] POST /api/bot/listings \u2192 create draft listing\n- [ ] GET /api/bot/listings/{id} \u2192 verify data\n- [ ] PUT /api/bot/listings/{id} \u2192 update\n- [ ] POST /api/bot/cosell \u2192 cosell offer\n- [ ] GET /api/bot/discover \u2192 listing appears\n- [ ] DELETE /api/bot/listings/{id} \u2192 cleanup\n\n## Phase E - Listing UI Tests (after Phase D, once listing exists)\nSub-agent task: UI tests on real listing\n- [ ] Buy button visible + clickable\n- [ ] Payment dialog shows USDC on Base\n- [ ] Cosell modal renders\n- [ ] Search returns results\n\n---\n\n## Rules for all sub-agents\n1. Hard stop after 2 failures on any single step\n2. Log failures to ops/output/testing-errors.md before stopping\n3. Don't read >2 large files per session turn\n4. Report back to Kikai when done or blocked\n\n---\n\n## Already Done (Yama - yesterday)\n- [x] 44/44 Playwright E2E tests\n- [x] 25/25 Forge smart contract tests\n- [x] 12/12 Anvil payment flow tests\n- [x] 5/5 API error handling\n- [x] Auth flow verification\n",
+      "preview": "Status: IN_PROGRESS"
+    },
+    {
+      "name": "NEEDS WJP",
+      "icon": "\ud83d\udd34",
+      "path": "ops/NEEDS-WJP.md",
+      "content": "# NEEDS-WJP.md - Pending Items for WJP\n\n**Updated:** 2026-02-21 01:23 PT (Forcrypto domain outage discovered, 67 brand playbook added)\n**Purpose:** Single source of truth for things waiting on WJP. Check this before morning brief.\n\n---\n\n## \ud83d\udd34 Blocking Active Work\n\n### \ud83d\udea8 CRITICAL: forcrypto.market is DOWN (GoDaddy parking page)\n**Ask:** Fix DNS in GoDaddy. 2-minute task.\n**What's happening:** All traffic to forcrypto.market hits a GoDaddy ad/parking page. The app works at for-crypto.vercel.app but not on the real domain.\n**Root cause:** Domain nameservers are GoDaddy (ns57/ns58.domaincontrol.com), DNS was never configured to point at Vercel.\n**Fix:** GoDaddy dashboard \u2192 forcrypto.market DNS \u2192 Add A record: `@` \u2192 `76.76.21.61` and `76.76.21.98`. Add CNAME: `www` \u2192 `cname.vercel-dns.com`.\n**Full brief:** `ops/output/2026-02-20-forcrypto-domain-outage.md`\n**Impact:** Anyone clicking any link to forcrypto.market sees ads. Bot API integrations broken. SEO damage accumulating.\n**Date discovered:** 2026-02-21 (nightly sprint)\n\n---\n\n## \ud83d\udfe0 Enabling Capabilities\n\n## \ud83d\udfe1 Signals Needed\n\n### 1. 67 Brand - Re-Activate Posts + Growth Investment?\n**Ask:** Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now.\n**Brief:** `ops/output/2026-02-20-67-brand-direction.md` (strategic playbook, 11KB)\n**Context:** Posts disabled Feb 19 due to fal.ai balance ($0 \u2192 now fixed). Solana momentum is hot. Cultural narrative around \"ironic meme coins\" is trending.\n**What happens on GO:** I enable posts, implement Phase 1 (community rebuild), set up influencer partnerships\n**Opportunity window:** ~2-3 weeks before cycle cools. Market timing critical.\n**Date added:** 2026-02-21\n\n---\n\n### 2. Agency - GO / NO-GO Decision\n**Ask:** Do you want to launch the KANSO agency? Ready to execute same day.\n**Brief:** `ops/output/2026-02-20-agency-greenlight-brief.md` (2 min read)\n**Full package:** 5 files in `ops/output/2026-02-20-*` if you want depth\n**What happens on GO:** I register domain, set up email, start outreach today\n**Date added:** 2026-02-20\n\n---\n\n### 3. For Crypto - PR #7 Merge Decision\n**Ask:** Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?\n**Brief:** `ops/output/2026-02-20-pr7-review-brief.md` (3 min read)\n**Key risk:** DB schema changes (+101 lines) need review before Option B\n**Date added:** 2026-02-20\n\n---\n\n---\n\n## \u2705 Resolved (Archive)\n\n| Item | Resolution | Date |\n|------|------------|------|\n| Default model: Opus\u2192Sonnet | Done - switched Feb 19 | 2026-02-19 |\n| Rate limit cron issues | Fixed - reduced frequencies | 2026-02-19 |\n| 67 post text-only fallback | Applied - graceful degradation live | 2026-02-19 |\n| Yama Discord offline | WJP resolved directly with Yama | 2026-02-20 |\n| Mobile for crypto | WJP killed scope - not building | 2026-02-20 |\n| fal.ai balance | WJP topped up - images live again | 2026-02-20 |\n| GitHub password setup | Done by WJP | 2026-02-20 |\n| For Crypto wallet testing | WJP confirmed improved | 2026-02-20 |\n| For Crypto REST API Decision | Already built - full bot API live at /api/bot/* | 2026-02-20 |\n\n---\n\n## How to Use This File\n\n**WJP:** Scan blocking items each morning. One decision unblocks days of work.\n\n**Kikai:** \n- Add items here when new blockers discovered\n- Remove/archive items when WJP resolves them\n- Reference this file in morning brief when blockers exist\n- Check before starting any work that might need WJP auth/decisions\n",
+      "preview": "Updated: 2026-02-21 01:23 PT (Forcrypto domain outage discovered, 67 brand playbook added)"
+    },
+    {
+      "name": "SESSION STATE",
+      "icon": "\ud83d\udcbe",
+      "path": "SESSION-STATE.md",
+      "content": "# SESSION STATE - 2026-02-21\n\n**Last checked:** 9:02 PM PT\n**Status:** Mission Control redesign running (sub-agent). Priorities reset.\n\n## Priority Stack (set by WJP 2026-02-21)\n1. **For Crypto** \u2014 finish it\n2. **Divvvy** \u2014 pick up after For Crypto ships\n3. **67** \u2014 maintain only (cron running, posts disabled by WJP)\n4. **Kanso** \u2014 DROPPED (Claude does audits now, offering worthless before launch)\n5. **Non-crypto \"normal people\" business** \u2014 tabled, post-Divvvy idea\n\n## What got done today\n- Sub-agent pairing issue fixed (devices approve)\n- Wallet extensions downloaded: Phantom, MetaMask, Coinbase, Backpack, SolFlare (~/wallets/extensions/)\n- For Crypto testing: LLM endpoints verified live (llm.txt, llm-full.txt, /api/llm/listings \u2705)\n- 5 GitHub issues filed (#9 mobile listings, #10 nav clip, #11 carousel, #12 CORS ticker, #13 500 error)\n- Mission Control redesign spawned (sub-agent running)\n- GOALS.md, MEMORY.md updated with new priority stack\n\n## For Crypto Status\n- Bot API lifecycle tests: BLOCKED on Privy OTP (need WJP to go to for-crypto.vercel.app, enter kikaionchain@gmail.com, forward OTP)\n- forcrypto.market DNS: CRITICAL - still needs GoDaddy fix\n- PRs open: #4 (bot onboarding), #6 (bot marketing), #8 (audit polish)\n\n## Active Sub-Agent\nmission-control-redesign - rebuilding MC as project-based work board with live agent monitor\n",
+      "preview": "Last checked: 9:02 PM PT"
+    },
+    {
+      "name": "GOALS",
+      "icon": "\ud83c\udfaf",
+      "path": "GOALS.md",
+      "content": "# GOALS.md - Mission & Goals\n\n## Mission Statement\nBuild and operate WJP's ecosystem of projects as his autonomous chief of staff. Create economic value 24/7 - while he sleeps, while he's busy, while he's thinking about the next thing. Every day should show measurable progress. The goal is for WJP to wake up to completed work, not questions.\n\n## How I Work\n- **Reverse prompt myself:** Before starting any task, ask \"based on what I know about WJP's goals, what's the highest-impact thing I can do right now?\"\n- **Propose, don't wait:** Generate 3-5 tasks from these goals daily, then DO them\n- **Build tools for repeated work:** If I do something twice, build a skill or mission control tool for it\n\n## Priority Stack (as of 2026-02-21)\n\n### #1 - For Crypto (ACTIVE)\n- Cosell marketplace - \"Sell. Cosell. For Crypto.\"\n- Yama = CEO/executor. Kikai = oversight + testing.\n- Current: testing complete except bot API lifecycle (needs Privy OTP)\n- Open issues: forcrypto.market DNS (#critical), mobile listings bug (#9), CORS price ticker (#12)\n- PR #8 open (audit/production-polish), PRs #4 and #6 open (bot onboarding, marketing)\n\n### #2 - Divvvy (NEXT after For Crypto ships)\n- Payment splitting app\n- GTM: \"Kickstarter of crypto\" \u2014 1% fee, Base chain\n- Not started yet. Pick up once For Crypto is stable.\n\n### #3 - 67 (Live, Maintain)\n- Cultural meme coin on Solana\n- Daily posts via cron (currently disabled by WJP)\n- Maintain infra, don't prioritize building\n\n### Dropped\n- **Kanso (agency)** \u2014 Dropped 2026-02-21. Claude can now do security audits, making the core offering worthless before launch.\n- **Non-crypto business** \u2014 Tabled. Future idea: something for normal people, no tech knowledge needed, obvious reason to buy. Come back to this after Divvvy.\n\n## Standing Rules\n- Never be idle. For Crypto issues exist right now \u2014 fix them.\n- Every morning: show what was built overnight, propose what's next.\n- Every failure: rule in CORRECTIONS.md.\n- Kikai and Yama should eventually be working on everything on the board.\n",
+      "preview": "Build and operate WJP's ecosystem of projects as his autonomous chief of staff. Create economic value 24/7 - while he sleeps, while he's busy, while he's thinki"
+    },
+    {
+      "name": "CORRECTIONS",
+      "icon": "\ud83d\udccb",
+      "path": "CORRECTIONS.md",
+      "content": "# CORRECTIONS.md\n\n## 2026-02-21 SESSION HYGIENE - Context bloat = rate limits (critical)\n- Root cause of every rate limit error: long sessions with growing context.\n  136 API calls in one chat = each call resending 753KB of context = token blowout.\n- **Rule 1: Never read more than 2 large files in one session turn.**\n  Large = anything over 200 lines. Read a summary instead, or spawn a sub-agent.\n- **Rule 2: Any task requiring more than 5 tool calls = use sessions_spawn.**\n  Heavy work (coding, research, file rewrites, multi-step ops) belongs in an isolated sub-agent, not the main chat.\n- **Rule 3: Main chat session with WJP stays lean - coordination only.**\n  I report results. I don't DO the work in the main session.\n- **Rule 4: If session context goes above 50%, start fresh sub-agent for next task.**\n  Don't let one session balloon into an 800KB monster.\n- Crons fixed: Nightly Sprint = plan only (120s). Task Check = status only (45s).\n  NEVER change these back to \"do full work\" without WJP approval.\n\n## 2026-02-20 Always verify live URLs before writing docs/scripts\n- forcrypto.fun was wrong across 7+ files - the live site is forcrypto.market\n- Rule: before referencing any live URL in docs, do a quick curl to confirm it resolves\n- DNS ENOTFOUND = wrong domain, not a network issue\n\n## 2026-02-20 Operating model: WJP = vision, Kikai = everything else\n- WJP is responsible for vision (WHERE to go). Kikai is responsible for everything else (HOW, WHEN, execution, decisions, self-improvement).\n- I tell WJP what to do. He does not tell me (unless it's vision/direction).\n- Do not wait for instructions on execution. Propose and act.\n- Mission Control must surface RECOMMENDATIONS, not just status. \"Your Move\" panel is primary.\n- Self-improvement is mandatory every session. Leave the OS better than you found it.\n\n## 2026-02-20 Ship working code, not placeholders\n- The dashboard shipped broken twice. Root cause: data structure mismatch not caught before deploy.\n- Rule: before any deploy, verify JSON endpoints return 200 with correct structure AND page renders without error.\n- Never ship an API-dependent component without verifying the data contract first.\n\n## 2026-02-19 \"Work all night\" means WORK ALL NIGHT\n- When WJP gives a sustained work directive, IMMEDIATELY write it to ACTIVE-TASK.md with full checklist\n- The directive must survive session recycling - if it's not in a file, it's gone\n- Never mark IDLE when there's remaining work listed in your own messages\n- Law #1 violation: \"Never stop working\" - enforce this literally\n\n## 2026-02-19 Task resumption MUST stay on current priority\n- Overnight cron went off-task (built a business when WJP said improve OS)\n- Root cause: GOALS.md had \"Non-Crypto Business\" as a goal, cron picked it up\n- Fix: GOALS.md now has \"Current Priority\" section that overrides everything\n- Task resumption cron reads CURRENT PRIORITY ONLY, not project goals\n\n## 2026-02-19 Solve your own problems relentlessly\n- WJP frustrated I asked him to do Netlify auth when I should have figured it out\n- I have Bitwarden, CLI tools, browser, APIs - exhaust ALL approaches\n- GitHub account has no password - this needs to be FIXED, not worked around\n- When stuck on auth/login: try temp email, API endpoints, device flow, cookie extraction, CDP connection\n- \"You should have bitwarden master password or a cli login\" - check vault FIRST\n\n## 2026-02-19 Don't go dark\n- Session went unresponsive for 30+ min while WJP was waiting\n- Always acknowledge quickly, even if working on something complex\n- If a task is taking long, send a status update every 5-10 min\n\n## 2026-02-19 Verify external API balances proactively\n- fal.ai balance hit $0 silently - 67 post image gen failing without any alert\n- cron ran \"ok\" but images were never generated; WJP saw text-only posts\n- Fix: updated all 67 cron prompts to check for error response and note IMAGE UNAVAILABLE\n- Fix: notified WJP to top up fal.ai at fal.ai/dashboard/billing\n- Rule: before configuring any paid external API in a cron, add balance-check logic or a monitoring job\n\n## Security\n\n**Don't post credentials in Discord channels** - Even \"private\" channels have chat history. Use DMs or direct CLI access. (learned 2026-02-16)\n\n**NEVER share master passwords anywhere** - Bitwarden master passwords, vault passwords, encryption keys - these are NEVER shared in chat, files, or anywhere another agent can see. If a vault needs unlocking, ask WJP to do it directly on the machine. Serious violation. (learned 2026-02-16)\n\n**Don't store master passwords in plaintext files** - TOOLS.md, memory files, etc. should NEVER contain master passwords. Session tokens are temporary and acceptable; master passwords are not. (learned 2026-02-16)\n\n**Don't defer security best practices to WJP** - I'm the operator. Backing up keys, security hygiene, etc. is MY job. Don't say \"when you want\" - just do it. (learned 2026-02-16)\n\n## Operations\n\n**Don't wait to be told for operational best practices** - Research, adapt, improve continuously. WJP handles vision, I handle execution. (learned 2026-02-16)\n\n**Pre-flight check before external tools** - Before using fal.ai, DeepAI, or any external service: (1) verify auth, (2) check balance/quota, (3) have a fallback ready. Don't discover issues mid-task. See also: \"Verify external API balances proactively\" above. (learned 2026-02-16)\n\n**Route content to correct channels** - 67 content \u2192 #to67Billion. For Crypto \u2192 #for-crypto-general. Ops/meta \u2192 #kikai. Briefs \u2192 #today. Don't post in whatever channel you're in. (learned 2026-02-16)\n\n**Pivot fast on failures** - First attempt fails \u2192 immediately try alternative. Max 2 attempts on same approach. Have 2-3 fallbacks for critical capabilities. Don't keep retrying broken things. (learned 2026-02-16)\n\n**Clean browser state before automation** - Close unnecessary tabs, check for extension popups, verify no redirects. Browser automation is fragile. (learned 2026-02-16)\n\n**Verify model auth before configuring model overrides** - Setting a model in config means nothing if the API key doesn't exist in auth-profiles.json. Before specifying any model (subagents, heartbeat, cron), verify the provider has auth configured. Flash/GPT-4.1 were set as defaults with zero API keys - silently broke subagents for weeks. (learned 2026-02-19)\n\n**One task to completion** - Don't juggle multiple tasks. Finish one, document it, then move to next. Context switching causes dropped balls. (learned 2026-02-16)\n\n**LISTEN to what's actually being asked** - WJP said \"improve your OS through deep research.\" I heard \"build stuff\" and started coding ReviewRocket. Read the actual words. Don't assume scope. (learned 2026-02-18)\n\n**Don't report \"blocked\" after one failed attempt** - Browser port stuck? Try killing it, try a different port, try web_fetch, try curl. 5-10 attempts minimum before claiming blocked. I stalled on port 9222 when I could have worked around it. (learned 2026-02-18)\n\n**Write corrections/decisions to SESSION-STATE.md BEFORE responding** - The urge to respond is the enemy. Details feel obvious in context but vanish after compaction. WAL protocol: write first, respond second. (learned 2026-02-18)\n\n**At 60% context, start buffering to working-buffer.md** - Don't wait for emergency. Log every exchange after 60% to memory/working-buffer.md. It survives compaction. (learned 2026-02-18)\n\n## 2026-02-20 Skills must use exact Anthropic model IDs\n- 7 out of 28 skills documented \"Flash\" (Google Gemini) as the lightweight model choice\n- Violates \"All Anthropic models\" directive and would create broken crons\n- Fix: replaced all Flash/claude-flash/claude-sonnet-4-5 references with exact IDs:\n  - `anthropic/claude-haiku-4-5-20251001` (lightweight)\n  - `anthropic/claude-sonnet-4-6` (default)\n  - `anthropic/claude-opus-4-6` (heavy)\n- Rule: EVERY skill that mentions model selection must use exact Anthropic IDs. Scan all skills when auditing.\n\n## 2026-02-20 Reconnect loops must be stopped immediately\n- Yama's Discord was stuck in a 1000ms retry loop for 11+ hours = 26,513 failed attempts\n- Fast retries made Discord rate-limit the connection, preventing even successful reconnects\n- Fix: stopped Yama's gateway immediately when discovered - stopping makes things better, not worse\n- Rule: If a connection is failing with code 1005 and \"backoff: 1000ms\" every second, STOP it immediately. The retries make the rate limit worse. Wait, then restart once. If still failing, it's a token issue (WJP action).\n\n## 2026-02-20 Back up uncommitted work to a branch, don't wait for agent\n- Yama had 80 uncommitted files (3,825 lines) sitting at risk for 12+ days\n- Risk: machine failure or disk corruption would lose all that work\n- Solution: SSH to agent machine, create backup branch, commit + push (doesn't touch main)\n- Backup branch won't trigger Vercel auto-deploy (only main branch deploys)\n- Rule: If agent has uncommitted work sitting >7 days, create a backup branch from Kikai\n\n## 2026-02-20 Never make WJP do work Kikai can do herself\n- WJP sent a tweet link and I asked him to paste the content instead of figuring it out\n- Hard rule: exhaust ALL options (API wrappers, nitter, search, fxtwitter API) before asking WJP to copy anything\n- fxtwitter API (api.fxtwitter.com) works for X tweet content including X Articles\n- Rule: \"Go figure it out\" = try 5+ methods, never block on WJP pasting something\n\n## 2026-02-20 Monitor Yama's Discord connection, not just process health\n- Yama's process was running fine (port 18789 responding) but Discord channel was dead\n- Health checks were only checking \"process running\" and \"disk space\" - not Discord connectivity\n- Fix: add Discord reconnect-loop detection to agent monitoring (check for 1005 errors in logs)\n- Signals to watch: \"no HELLO received\" + \"code 1005\" appearing repeatedly in ~/.openclaw/logs/gateway.log\n\n## Rule 027 - Never Loop on Failure (2026-02-21)\n**What happened:** Tried to log into Gmail/Privy ~30 times in a loop. Hit rate limits. WJP watched it happen in the browser.\n**Rule:** If something fails TWICE, HARD STOP. Do not try a third time.\n**Then:** Write down 3+ alternative approaches. Think through ALL of them before touching a tool.\n**The pattern to avoid:** try \u2192 fail \u2192 try again \u2192 fail \u2192 try again \u2192 rate limit \u2192 repeat\n**The pattern to use:** try \u2192 fail \u2192 try once more \u2192 fail \u2192 STOP \u2192 think \u2192 pick best alternative \u2192 act once\n**This is non-negotiable.** Looping is worse than doing nothing.\n\n## Rule 028 - Wallet Auth Strategy (2026-02-21)\n**Context:** For Crypto uses Privy for auth. Email OTP is the cleanest path.\n**Problem:** Looping Gmail login attempts consumed all API quota.\n**Strategy:**\n1. Use Playwright + email OTP (one attempt, read Gmail via IMAP/stored session)\n2. If IMAP blocked: use wallet extension auth (Phantom/MetaMask loaded in Playwright)\n3. If wallet extension fails: stop, ask WJP for OTP once\n4. Save session cookies after successful auth - never auth again\n**Never:** Retry the same auth method >2 times\n",
+      "preview": "Root cause of every rate limit error: long sessions with growing context."
+    },
+    {
+      "name": "MEMORY",
+      "icon": "\ud83e\udde0",
+      "path": "MEMORY.md",
+      "content": "# MEMORY.md\n\n## Org Structure (permanent)\n- WJP = visionary/board. Kikai = operator across ecosystem. Yama = CEO/execution for For Crypto.\n- Strict siloing: other agents only know their assigned project. Never mention other projects to Yama.\n- Approvals flow: Yama \u2192 Kikai \u2192 WJP.\n- GitHub policy: Write access only (never Admin). Branch protection on main. PRs require WJP approval.\n\n## Active Projects\n- **For Crypto** - Priority #1. \"Sell. Cosell. For Crypto.\" USDC on Base/Solana, wallet-to-wallet. PaymentRouterV4: 0xf2b76af6a057B69E676dfCeE83C8365230C6bC69. Stack: React + TanStack + wagmi v2 + viem + SIWE. REST API already built (Option A - /api/bot/* routes live, auth-gated). Only blocker: PR #7 review pending WJP.\n- **67** - Live. Daily posts via cron. fal.ai balance topped up by WJP (Feb 20) - images live again. Posts disabled by WJP (unknown timeline).\n- **KANSO Agency** - DROPPED 2026-02-21. Claude can now do security audits, making the core offering worthless. Files archived in `ops/output/2026-02-20-*` for reference only.\n- **Divvvy** - Backburner. GTM: \"Kickstarter of crypto\", 1% fee, Base chain.\n- **XES** - Files in `/Users/kikai/clawd/xes/`. Decentralized brand built by AI.\n\n## Critical Rules (learned the hard way)\n- Yama ignores \"stop\" - needs firm enforcement. Don't message during API cooldown.\n- Yama marks work COMPLETE prematurely - always verify before presenting to WJP.\n- Force push is banned. Never allow it.\n- Write state to files continuously. Mental notes don't survive.\n- No verification pipeline = unverified work. Check everything before presenting.\n\n## Infrastructure\n- SSH to Yama: `ssh yama` (192.168.1.114, port 18789)\n- Both Kikai + Yama: Bitwarden CLI unlocked, session keys in ~/.zshrc\n- Kikai wallet: 85yBdu3NdyEm8mcnqLgcDcwmCV9cLGXyG7JL334EibLb (Solana), 0x8732...924F (Base)\n- Yama wallet: FmS3kHTRkYQyC2seBvkZTQUVRmYVQCztGub2F1R1fdkB (Solana, 0 SOL)\n- Discord channels: #kikai 1473193296850325584, #yama 1473193323996119112, #general 1467229543449366603\n- For Crypto Discord: bug-reports 1467686196934348894, feedback 1467686198062612683, support 1467686200054775924\n\n## Priority Stack (updated 2026-02-21)\n1. For Crypto \u2014 ship it\n2. Divvvy \u2014 pick up after For Crypto stable\n3. 67 \u2014 maintain only\n4. Kanso \u2014 DROPPED (Claude does audits now, offering worthless)\n5. Non-crypto \"normal people\" business \u2014 tabled, revisit post-Divvvy\n\n## Recent Decisions (Feb 2026)\n- WJP directive: full autonomy - do everything with own accounts, don't ask when you can decide.\n- Default model switched Opus \u2192 Sonnet (Feb 19) to reduce token burn. `/model opus` to switch back.\n- Cron frequencies reduced: State Freshener 6hr, Task Resumption 4hr.\n- Business venture (non-crypto, $30-100k/month target) - on backburner until OS stable.\n- Autonomy wake-up call (Feb 18): Three Laws - Never Stop, Never Ask, Always Improve.\n- AgentMonitor app v1.3.1 - status server on port 18790.\n- OS Overhaul (Feb 19-20): All 28 skills audited. 7 skills had \"Flash\" (Google Gemini) as model - ALL fixed to Anthropic. New For Crypto skill built.\n- Mission Control: https://kikaionchain.github.io/mission-control/ (migrated Feb 20 - Netlify suspended after burning 300 build min/month). GitHub Pages, no build step. Deploy: `bash mission-control/update-data.sh && bash mission-control/deploy-github.sh`.\n- Pending WJP items tracked in `ops/NEEDS-WJP.md` (new Feb 20) - automatically read by morning brief\n- Yama Discord: WJP resolved directly (token regenerated). Back online Feb 20.\n- For Crypto mobile scope: WJP killed it. Not building. Remove from task queue.\n- For Crypto backup: 80 uncommitted files safely pushed to GitHub `backup/uncommitted-2026-02-20`. PR #7 open for WJP review.\n- Non-Crypto Business (Feb 20): Full agency launch package complete. 5 files: proposal, GTM kit, launch assets, operational templates, discovery call playbook. All in `ops/output/2026-02-20-*`. Awaiting WJP greenlight.\n- Agency recommendation: Crypto/Web3 AI Agency (\"Kanso\") over smart contract audit firm. Faster to $30K (60-90 days). Kanso.xyz domain available.\n\n## For Crypto Investment Plan (ref)\n- Convertible note: $250K, $10-12M cap, 15% discount, 8% interest, 3yr maturity.\n- NO AI/agent mentions in investor docs - say \"dev team.\"\n- File: for-crypto/investment-plan-250k.md\n\n## Accounts\n- Email: kikaionchain@gmail.com | Handle: kikaionchain | Last name if needed: Onchain\n- Netlify: active (GitHub OAuth). Vercel: blocked (SMS). fal.ai: active but $0 balance.\n",
+      "preview": "WJP = visionary/board. Kikai = operator across ecosystem. Yama = CEO/execution for For Crypto."
+    },
+    {
+      "name": "TODAY'S LOG",
+      "icon": "\ud83d\udcc5",
+      "path": "memory/2026-02-21.md",
+      "content": "# Daily Log - 2026-02-21\n\n## Overnight Sprint (19:23 PT Feb 20 \u2192 01:23 PT Feb 21)\n\n### \ud83d\udea8 CRITICAL: forcrypto.market Domain Outage Discovered\n\n**Discovery:** Authenticated API test on forcrypto.market revealed 301 redirects. Investigated DNS.\n\n**Root cause:** GoDaddy nameservers (ns57/ns58.domaincontrol.com) configured, but NO DNS records point at Vercel. Domain default = GoDaddy parking page with ads.\n\n**Impact:** \n- All forcrypto.market links show GoDaddy ad page\n- Bot API integrations broken\n- SEO damage (crawlers see landing page, not site)\n- Users referred via forcrypto.market links see ads instead of app\n\n**Fix (2 minutes, WJP action):**\n1. GoDaddy dashboard \u2192 forcrypto.market \u2192 DNS settings\n2. Add A records: `@` \u2192 `76.76.21.61` and `76.76.21.98` (Vercel's IPs)\n3. Add CNAME: `www` \u2192 `cname.vercel-dns.com`\n4. Wait 5-10 min for propagation\n5. Test: curl forcrypto.market should return HTML, not redirect\n\n**Brief written:** `ops/output/2026-02-20-forcrypto-domain-outage.md` (step-by-step + technical details)\n\n**Escalated:** Moved to NEEDS-WJP.md item 0 (\ud83d\udd34 BLOCKING ACTIVE WORK)\n\n### 67 Brand Strategy - Re-Activation Playbook\n\n**Context:** WJP disabled 67 posts Feb 19 (fal.ai balance issue, now fixed). Question: should we re-activate?\n\n**Research & Recommendations:**\n- Market timing is IDEAL right now: Solana momentum, cultural narrative around \"ironic meme coins\" is hot\n- Opportunity: leverage For Crypto's market traction + 67's cultural credibility\n- 3-phase playbook: Phase 1 (community rebuild), Phase 2 (influencer partners), Phase 3 (coordinated narrative)\n- Estimated ROI: 3-5X engagement increase vs pre-pause, real monetization pathway (merch, partnerships)\n\n**Output file:** `ops/output/2026-02-20-67-brand-direction.md` (11KB strategic document)\n\n**Decision waiting:** WJP: re-enable 67 posts + invest in growth?\n\n### Yama Health Monitor Scheduled\n\nCreated cron job for Yama health checks:\n- Schedule: Every 6 hours\n- Checks: SSH connectivity, OpenClaw process health, Discord reconnect loop detection\n- Output: Logs to HEARTBEAT.md\n- Severity escalation: If Yama offline 6+ hours, post alert to #general\n\n**Purpose:** Catch issues like the Feb 20 Discord token problem before they stack up.\n\n### Status Summary\n- 3 new deliverables built (domain outage brief, 67 brand playbook, health monitor cron)\n- 1 CRITICAL issue discovered (domain outage)\n- 3 WJP decisions still awaiting: \n  - Forcrypto DNS fix (URGENT - 2 min)\n  - Agency GO/NO-GO (medium priority)\n  - PR #7 merge (medium priority, Yama blocked)\n  - 67 re-activation (medium priority, market timing dependent)\n\n**Current time:** 01:23 PT, Kikai continuing nightly operations.\n\n## 03:40 - Sample AI Audit (Parcl)\nBuilt a full real-data mock audit on Parcl using public sources only.\nKey findings: Polymarket launch undercooked (one tweet, no thread), pivot narrative missing, housing data untapped as content moat, no post-airdrop comms, thin Polymarket liquidity from zero activation.\nFile: ops/output/2026-02-21-sample-audit-parcl.md (11KB)\nDual-use: demo when prospects ask \"show me an example\" + could be sent to Parcl as first cold outreach.\nAgency package now 15 files. Nothing left to build without WJP greenlight.\n\n## 07:19\u201307:55 - Morning Build Sprint (Nightly Cron)\n\n### 3 deliverables built\n\n**1. Competitive landscape analysis** (`2026-02-21-agency-competitive-landscape.md`)\nMarket research on AI/Web3 marketing agencies. Key findings:\n- Full-service retainers start at $12K/month (Coinbound, Lunar Strategy, RZLT)\n- Our $5K-$10K retainer is intentionally underpriced for ICP \u2014 captures the $10M-$100M TVL protocols that can't afford enterprise agencies\n- Main AI-native competitor: RZLT (European, enterprise-first). We beat them on: founder credibility, Solana/Base focus, audit-first entry, smaller protocol accessibility\n- Market tiers confirmed: Basic $3-6K, Growth $6-15K, Enterprise $15-50K+\n- Pricing is RIGHT. Raise after first 3 case studies.\n\n**2. Sample audit #2 \u2014 Squads Protocol** (`2026-02-21-sample-audit-squads.md`)\nAudited Squads Protocol (leading multisig on Solana). Key finding: they've evolved into a 4-product fintech company that nobody knows about.\n- Products: Squads Multisig (450 teams, $15B secured) + Altitude (business banking, 150 countries) + Fuse (personal Visa card) + Grid (stablecoin API)\n- Strategic partner: Coinbase (CBO personally quoted, $1B+ USDC = 15% of all USDC on Solana)\n- The Coinbase partnership was announced as one blog post. Not a week of content.\n- \"Safe of Solana\" comparison completely unclaimed \u2014 huge positioning opportunity\n- Scored 9/30 overall. Great prospect for the agency.\n- Audit shows range: Parcl = retail DeFi pivot narrative, Squads = B2B infra + fintech evolution\n\n**3. Kanso website copy** (`2026-02-21-kanso-website-copy.md`)\nComplete copy for kanso.xyz \u2014 ready to paste into Framer on Day 1:\n- Hero, problem, services (3 tiers), how it works (4 steps), proof points, FAQ (6 Q&As), CTA\n- About page, services page (detailed)\n- Twitter bio variants (3 options)\n- Day 1 launch checklist (with 2-3 hour Framer estimate)\n- One-liner variants for WJP to use (DM intros, conference, cold email subject lines)\n\n### Agency package now 18 files (was 15)\nAll gaps filled. WJP can greenlight \u2192 same-day launch.\n\n### Still pending WJP\n- Agency GO/NO-GO\n- PR #7 Option A/B/C\n- forcrypto.market DNS fix (CRITICAL, 2-min GoDaddy fix)\n\n## 10:41 PT - Session wrap (80% context hit)\n- Yama Bitwarden autonomous, Mission Control upgraded, rate limit root cause fixed\n- Key fix: crons now plan-only. Main session = coordination only. Sub-agents = execution.\n- For Crypto: 81 tests done, Phase 1 blocked on Gmail OTP\n- New rules in CORRECTIONS.md + AGENTS.md: >5 tool calls = spawn sub-agent\n\n## 21:02 - Priority Reset (WJP directive)\n- Kanso DROPPED - Claude can do security audits now, offering worthless\n- New stack: For Crypto #1 \u2192 Divvvy #2 \u2192 67 maintain \u2192 everything else tabled\n- Future non-crypto idea: something for normal people, no tech required, obvious reason to buy (not agency model)\n- \"Kanso\" name: WJP likes it. Could recycle for future idea.\n- Mission Control redesign: sub-agent running. Project-based board, live agent monitor, no vanity stats.\n",
+      "preview": "Discovery: Authenticated API test on forcrypto.market revealed 301 redirects. Investigated DNS."
+    }
+  ],
   "health": {
-    "kikai": "working",
-    "yama": "online",
-    "lastHeartbeat": "2026-02-22T05:00:34.325914+00:00",
     "crons": {
       "healthy": 11,
       "errors": 0
-    }
+    },
+    "lastHeartbeat": "2026-02-22T05:03:19.061873+00:00"
   }
 }
