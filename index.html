@@ -676,6 +676,80 @@ body {
   color: var(--text2);
 }
 
+/* ─── TASKS ───────────────────────────────────────────── */
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-section-header {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text2);
+  padding: 10px 0 4px;
+}
+
+.task-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.task-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.task-check.done {
+  background: rgba(57,255,20,0.12);
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.task-check.todo {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+}
+
+.task-label {
+  font-size: 16px;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.task-label.done-label {
+  color: var(--text2);
+  text-decoration: line-through;
+  text-decoration-color: var(--dim);
+}
+
+.task-label.todo-label {
+  color: var(--text);
+}
+
+.task-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--text2);
+}
+
 /* ─── CRONS ───────────────────────────────────────────── */
 .crons-grid {
   display: grid;
@@ -1106,6 +1180,75 @@ function render(data, crons) {
 
     projectsSection.appendChild(projectsGrid);
     main.appendChild(projectsSection);
+  }
+
+  // ── TASKS ─────────────────────────────────────────────
+  const activeTaskFile = (data.files || []).find(f => f.name === 'ACTIVE TASK');
+  if (activeTaskFile && activeTaskFile.content) {
+    const tasksSection = document.createElement('section');
+    tasksSection.innerHTML = '<div class="section-title">Active Task</div>';
+    const container = document.createElement('div');
+    container.className = 'tasks-container';
+
+    const lines = activeTaskFile.content.split('\n');
+    let taskTitle = '';
+    let currentPhase = '';
+    let taskCount = 0;
+
+    lines.forEach(line => {
+      // Title
+      if (line.startsWith('# ') && !taskTitle) {
+        taskTitle = line.replace('# ', '').trim();
+        const titleEl = document.createElement('div');
+        titleEl.className = 'task-status-row';
+        titleEl.innerHTML = `<strong style="color:var(--text);font-size:17px;">${escHtml(taskTitle)}</strong>`;
+        container.appendChild(titleEl);
+        return;
+      }
+
+      // Status line
+      if (line.startsWith('**Status:**')) {
+        const status = line.replace('**Status:**', '').trim();
+        const statusEl = document.createElement('div');
+        statusEl.className = 'task-status-row';
+        statusEl.innerHTML = `<span style="color:var(--gold);">${escHtml(status)}</span>`;
+        container.appendChild(statusEl);
+        return;
+      }
+
+      // Phase headers (## Phase)
+      if (line.startsWith('## Phase') || line.startsWith('## Phase')) {
+        currentPhase = line.replace(/^#+\s*/, '').trim();
+        const phaseEl = document.createElement('div');
+        phaseEl.className = 'task-section-header';
+        phaseEl.textContent = currentPhase;
+        container.appendChild(phaseEl);
+        return;
+      }
+
+      // Checkboxes
+      const doneMatch = line.match(/^[\s-]*\[x\]\s+(.+)/i);
+      const todoMatch = line.match(/^[\s-]*\[ \]\s+(.+)/);
+
+      if (doneMatch || todoMatch) {
+        const isDone = !!doneMatch;
+        const label = (doneMatch || todoMatch)[1].trim();
+        taskCount++;
+
+        const item = document.createElement('div');
+        item.className = 'task-line';
+        item.innerHTML = `
+          <div class="task-check ${isDone ? 'done' : 'todo'}">${isDone ? '✓' : ''}</div>
+          <div class="task-label ${isDone ? 'done-label' : 'todo-label'}">${escHtml(label)}</div>
+        `;
+        container.appendChild(item);
+      }
+    });
+
+    if (taskCount > 0) {
+      tasksSection.appendChild(container);
+      main.appendChild(tasksSection);
+    }
   }
 
   // ── CRONS ─────────────────────────────────────────────
