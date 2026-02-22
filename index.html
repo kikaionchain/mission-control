@@ -157,12 +157,16 @@ body {
 }
 
 .section-pfp {
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--border2);
   flex-shrink: 0;
+}
+
+.section-title.no-line::after {
+  display: none;
 }
 
 /* ─── CARD ────────────────────────────────────────────── */
@@ -672,6 +676,128 @@ body {
   color: var(--text2);
 }
 
+/* ─── CRONS ───────────────────────────────────────────── */
+.crons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+}
+
+.cron-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.cron-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cron-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cron-meta {
+  font-size: 13px;
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+/* ─── FILES ───────────────────────────────────────────── */
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.file-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.file-card:hover { border-color: var(--border2); }
+.file-card.open { border-color: var(--accent); }
+
+.file-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.file-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.file-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.file-chevron {
+  font-size: 12px;
+  color: var(--text2);
+  transition: transform 0.2s;
+}
+
+.file-card.open .file-chevron { transform: rotate(180deg); }
+
+.file-preview {
+  padding: 0 14px 10px;
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.file-content {
+  display: none;
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+.file-card.open .file-content { display: block; }
+
+.file-content pre {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--text2);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-top: 10px;
+  line-height: 1.5;
+}
+
 /* ─── MOBILE ──────────────────────────────────────────── */
 @media (max-width: 480px) {
   .header { padding: 10px 14px; }
@@ -734,10 +860,15 @@ async function loadData() {
   clearTimers();
 
   try {
-    const res = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    render(data);
+    const t = '?t=' + Date.now();
+    const [dataRes, cronRes] = await Promise.all([
+      fetch(DATA_URL + t, { cache: 'no-store' }),
+      fetch('./cron-snapshot.json' + t, { cache: 'no-store' }).catch(() => null)
+    ]);
+    if (!dataRes.ok) throw new Error('HTTP ' + dataRes.status);
+    const data = await dataRes.json();
+    const crons = cronRes && cronRes.ok ? await cronRes.json() : [];
+    render(data, crons);
     startRefreshCycle();
   } catch (err) {
     showError(DATA_URL, err.message);
@@ -771,7 +902,7 @@ function updateCountdown() {
 // ════════════════════════════════════════════════════════
 // RENDER
 // ════════════════════════════════════════════════════════
-function render(data) {
+function render(data, crons) {
   const main = document.getElementById('main');
   main.innerHTML = '';
 
@@ -812,7 +943,7 @@ function render(data) {
   needsWjp.sort((a, b) => (urgencyOrder[a.urgency] || 2) - (urgencyOrder[b.urgency] || 2));
 
   const yourMoveSection = document.createElement('section');
-  yourMoveSection.innerHTML = '<div class="section-title"><img class="section-pfp" src="./wjp-pfp.png" alt="WJP">WJP</div>';
+  yourMoveSection.innerHTML = '<div class="section-title no-line"><img class="section-pfp" src="./wjp-pfp.png" alt="WJP">WJP</div>';
   const moveGrid = document.createElement('div');
   moveGrid.className = 'your-move-grid';
 
@@ -975,6 +1106,69 @@ function render(data) {
 
     projectsSection.appendChild(projectsGrid);
     main.appendChild(projectsSection);
+  }
+
+  // ── CRONS ─────────────────────────────────────────────
+  if (Array.isArray(crons) && crons.length > 0) {
+    const cronsSection = document.createElement('section');
+    cronsSection.innerHTML = '<div class="section-title">Crons</div>';
+    const cronsGrid = document.createElement('div');
+    cronsGrid.className = 'crons-grid';
+
+    crons.forEach(job => {
+      const ok = job.lastStatus === 'ok' || job.consecutiveErrors === 0;
+      const disabled = !job.enabled;
+      const dotColor = disabled ? 'var(--text2)' : ok ? 'var(--green)' : 'var(--red)';
+
+      // Format last run
+      let lastRun = '—';
+      if (job.lastRunMs) {
+        const mins = Math.floor((Date.now() - job.lastRunMs) / 60000);
+        lastRun = mins < 60 ? mins + 'm ago' : Math.floor(mins/60) + 'h ago';
+      }
+
+      const item = document.createElement('div');
+      item.className = 'cron-item';
+      item.innerHTML = `
+        <div class="cron-dot" style="background:${dotColor};"></div>
+        <div class="cron-name">${escHtml(job.name)}</div>
+        <div class="cron-meta">${disabled ? 'off' : lastRun}</div>
+      `;
+      cronsGrid.appendChild(item);
+    });
+
+    cronsSection.appendChild(cronsGrid);
+    main.appendChild(cronsSection);
+  }
+
+  // ── FILES ──────────────────────────────────────────────
+  const files = Array.isArray(data.files) ? data.files : [];
+  if (files.length > 0) {
+    const filesSection = document.createElement('section');
+    filesSection.innerHTML = '<div class="section-title">Files</div>';
+    const filesGrid = document.createElement('div');
+    filesGrid.className = 'files-grid';
+
+    files.forEach(file => {
+      const card = document.createElement('div');
+      card.className = 'file-card';
+      card.innerHTML = `
+        <div class="file-header">
+          <div class="file-icon">${file.icon || '📄'}</div>
+          <div class="file-name">${escHtml(file.name)}</div>
+          <div class="file-chevron">▼</div>
+        </div>
+        <div class="file-preview">${escHtml((file.preview || '').slice(0, 120))}</div>
+        <div class="file-content"><pre>${escHtml(file.content || '')}</pre></div>
+      `;
+      card.querySelector('.file-header').addEventListener('click', () => {
+        card.classList.toggle('open');
+      });
+      filesGrid.appendChild(card);
+    });
+
+    filesSection.appendChild(filesGrid);
+    main.appendChild(filesSection);
   }
 
   // ── INTEL ─────────────────────────────────────────────
