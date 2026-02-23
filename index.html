@@ -710,7 +710,7 @@ body {
 /* ─── DASHBOARD LAYOUT ───────────────────────────────── */
 .top-row {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: auto 1fr;
   gap: 20px;
   align-items: stretch;
 }
@@ -733,7 +733,7 @@ body {
 }
 
 .agent-sidebar .agents-grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .section-block {
@@ -744,6 +744,10 @@ body {
 @media (max-width: 1024px) {
   .top-row { grid-template-columns: 1fr; }
   .middle-row { grid-template-columns: 1fr; }
+  .agent-sidebar .agents-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .agent-sidebar .agents-grid { grid-template-columns: 1fr; }
 }
 
 /* ─── TASKS ───────────────────────────────────────────── */
