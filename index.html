@@ -1107,11 +1107,12 @@ function render(data, crons) {
       div.innerHTML = `
         <span class="move-urgency urgency-${item.urgency || 'medium'}">${item.urgency || 'medium'}</span>
         <div class="move-content">
-          <div class="move-title">${escHtml(item.title || item.ask || 'Action needed')}</div>
+          <div class="move-title">${escHtml(item.title || item.ask || 'Action needed')}${item._local ? '<span class="mc-local-badge">local</span>' : ''}</div>
           ${item.ask ? '<div class="move-ask">' + escHtml(item.ask) + '</div>' : ''}
           ${item.impact ? '<div class="move-ask" style="margin-top:2px;color:var(--text2);">' + escHtml(item.impact) + '</div>' : ''}
         </div>
         ${item.project ? '<span class="move-project">' + escHtml(item.project) + '</span>' : ''}
+        ${item._local ? '<button class="mc-del" onclick="deleteLocalCard(\'wjp\',\''+item.id+'\')" title="Delete">×</button>' : ''}
       `;
       moveGrid.appendChild(div);
     });
@@ -1450,10 +1451,14 @@ function render(data, crons) {
     intelSection.innerHTML = '<div class="section-title">Intel</div>';
     const intelGrid = document.createElement('div');
     intelGrid.className = 'intel-section';
-    intel.slice(0, 5).forEach(item => {
+    intel.slice(0, 10).forEach(item => {
       const div = document.createElement('div');
       div.className = 'intel-item';
-      div.textContent = item.text || String(item);
+      if (item._local) {
+        div.innerHTML = escHtml(item.text || String(item)) + '<span class="mc-local-badge">local</span><button class="mc-del" onclick="deleteLocalCard(\'intel\',\'' + item.id + '\')" title="Delete">×</button>';
+      } else {
+        div.textContent = item.text || String(item);
+      }
       intelGrid.appendChild(div);
     });
     intelSection.appendChild(intelGrid);
@@ -1494,6 +1499,138 @@ function escHtml(str) {
 const stamp = document.getElementById('build-stamp');
 if (stamp) stamp.textContent = 'loaded ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
 loadData();
+</script>
+
+<!-- ── CREATE CARD UI ─────────────────────────────────── -->
+<style>
+#fab { position:fixed; bottom:28px; right:28px; width:52px; height:52px; border-radius:50%; background:var(--accent); color:#000; font-size:28px; line-height:52px; text-align:center; cursor:pointer; z-index:1000; box-shadow:0 4px 16px rgba(0,217,255,0.35); border:none; font-weight:300; transition:transform 0.15s; }
+#fab:hover { transform:scale(1.08); }
+#mc-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:1001; align-items:center; justify-content:center; }
+#mc-overlay.open { display:flex; }
+#mc-modal { background:#111; border:1px solid #2a2a2a; border-radius:10px; width:100%; max-width:460px; padding:24px; position:relative; }
+#mc-modal h3 { font-size:15px; font-weight:600; color:var(--text); margin-bottom:16px; letter-spacing:0.03em; }
+.mc-close { position:absolute; top:14px; right:16px; background:none; border:none; color:var(--dim); font-size:20px; cursor:pointer; line-height:1; }
+.mc-close:hover { color:var(--text); }
+.mc-tabs { display:flex; gap:0; border-bottom:1px solid #2a2a2a; margin-bottom:18px; }
+.mc-tab { padding:6px 16px; font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; background:none; border:none; color:var(--dim); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.mc-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+.mc-field { margin-bottom:14px; }
+.mc-field label { display:block; font-size:11px; color:#777; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:5px; }
+.mc-field input, .mc-field textarea, .mc-field select { width:100%; background:#1a1a1a; border:1px solid #333; color:var(--text); padding:8px 10px; border-radius:5px; font-size:14px; font-family:inherit; resize:vertical; }
+.mc-field textarea { min-height:72px; }
+.mc-field input:focus, .mc-field textarea:focus, .mc-field select:focus { outline:none; border-color:var(--accent); }
+.mc-radios { display:flex; gap:12px; }
+.mc-radios label { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text2); cursor:pointer; text-transform:none; letter-spacing:0; }
+.mc-submit { background:var(--accent); color:#000; font-weight:700; border:none; padding:9px 22px; border-radius:5px; font-size:13px; cursor:pointer; margin-top:4px; }
+.mc-submit:hover { opacity:0.9; }
+.mc-pane { display:none; }
+.mc-pane.active { display:block; }
+.mc-local-badge { font-size:10px; background:#1a1a1a; border:1px solid #333; color:#666; padding:1px 5px; border-radius:3px; margin-left:6px; vertical-align:middle; }
+.mc-del { background:none; border:none; color:#444; font-size:13px; cursor:pointer; padding:0 4px; float:right; line-height:1; margin-top:2px; }
+.mc-del:hover { color:var(--red); }
+</style>
+
+<button id="fab" title="Add card">+</button>
+
+<div id="mc-overlay">
+  <div id="mc-modal">
+    <h3>NEW CARD</h3>
+    <button class="mc-close" onclick="closeMC()">×</button>
+    <div class="mc-tabs">
+      <button class="mc-tab active" onclick="switchTab('wjp',this)">WJP Item</button>
+      <button class="mc-tab" onclick="switchTab('intel',this)">Intel</button>
+    </div>
+    <div id="pane-wjp" class="mc-pane active">
+      <div class="mc-field"><label>Project</label>
+        <select id="mc-project"><option>For Crypto</option><option>Divvvy</option><option>67</option><option>OS</option><option>Other</option></select>
+      </div>
+      <div class="mc-field"><label>Title</label><input id="mc-title" type="text" placeholder="Short title..."></div>
+      <div class="mc-field"><label>Urgency</label>
+        <div class="mc-radios">
+          <label><input type="radio" name="mc-urgency" value="critical" checked> Critical</label>
+          <label><input type="radio" name="mc-urgency" value="medium"> Medium</label>
+        </div>
+      </div>
+      <div class="mc-field"><label>Ask / Details</label><textarea id="mc-ask" placeholder="What needs to happen..."></textarea></div>
+      <button class="mc-submit" onclick="saveWjpCard()">Save Card</button>
+    </div>
+    <div id="pane-intel" class="mc-pane">
+      <div class="mc-field"><label>Intel Text</label><textarea id="mc-intel-text" placeholder="Market note, observation..."></textarea></div>
+      <button class="mc-submit" onclick="saveIntelCard()">Save Card</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('fab').addEventListener('click', () => {
+  document.getElementById('mc-overlay').classList.add('open');
+});
+function closeMC() { document.getElementById('mc-overlay').classList.remove('open'); }
+document.getElementById('mc-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeMC(); });
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.mc-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.mc-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + name).classList.add('active');
+}
+
+function getLocalCards() {
+  try { return JSON.parse(localStorage.getItem('mc_user_cards') || '{"needsWjp":[],"intel":[]}'); }
+  catch(e) { return {needsWjp:[], intel:[]}; }
+}
+function saveLocalCards(c) { localStorage.setItem('mc_user_cards', JSON.stringify(c)); }
+
+function saveWjpCard() {
+  const title = document.getElementById('mc-title').value.trim();
+  const ask = document.getElementById('mc-ask').value.trim();
+  if (!title) { alert('Title required'); return; }
+  const c = getLocalCards();
+  c.needsWjp.push({
+    id: 'user-' + Date.now(),
+    project: document.getElementById('mc-project').value,
+    title, urgency: document.querySelector('input[name="mc-urgency"]:checked').value,
+    ask, updatedAt: new Date().toISOString(), _local: true
+  });
+  saveLocalCards(c);
+  closeMC();
+  document.getElementById('mc-title').value = '';
+  document.getElementById('mc-ask').value = '';
+  loadData();
+}
+
+function saveIntelCard() {
+  const text = document.getElementById('mc-intel-text').value.trim();
+  if (!text) { alert('Text required'); return; }
+  const c = getLocalCards();
+  c.intel.push({ id: 'intel-' + Date.now(), text, time: new Date().toISOString(), _local: true });
+  saveLocalCards(c);
+  closeMC();
+  document.getElementById('mc-intel-text').value = '';
+  loadData();
+}
+
+function deleteLocalCard(type, id) {
+  const c = getLocalCards();
+  if (type === 'wjp') c.needsWjp = c.needsWjp.filter(x => x.id !== id);
+  if (type === 'intel') c.intel = c.intel.filter(x => x.id !== id);
+  saveLocalCards(c);
+  loadData();
+}
+
+// Patch loadData to merge local cards after fetch
+const _origLoadData = loadData;
+window.loadData = function() {
+  const orig = window.render;
+  window.render = function(data, crons) {
+    const local = getLocalCards();
+    if (local.needsWjp && local.needsWjp.length) data.needsWjp = [...(data.needsWjp||[]), ...local.needsWjp];
+    if (local.intel && local.intel.length) data.intel = [...(data.intel||[]), ...local.intel];
+    orig(data, crons);
+    window.render = orig; // restore after one use
+  };
+  _origLoadData();
+};
 </script>
 </body>
 </html>
