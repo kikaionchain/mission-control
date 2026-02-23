@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T00:25:03.941324+00:00",
+  "updatedAt": "2026-02-23T02:25:04.965622+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -117,7 +117,7 @@
       "workingOn": "For Crypto - Full Testing Infrastructure",
       "contextPct": 31,
       "model": "claude-sonnet-4-6",
-      "sessionDurationMin": 203,
+      "sessionDurationMin": 181,
       "lastActivityMin": 0,
       "rateLimit": false
     },
@@ -139,7 +139,7 @@
       "urgency": "critical",
       "ask": "Fix DNS in GoDaddy. 2-minute task.",
       "impact": "Anyone clicking any link to forcrypto.market sees ads. Bot API integrations broken. SEO damage accumulating.",
-      "updatedAt": "2026-02-23T00:25:03.941324+00:00"
+      "updatedAt": "2026-02-23T02:25:04.965622+00:00"
     },
     {
       "id": "67-brand---re-activate-posts---growth-in",
@@ -148,7 +148,7 @@
       "urgency": "medium",
       "ask": "Should we re-enable 67 posts + invest in brand momentum? Market timing is ideal right now.",
       "impact": "",
-      "updatedAt": "2026-02-23T00:25:03.941324+00:00"
+      "updatedAt": "2026-02-23T02:25:04.965622+00:00"
     },
     {
       "id": "for-crypto---pr--7-merge-decision",
@@ -157,7 +157,7 @@
       "urgency": "medium",
       "ask": "Option A (safe cherry-pick), B (full merge + test), or C (leave as backup)?",
       "impact": "",
-      "updatedAt": "2026-02-23T00:25:03.941324+00:00"
+      "updatedAt": "2026-02-23T02:25:04.965622+00:00"
     }
   ],
   "intel": [
@@ -230,6 +230,6 @@
       "healthy": 11,
       "errors": 0
     },
-    "lastHeartbeat": "2026-02-23T00:25:03.941324+00:00"
+    "lastHeartbeat": "2026-02-23T02:25:04.965622+00:00"
   }
 }
