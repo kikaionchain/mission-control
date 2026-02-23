@@ -453,6 +453,7 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
+  align-items: start;
 }
 
 @media (max-width: 768px) {
@@ -709,7 +710,7 @@ body {
 /* ─── DASHBOARD LAYOUT ───────────────────────────────── */
 .top-row {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 300px 1fr;
   gap: 20px;
   align-items: stretch;
 }
@@ -1121,16 +1122,16 @@ function render(data, crons) {
 
   yourMoveSection.appendChild(moveGrid);
 
-  // ── TOP ROW: WJP (left) + Agents (right) ──────────────
+  // ── TOP ROW: Agents (left) + WJP (right) ──────────────
   const topRow = document.createElement('div');
   topRow.className = 'top-row';
+
   const topLeft = document.createElement('div');
-  topLeft.className = 'section-block';
-  topLeft.appendChild(yourMoveSection);
-  topRow.appendChild(topLeft);
+  topLeft.className = 'section-block agent-sidebar';
 
   const topRight = document.createElement('div');
-  topRight.className = 'section-block agent-sidebar';
+  topRight.className = 'section-block';
+  topRight.appendChild(yourMoveSection);
 
   if (data.agents) {
     const agentsSection = document.createElement('section');
@@ -1191,9 +1192,10 @@ function render(data, crons) {
     });
 
     agentsSection.appendChild(agentsGrid);
-    topRight.appendChild(agentsSection);
+    topLeft.appendChild(agentsSection);
   }
 
+  topRow.appendChild(topLeft);
   topRow.appendChild(topRight);
   main.appendChild(topRow);
 
