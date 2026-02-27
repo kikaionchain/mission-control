@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-26T22:25:04.339555+00:00",
+  "updatedAt": "2026-02-27T00:25:04.709903+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -98,14 +98,14 @@
       "workingOn": "For Crypto - Full Testing Infrastructure",
       "contextPct": 34,
       "model": "claude-sonnet-4-6",
-      "sessionDurationMin": 119,
+      "sessionDurationMin": 239,
       "lastActivityMin": 0,
       "rateLimit": false
     },
     "yama": {
       "status": "ssh-only",
       "workingOn": "idle",
-      "contextPct": 75,
+      "contextPct": 77,
       "model": "claude-sonnet-4-6",
       "sessionDurationMin": null,
       "lastActivityMin": null,
@@ -184,9 +184,9 @@
   ],
   "health": {
     "crons": {
-      "healthy": 10,
-      "errors": 8
+      "healthy": 12,
+      "errors": 6
     },
-    "lastHeartbeat": "2026-02-26T22:25:04.339555+00:00"
+    "lastHeartbeat": "2026-02-27T00:25:04.709903+00:00"
   }
 }
