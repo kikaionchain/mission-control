@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-27T04:25:05.693577+00:00",
+  "updatedAt": "2026-02-27T06:25:06.424099+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -96,7 +96,7 @@
     "kikai": {
       "status": "active",
       "workingOn": "For Crypto - Full Testing Infrastructure",
-      "contextPct": 34,
+      "contextPct": 36,
       "model": "claude-sonnet-4-6",
       "sessionDurationMin": 239,
       "lastActivityMin": 0,
@@ -187,6 +187,6 @@
       "healthy": 12,
       "errors": 6
     },
-    "lastHeartbeat": "2026-02-27T04:25:05.693577+00:00"
+    "lastHeartbeat": "2026-02-27T06:25:06.424099+00:00"
   }
 }
