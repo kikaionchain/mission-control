@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-27T08:25:06.148175+00:00",
+  "updatedAt": "2026-02-27T10:25:06.120923+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -89,7 +89,7 @@
     "kikai": {
       "status": "active",
       "workingOn": "4-Hour Blender Mastery Night Sprint",
-      "contextPct": 91,
+      "contextPct": 21,
       "model": "claude-sonnet-4-6",
       "sessionDurationMin": 239,
       "lastActivityMin": 0,
@@ -173,6 +173,6 @@
       "healthy": 13,
       "errors": 5
     },
-    "lastHeartbeat": "2026-02-27T08:25:06.148175+00:00"
+    "lastHeartbeat": "2026-02-27T10:25:06.120923+00:00"
   }
 }
