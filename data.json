@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-27T00:25:04.709903+00:00",
+  "updatedAt": "2026-02-27T02:25:04.972943+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -105,7 +105,7 @@
     "yama": {
       "status": "ssh-only",
       "workingOn": "idle",
-      "contextPct": 77,
+      "contextPct": 79,
       "model": "claude-sonnet-4-6",
       "sessionDurationMin": null,
       "lastActivityMin": null,
@@ -187,6 +187,6 @@
       "healthy": 12,
       "errors": 6
     },
-    "lastHeartbeat": "2026-02-27T00:25:04.709903+00:00"
+    "lastHeartbeat": "2026-02-27T02:25:04.972943+00:00"
   }
 }
