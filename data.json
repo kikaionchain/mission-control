@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-28T10:25:59.497248+00:00",
+  "updatedAt": "2026-02-28T12:25:59.874331+00:00",
   "projects": [
     {
       "id": "for-crypto",
@@ -89,7 +89,7 @@
     "kikai": {
       "status": "active",
       "workingOn": "For Crypto Production Checklist \u2014 DNS + PR #8 Audit",
-      "contextPct": 45,
+      "contextPct": 37,
       "model": "claude-sonnet-4-6",
       "sessionDurationMin": 239,
       "lastActivityMin": 0,
@@ -176,6 +176,6 @@
       "healthy": 12,
       "errors": 6
     },
-    "lastHeartbeat": "2026-02-28T10:25:59.497248+00:00"
+    "lastHeartbeat": "2026-02-28T12:25:59.874331+00:00"
   }
 }
